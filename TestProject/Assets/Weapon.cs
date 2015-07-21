@@ -7,17 +7,20 @@ public class Weapon : MonoBehaviour {
 	public float Damage = 10;
 	public float Range = 100;
 	public LayerMask whatToHit;
+	public GameObject crosshair;
 
 	public Transform BulletTrailPrefab;
 	public Transform MuzzleFlashPrefab;
 	public Transform BulletHitPrefab;
-	float timeToSpawnEffect = 0;
-	public float effectSpawnRate = 10;
+	//float timeToSpawnEffect = 0;
+	//public float effectSpawnRate = 10;
 
+	float aimingComplete = 0;
 	float timeToFire = 0;
 	Transform firePoint;
 	Transform arm;
 	Quaternion muzzleFlashRotation;
+
 
 	// Use this for initialization
 	void Awake () {
@@ -30,20 +33,42 @@ public class Weapon : MonoBehaviour {
 			Debug.LogError ("No 'arm' object found.");
 		}
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		if (fireRate == 0) {
-			if (Input.GetButtonDown ("Fire1")) {
+		if(Input.GetMouseButton(0)){
+			if(aimingComplete < 1.5){
+				aimingComplete += Time.deltaTime;
+				Aim ();
+			} else if(aimingComplete > 1.5){
+				Debug.Log("SHOOT");
+				aimingComplete = 0;
 				Shoot ();
 			}
-		} else {
-			if(Input.GetButton("Fire1") && Time.time > timeToFire){
-				timeToFire = Time.time + 1/fireRate;
-				Shoot();
-			}
+		}
+		else if(Input.GetMouseButtonUp(0)) {
+			aimingComplete = 0;
 		}
 	}
+
+
+	void Aim(){
+		// Get mouse position from screen and convert that position to the game world
+		Vector2 mousePosition = new Vector2 (Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+		Vector2 firePointPosition = new Vector2 (firePoint.position.x, firePoint.position.y);
+		Vector3 mouseDirection = mousePosition - firePointPosition;
+
+		// draw some kind of effect for aiming...WIP
+		Transform line = Instantiate (BulletTrailPrefab, firePoint.position, firePoint.rotation) as Transform;
+		LineRenderer linerenderer = line.GetComponent<LineRenderer> ();
+
+		if(linerenderer != null){
+			linerenderer.SetPosition(0, firePoint.position);
+			linerenderer.SetPosition(1, mouseDirection);
+		}
+		Destroy (line.gameObject, 0.04f);
+	}
+
 
 	void Shoot(){
 		// Get mouse position from screen and convert that position to the game world
@@ -54,23 +79,21 @@ public class Weapon : MonoBehaviour {
 		if(hit.collider != null){
 			Debug.Log ("We hit " + hit.collider.name + " and did " + Damage + " damage.");
 		}
+		
+		Vector3 hitPosition; // point where bullet collided with something
+		Vector3 hitNormal;
 
-		if(Time.time >= timeToSpawnEffect){
-			Vector3 hitPosition;
-			Vector3 hitNormal;
-
-			if(hit.collider == null){
-				hitPosition = (mousePosition - firePointPosition) * 30; // Get the mouse cursor direction and add some distance
-				hitNormal = new Vector3 (9999, 9999, 9999);
-			} else {
-				hitPosition = hit.point;
-				hitNormal = hit.normal;
-			}
-
-			Effect (hitPosition, hitNormal);
-			timeToSpawnEffect = Time.time + 1/effectSpawnRate;
+		if(hit.collider == null){
+			hitPosition = (mousePosition - firePointPosition) * 30; // Get the mouse cursor direction and add some distance
+			hitNormal = new Vector3 (9999, 9999, 9999);
+		} else {
+			hitPosition = hit.point;
+			hitNormal = hit.normal;
 		}
+
+		Effect (hitPosition, hitNormal);
 	}
+
 
 	void Effect(Vector3 hitPosition, Vector3 hitNormal){
 		//Bullet trail effect
@@ -81,7 +104,6 @@ public class Weapon : MonoBehaviour {
 			linerenderer.SetPosition(0, firePoint.position);
 			linerenderer.SetPosition(1, hitPosition);
 		}
-
 		Destroy (trail.gameObject, 0.04f);
 
 		//Bullet hit effect
