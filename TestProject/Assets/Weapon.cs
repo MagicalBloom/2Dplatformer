@@ -12,6 +12,7 @@ public class Weapon : MonoBehaviour {
 	public Transform BulletTrailPrefab;
 	public Transform MuzzleFlashPrefab;
 	public Transform BulletHitPrefab;
+	public Transform aimTestPrefab;
 	//float timeToSpawnEffect = 0;
 	//public float effectSpawnRate = 10;
 
@@ -57,14 +58,15 @@ public class Weapon : MonoBehaviour {
 		Vector2 mousePosition = new Vector2 (Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
 		Vector2 firePointPosition = new Vector2 (firePoint.position.x, firePoint.position.y);
 		Vector3 mouseDirection = mousePosition - firePointPosition;
+		mouseDirection.z = 0f;
 
 		// draw some kind of effect for aiming...WIP
-		Transform line = Instantiate (BulletTrailPrefab, firePoint.position, firePoint.rotation) as Transform;
+		Transform line = Instantiate (aimTestPrefab, firePoint.position, firePoint.rotation) as Transform;
 		LineRenderer linerenderer = line.GetComponent<LineRenderer> ();
 
 		if(linerenderer != null){
 			linerenderer.SetPosition(0, firePoint.position);
-			linerenderer.SetPosition(1, mouseDirection);
+			linerenderer.SetPosition(1, mousePosition);
 		}
 		Destroy (line.gameObject, 0.04f);
 	}
