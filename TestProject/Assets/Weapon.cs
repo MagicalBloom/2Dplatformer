@@ -101,7 +101,7 @@ public class Weapon : MonoBehaviour {
 			hitPosition = hit.point;
 			hitNormal = hit.normal;
 		}
-
+		Debug.DrawRay (firePointPosition, (mousePosition-firePointPosition)*30, Color.white, 1);
 		Effect (hitPosition, hitNormal);
 	}
 
