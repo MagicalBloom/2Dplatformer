@@ -3,14 +3,14 @@ using System.Collections;
 
 public class PlayerHealth : MonoBehaviour {
 
-	public int fullHitPoints = 100;
+	public int maxHitPoints = 100;
 	public int currentHitPoints;
 
 	bool playerDead;
 	bool playerDamaged;
 	
 	void Awake () {
-		currentHitPoints = fullHitPoints; // Starting hp
+		currentHitPoints = maxHitPoints; // Starting hp
 	}
 	
 	// Update is called once per frame

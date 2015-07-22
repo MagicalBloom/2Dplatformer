@@ -4,8 +4,9 @@ using System.Collections;
 public class Weapon : MonoBehaviour {
 
 	public float fireRate = 0;
-	public float Damage = 10;
-	public float Range = 100;
+	public float damage = 10;
+	public float range = 100;
+	public float bulletVelocity = 100;
 	public float aimDelay;
 	public LayerMask whatToHit;
 
@@ -13,15 +14,12 @@ public class Weapon : MonoBehaviour {
 	public Transform MuzzleFlashPrefab;
 	public Transform BulletHitPrefab;
 	public Transform aimTestPrefab;
-	//float timeToSpawnEffect = 0;
-	//public float effectSpawnRate = 10;
 
 	//Need these to test healthbar
 	GameObject player;
 	PlayerHealth playerHealth;
 
 	float aimingComplete = 0;
-	float timeToFire = 0;
 	Transform firePoint;
 	Transform arm;
 	Quaternion muzzleFlashRotation;
@@ -35,6 +33,7 @@ public class Weapon : MonoBehaviour {
 
 		firePoint = transform.FindChild ("FirePoint");
 		arm = GameObject.Find ("Player/Arm").transform;
+
 		if(firePoint == null){
 			Debug.LogError ("No 'firePoint' object found.");
 		}
@@ -46,9 +45,11 @@ public class Weapon : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(Input.GetMouseButton(0)){
+			// Do some sort of aim effect when holding the mouse button
 			if(aimingComplete < aimDelay){
 				aimingComplete += Time.deltaTime;
 				//Aim ();
+			// Shoot after the mouse button is held down for required time
 			} else if(aimingComplete > aimDelay){
 				Debug.Log("SHOOT");
 				aimingComplete = 0;
@@ -56,7 +57,7 @@ public class Weapon : MonoBehaviour {
 			}
 		}
 		else if(Input.GetMouseButtonUp(0)) {
-			aimingComplete = 0;
+			aimingComplete = 0; // Reset the timer for aiming
 		}
 	}
 
@@ -84,30 +85,55 @@ public class Weapon : MonoBehaviour {
 		// Get mouse position from screen and convert that position to the game world
 		Vector2 mousePosition = new Vector2 (Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
 		Vector2 firePointPosition = new Vector2 (firePoint.position.x, firePoint.position.y);
-		RaycastHit2D hit = Physics2D.Raycast (firePointPosition, mousePosition-firePointPosition, Range, whatToHit);
+		// raycast is used to see when player hits something
+		RaycastHit2D hit = Physics2D.Raycast (firePointPosition, mousePosition-firePointPosition, range, whatToHit);
 
 		if(hit.collider != null){
-			Debug.Log ("We hit " + hit.collider.name + " and did " + Damage + " damage.");
+			// Logic after we hit something
+			Debug.Log ("We hit " + hit.collider.name + " and did " + damage + " damage.");
 			playerHealth.playerTakeDamage(20);
 		}
 		
-		Vector3 hitPosition; // point where bullet collided with something
+		Vector3 hitPosition; 
 		Vector3 hitNormal;
 
 		if(hit.collider == null){
-			hitPosition = (mousePosition - firePointPosition) * 30; // Get the mouse cursor direction and add some distance
-			hitNormal = new Vector3 (9999, 9999, 9999);
+			hitPosition = (mousePosition-firePointPosition)*30; // Get the mouse cursor direction and add some distance
+			hitPosition += firePoint.position;
+			hitNormal = new Vector3 (9999, 9999, 9999); // used for checking if bullet hit something in effect method... kinda bad solution but whatever
 		} else {
-			hitPosition = hit.point;
-			hitNormal = hit.normal;
+			hitPosition = hit.point; // point where bullet collided with something
+			hitNormal = hit.normal; // normal vector of collided surface
 		}
-		Debug.DrawRay (firePointPosition, (mousePosition-firePointPosition)*30, Color.white, 1);
+		//Debug.DrawRay (firePointPosition, (mousePosition-firePointPosition)*30, Color.white, 1);
 		Effect (hitPosition, hitNormal);
+
+
+		/*
+		 * For bullet+rigidbody
+		Vector3 firePosition = Camera.main.WorldToScreenPoint (firePoint.position);
+		Vector3 direction = (Input.mousePosition - firePosition).normalized;
+
+		Quaternion muzzleFlashRotation = Quaternion.Euler (-firePoint.rotation.eulerAngles.z, 90, 0f);
+
+		GameObject bulletClone = Instantiate (BulletPrefab, firePoint.position, muzzleFlashRotation) as GameObject;
+		bulletClone.GetComponent<Rigidbody> ().velocity = direction * bulletVelocity;
+		Destroy (bulletClone.gameObject, 1f);
+
+		//bullet effect reflection
+		v' = 2 * (v . n) * n - v;
+		v = hitPosition
+		n = hit.normal
+		*/
+		//Quaternion asd = 2 * (Vector3.Dot(hitPosition,hitNormal)) * hitNormal - hitPosition as Quaternion;
+
+
 	}
 
 
 	void Effect(Vector3 hitPosition, Vector3 hitNormal){
-		//Bullet trail effect
+		// Bullet trail effect
+		// Basically we move pre-made bullet trail from one point to another
 		Transform trail = Instantiate (BulletTrailPrefab, firePoint.position, firePoint.rotation) as Transform;
 		LineRenderer linerenderer = trail.GetComponent<LineRenderer> ();
 
@@ -117,7 +143,7 @@ public class Weapon : MonoBehaviour {
 		}
 		Destroy (trail.gameObject, 0.04f);
 
-		//Bullet hit effect
+		// Bullet hit effect
 		if(hitNormal != new Vector3(9999, 9999, 9999)){
 			Transform hitParticle = Instantiate (BulletHitPrefab, hitPosition, Quaternion.FromToRotation (Vector3.right, hitNormal)) as Transform;
 			Destroy (hitParticle.gameObject, 1.0f);
@@ -126,7 +152,6 @@ public class Weapon : MonoBehaviour {
 		//Muzzle flash effect
 		muzzleFlashRotation = Quaternion.Euler (-firePoint.rotation.eulerAngles.z, 90, 0f);
 		Transform clone = Instantiate (MuzzleFlashPrefab, firePoint.position, muzzleFlashRotation) as Transform;
-		//clone.parent = firePoint;
 		float size = Random.Range (0.6f, 0.9f);
 		clone.localScale = new Vector3 (size, size, 0);
 		Destroy (clone.gameObject, 2.0f);

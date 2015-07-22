@@ -19,11 +19,8 @@ namespace UnityStandardAssets._2D
         private Animator m_Anim;            // Reference to the player's animator component.
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
-		//private bool mouseRightSide = true; // For determining which way the player is currently aiming.
 
 		Transform playerGraphics;			// Reference to the graphics so we can change direction
-		//Transform playerArm;
-		//Transform playerWeapon;
 
 
         private void Awake()
@@ -34,20 +31,10 @@ namespace UnityStandardAssets._2D
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
 			playerGraphics = transform.FindChild ("Graphics");
-			//playerArm = transform.FindChild ("Arm");
-			//playerWeapon = playerArm.FindChild ("Pistol");
 
 			if(playerGraphics == null) {
 				Debug.LogError ("'Graphics' object not found.");
 			}
-			/*
-			if(playerArm == null) {
-				Debug.LogError ("'Arm' object not found.");
-			}
-			if(playerWeapon == null) {
-				Debug.LogError ("'Pistol' object not found.");
-			}
-			*/
         }
 	
 
@@ -67,33 +54,6 @@ namespace UnityStandardAssets._2D
 
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
-
-			/*
-			Vector3 direction = Input.mousePosition - Camera.main.WorldToScreenPoint (transform.position);
-			Vector3 armScale = playerArm.localScale;
-			Vector3 weaponScale = playerWeapon.localScale;
-			float rotationZ = Mathf.Atan2 (direction.y, direction.x) * Mathf.Rad2Deg;
-			
-			if (direction.x >= 0) {
-				if(mouseRightSide == false) {
-					armScale.x *= -1;
-					weaponScale.x *= -1;
-					playerArm.localScale = armScale;
-					playerWeapon.localScale = weaponScale;
-				}
-				mouseRightSide = true;
-			}
-			else {
-				if(mouseRightSide == true){
-					armScale.x *= -1;
-					weaponScale.x *= -1;
-					playerArm.localScale = armScale;
-					playerWeapon.localScale = weaponScale;
-				}
-				mouseRightSide = false;
-			}
-			*/
-
         }
 
 

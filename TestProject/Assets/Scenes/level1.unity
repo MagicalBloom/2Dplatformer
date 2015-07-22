@@ -578,13 +578,26 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 21200000, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5000000, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
       propertyPath: m_FixedAngle
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5000000, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
+      propertyPath: m_GravityScale
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000000, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 7479b44a395cbec41a7113654815ecc4, type: 2}
+    m_RemovedComponents:
+    - {fileID: 21200000, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &216060683
@@ -758,6 +771,18 @@ Prefab:
       propertyPath: aimTestPrefab
       value: 
       objectReference: {fileID: 407920, guid: 81862acbb46c7a64cb886ff9bc1f98a0, type: 2}
+    - target: {fileID: 11409932, guid: cb290795f86f7a04f8789d287ea6453c, type: 2}
+      propertyPath: aimDelay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11409932, guid: cb290795f86f7a04f8789d287ea6453c, type: 2}
+      propertyPath: BulletPrefab
+      value: 
+      objectReference: {fileID: 102196, guid: 466e36a01015e8c4b97a0b3cf30a68a2, type: 2}
+    - target: {fileID: 11409932, guid: cb290795f86f7a04f8789d287ea6453c, type: 2}
+      propertyPath: bulletVelocity
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cb290795f86f7a04f8789d287ea6453c, type: 2}
   m_IsPrefabParent: 0
@@ -1763,6 +1788,23 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
   m_PrefabInternal: {fileID: 1676974922}
+--- !u!1 &1050969080 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100002, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
+  m_PrefabInternal: {fileID: 205407119}
+--- !u!114 &1050969081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1050969080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a39f314f4f4c1347be379686c2bc033, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHitPoints: 100
+  currentHitPoints: 0
 --- !u!1001 &1095452530
 Prefab:
   m_ObjectHideFlags: 0
@@ -2305,7 +2347,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400012, guid: e6fec471c20b9d148b1f87910e67bea4, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e6fec471c20b9d148b1f87910e67bea4, type: 3}
@@ -3090,6 +3132,7 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
+  m_StereoMirrorMode: 0
 --- !u!4 &2028623201
 Transform:
   m_ObjectHideFlags: 0

@@ -69,8 +69,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 0
-  Damage: 10
-  Range: 100
+  damage: 10
+  range: 100
+  bulletVelocity: 100
   aimDelay: 0
   whatToHit:
     serializedVersion: 2
@@ -124,6 +125,10 @@ Prefab:
       propertyPath: BulletHitPrefab
       value: 
       objectReference: {fileID: 439392, guid: bbfe5dac5bc793b4680f6f6759f9749e, type: 2}
+    - target: {fileID: 0}
+      propertyPath: BulletPrefab
+      value: 
+      objectReference: {fileID: 152572, guid: 02f45f44112d63b4faacf163312cc143, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 191952}

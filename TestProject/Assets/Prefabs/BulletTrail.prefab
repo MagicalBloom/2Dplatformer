@@ -9,7 +9,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 434554}
   - 120: {fileID: 12073870}
-  - 114: {fileID: 11422750}
   m_Layer: 0
   m_Name: BulletTrail
   m_TagString: Untagged
@@ -29,19 +28,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11422750
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 132030}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d1509aa5843804997b73389a58dfa2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 230
-  trailDuration: 1
 --- !u!120 &12073870
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -68,7 +54,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: -1, y: 0, z: 0}
-  - {x: 5, y: 0, z: 1}
+  - {x: 5, y: 0, z: 0}
   m_Parameters:
     startWidth: .0799999982
     endWidth: .0799999982
@@ -113,6 +99,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Parameters.endWidth
       value: .0799999982
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Positions.Array.data[1].z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_UseWorldSpace
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
