@@ -6,8 +6,8 @@ public class Weapon : MonoBehaviour {
 	public float fireRate = 0;
 	public float Damage = 10;
 	public float Range = 100;
+	public float aimDelay;
 	public LayerMask whatToHit;
-	public GameObject crosshair;
 
 	public Transform BulletTrailPrefab;
 	public Transform MuzzleFlashPrefab;
@@ -15,6 +15,10 @@ public class Weapon : MonoBehaviour {
 	public Transform aimTestPrefab;
 	//float timeToSpawnEffect = 0;
 	//public float effectSpawnRate = 10;
+
+	//Need these to test healthbar
+	GameObject player;
+	PlayerHealth playerHealth;
 
 	float aimingComplete = 0;
 	float timeToFire = 0;
@@ -25,6 +29,10 @@ public class Weapon : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+		//Need these to test healthbar
+		player = GameObject.Find ("Player");
+		playerHealth = player.GetComponent <PlayerHealth> ();
+
 		firePoint = transform.FindChild ("FirePoint");
 		arm = GameObject.Find ("Player/Arm").transform;
 		if(firePoint == null){
@@ -38,10 +46,10 @@ public class Weapon : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(Input.GetMouseButton(0)){
-			if(aimingComplete < 1.5){
+			if(aimingComplete < aimDelay){
 				aimingComplete += Time.deltaTime;
-				Aim ();
-			} else if(aimingComplete > 1.5){
+				//Aim ();
+			} else if(aimingComplete > aimDelay){
 				Debug.Log("SHOOT");
 				aimingComplete = 0;
 				Shoot ();
@@ -80,6 +88,7 @@ public class Weapon : MonoBehaviour {
 
 		if(hit.collider != null){
 			Debug.Log ("We hit " + hit.collider.name + " and did " + Damage + " damage.");
+			playerHealth.playerTakeDamage(20);
 		}
 		
 		Vector3 hitPosition; // point where bullet collided with something
