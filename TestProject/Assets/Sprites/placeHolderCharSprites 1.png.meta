@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 1f48cddead78fb94fa65e7bd6a5eb6c2
-timeCreated: 1437589435
+timeCreated: 1437651823
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -61,7 +61,7 @@ TextureImporter:
         width: 45
         height: 91
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: player_crouch_sprite
       rect:
@@ -81,7 +81,7 @@ TextureImporter:
         width: 43
         height: 18
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: placeHolderCharSprites 1_3
       rect:
@@ -91,7 +91,7 @@ TextureImporter:
         width: 42
         height: 27
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

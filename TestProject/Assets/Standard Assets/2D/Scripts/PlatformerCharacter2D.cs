@@ -20,6 +20,9 @@ namespace UnityStandardAssets._2D
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
+		private float leftEdge;
+		private Vector3 playerPosition;
+
 		Transform playerGraphics;			// Reference to the graphics so we can change direction
 
 
@@ -83,6 +86,13 @@ namespace UnityStandardAssets._2D
 
                 // Move the character
                 m_Rigidbody2D.velocity = new Vector2(move*m_MaxSpeed, m_Rigidbody2D.velocity.y);
+
+				// Make it so the player can't go out from the camera view
+				leftEdge = Camera.main.ViewportToWorldPoint(new Vector3(0,0,(transform.position - Camera.main.transform.position).z)).x;
+				if(transform.position.x < leftEdge){
+					playerPosition = new Vector3 (Mathf.Clamp(transform.position.x, leftEdge, Mathf.Infinity), transform.position.y, transform.position.z);
+					transform.position = playerPosition;
+				}
 
                 // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !m_FacingRight)

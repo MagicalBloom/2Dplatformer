@@ -11,6 +11,10 @@ namespace UnityStandardAssets._2D
         public float lookAheadReturnSpeed = 0.5f;
         public float lookAheadMoveThreshold = 0.1f;
 
+		public float minYposition = 5f;
+		public float maxYposition = 5f;
+		private float minXposition = 0f;
+
         private float m_OffsetZ;
         private Vector3 m_LastTargetPosition;
         private Vector3 m_CurrentVelocity;
@@ -28,6 +32,10 @@ namespace UnityStandardAssets._2D
         // Update is called once per frame
         private void Update()
         {
+			// In case the player Gameobject is destroyed
+			if (target == null)
+				return;
+
             // only update lookahead pos if accelerating or changed direction
             float xMoveDelta = (target.position - m_LastTargetPosition).x;
 
@@ -44,6 +52,12 @@ namespace UnityStandardAssets._2D
 
             Vector3 aheadTargetPos = target.position + m_LookAheadPos + Vector3.forward*m_OffsetZ;
             Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref m_CurrentVelocity, damping);
+
+			// Lock camera on y-axis and keep it from going back along x-axis
+			if(minXposition < newPos.x){
+				minXposition = newPos.x;
+			}
+			newPos = new Vector3 (Mathf.Clamp(newPos.x, minXposition, Mathf.Infinity), Mathf.Clamp(newPos.y, minYposition, maxYposition), newPos.z);
 
             transform.position = newPos;
 

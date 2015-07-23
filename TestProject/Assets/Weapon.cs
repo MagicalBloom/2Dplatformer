@@ -3,10 +3,7 @@ using System.Collections;
 
 public class Weapon : MonoBehaviour {
 
-	public float fireRate = 0;
 	public float damage = 10;
-	public float range = 100;
-	public float bulletVelocity = 100;
 	public float aimDelay;
 	public LayerMask whatToHit;
 
@@ -15,22 +12,14 @@ public class Weapon : MonoBehaviour {
 	public Transform BulletHitPrefab;
 	public Transform aimTestPrefab;
 
-	//Need these to test healthbar
-	GameObject player;
-	PlayerHealth playerHealth;
-
+	float hitRange = 100;
 	float aimingComplete = 0;
 	Transform firePoint;
 	Transform arm;
 	Quaternion muzzleFlashRotation;
 
 
-	// Use this for initialization
 	void Awake () {
-		//Need these to test healthbar
-		player = GameObject.Find ("Player");
-		playerHealth = player.GetComponent <PlayerHealth> ();
-
 		firePoint = transform.FindChild ("FirePoint");
 		arm = GameObject.Find ("Player/Arm").transform;
 
@@ -42,7 +31,6 @@ public class Weapon : MonoBehaviour {
 		}
 	}
 
-	// Update is called once per frame
 	void Update () {
 		if(Input.GetMouseButton(0)){
 			// Do some sort of aim effect when holding the mouse button
@@ -86,27 +74,29 @@ public class Weapon : MonoBehaviour {
 		Vector2 mousePosition = new Vector2 (Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
 		Vector2 firePointPosition = new Vector2 (firePoint.position.x, firePoint.position.y);
 		// raycast is used to see when player hits something
-		RaycastHit2D hit = Physics2D.Raycast (firePointPosition, mousePosition-firePointPosition, range, whatToHit);
+		RaycastHit2D hit = Physics2D.Raycast (firePointPosition, mousePosition-firePointPosition, hitRange, whatToHit);
 
 		if(hit.collider != null){
 			// Logic after we hit something
 			Debug.Log ("We hit " + hit.collider.name + " and did " + damage + " damage.");
-			playerHealth.playerTakeDamage(20);
 		}
 		
 		Vector3 hitPosition; 
 		Vector3 hitNormal;
+		Collider2D collider;
 
 		if(hit.collider == null){
 			hitPosition = (mousePosition-firePointPosition)*30; // Get the mouse cursor direction and add some distance
 			hitPosition += firePoint.position;
 			hitNormal = new Vector3 (9999, 9999, 9999); // used for checking if bullet hit something in effect method... kinda bad solution but whatever
+			collider = null;
 		} else {
 			hitPosition = hit.point; // point where bullet collided with something
 			hitNormal = hit.normal; // normal vector of collided surface
+			collider = hit.collider; // for different hit collision effects based on collision
 		}
 		//Debug.DrawRay (firePointPosition, (mousePosition-firePointPosition)*30, Color.white, 1);
-		Effect (hitPosition, hitNormal);
+		Effect (hitPosition, hitNormal, collider);
 
 
 		/*
@@ -131,7 +121,7 @@ public class Weapon : MonoBehaviour {
 	}
 
 
-	void Effect(Vector3 hitPosition, Vector3 hitNormal){
+	void Effect(Vector3 hitPosition, Vector3 hitNormal, Collider2D collider){
 		// Bullet trail effect
 		// Basically we move pre-made bullet trail from one point to another
 		Transform trail = Instantiate (BulletTrailPrefab, firePoint.position, firePoint.rotation) as Transform;
