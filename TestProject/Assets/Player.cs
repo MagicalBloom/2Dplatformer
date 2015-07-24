@@ -20,44 +20,4 @@ public class Player : MonoBehaviour {
 			GameMaster.KillPlayer(this);
 		}
 	}
-	/*
-	public int maxHitPoints = 100;
-	public int currentHitPoints;
-
-	bool playerIsDead;
-	bool playerTookDamage;
-	
-	void Awake () {
-		currentHitPoints = maxHitPoints; // Starting hp
-		playerIsDead = false;
-	}
-
-	void Update () {
-		if(playerTookDamage){
-			// healthbar effect
-			Debug.Log("Current health: " + currentHitPoints);
-		} else {
-			// revert the effect back to normal
-		}
-
-		playerTookDamage = false;
-	}
-
-	public void playerTakeDamage(int incomingDamage){
-		playerTookDamage = true;
-		currentHitPoints -= incomingDamage;
-		Debug.Log ("You took " + incomingDamage + " damage");
-
-		if(currentHitPoints <= 0 && playerIsDead == false){
-			playerDied();
-		}
-	}
-
-	void playerDied(){
-		// animation and voice + whatnot
-		playerIsDead = true;
-		Debug.Log ("You died :(");
-		Application.LoadLevel(Application.loadedLevel); // Restart the level without any fancy shit
-	}
-	*/
 }

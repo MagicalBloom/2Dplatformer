@@ -43,6 +43,7 @@ GameObject:
   - 4: {fileID: 442716}
   - 212: {fileID: 21281808}
   - 114: {fileID: 11498368}
+  - 114: {fileID: 11497330}
   m_Layer: 0
   m_Name: Pistol
   m_TagString: Untagged
@@ -82,7 +83,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 111818}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -1.62920685e-07}
-  m_LocalPosition: {x: 56.9007339, y: -.00466704369, z: 0}
+  m_LocalPosition: {x: 20.1645546, y: .0812003613, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 442716}
@@ -119,6 +120,20 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 111818}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &11497330
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 161238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 513f78fe6157d3c439c844abeb49ecea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BulletTrailPrefab: {fileID: 434554, guid: e0d62f1fd06e34643ba5697c53d21642, type: 2}
+  MuzzleFlashPrefab: {fileID: 402830, guid: d69998fc853dc234d8e87aa105836d94, type: 2}
+  BulletHitPrefab: {fileID: 439392, guid: bbfe5dac5bc793b4680f6f6759f9749e, type: 2}
 --- !u!114 &11498368
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -130,16 +145,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc1a38f0eb264a49837bb3a585f3345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 0
-  Damage: 10
-  Range: 100
+  damage: 10
   aimDelay: 0
   whatToHit:
     serializedVersion: 2
     m_Bits: 4294967035
-  BulletTrailPrefab: {fileID: 434554, guid: e0d62f1fd06e34643ba5697c53d21642, type: 2}
-  MuzzleFlashPrefab: {fileID: 402830, guid: d69998fc853dc234d8e87aa105836d94, type: 2}
-  BulletHitPrefab: {fileID: 439392, guid: bbfe5dac5bc793b4680f6f6759f9749e, type: 2}
+  target: 0
   aimTestPrefab: {fileID: 0}
 --- !u!136 &13684014
 CapsuleCollider:

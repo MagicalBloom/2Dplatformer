@@ -141,6 +141,24 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
   m_PrefabInternal: {fileID: 2100340575}
+--- !u!1 &64315229 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 191952, guid: cb290795f86f7a04f8789d287ea6453c, type: 2}
+  m_PrefabInternal: {fileID: 229820302}
+--- !u!114 &64315230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 64315229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 513f78fe6157d3c439c844abeb49ecea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BulletTrailPrefab: {fileID: 434554, guid: e0d62f1fd06e34643ba5697c53d21642, type: 2}
+  MuzzleFlashPrefab: {fileID: 402830, guid: d69998fc853dc234d8e87aa105836d94, type: 2}
+  BulletHitPrefab: {fileID: 439392, guid: bbfe5dac5bc793b4680f6f6759f9749e, type: 2}
 --- !u!1001 &73824723
 Prefab:
   m_ObjectHideFlags: 0
@@ -697,6 +715,10 @@ Prefab:
       propertyPath: m_Name
       value: Platform16x01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: ba4eef1c1bb56b444b143beb8d3e30d5, type: 2}
+      propertyPath: m_TagString
+      value: hittable
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ba4eef1c1bb56b444b143beb8d3e30d5, type: 2}
   m_IsPrefabParent: 0
@@ -782,6 +804,10 @@ Prefab:
     - target: {fileID: 11409932, guid: cb290795f86f7a04f8789d287ea6453c, type: 2}
       propertyPath: bulletVelocity
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11409932, guid: cb290795f86f7a04f8789d287ea6453c, type: 2}
+      propertyPath: target
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cb290795f86f7a04f8789d287ea6453c, type: 2}
@@ -942,7 +968,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 107698, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_Name
@@ -989,8 +1015,8 @@ Transform:
   - {fileID: 962408288}
   - {fileID: 757989508}
   - {fileID: 1336236312}
-  - {fileID: 310306581}
   - {fileID: 1296839508}
+  - {fileID: 310306581}
   - {fileID: 63941412}
   - {fileID: 563111543}
   - {fileID: 1017563010}
@@ -2174,7 +2200,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 107698, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_Name
@@ -3171,7 +3197,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
-  m_StereoMirrorMode: 0
 --- !u!4 &2028623201
 Transform:
   m_ObjectHideFlags: 0
