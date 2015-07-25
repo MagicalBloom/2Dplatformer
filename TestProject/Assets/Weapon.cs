@@ -11,6 +11,7 @@ public class Weapon : MonoBehaviour {
 
 	public Transform aimTestPrefab;
 	WeaponEffects weaponEffects;
+	Transform crosshair;
 
 	Player player; //test
 	Enemy enemy;
@@ -26,6 +27,8 @@ public class Weapon : MonoBehaviour {
 		firePoint = transform.FindChild ("FirePoint");
 		arm = GameObject.Find ("Player/Arm").transform;
 		weaponEffects = GetComponent<WeaponEffects> ();
+		
+		//crosshair.GetComponent<SpriteRenderer>().enabled = false;
 
 		if(firePoint == null){
 			Debug.LogError ("No 'firePoint' object found.");
@@ -40,12 +43,13 @@ public class Weapon : MonoBehaviour {
 
 	void Update () {
 		// Check which aiming mode is selected and do stuff accordingly
+		//aimTestPrefab.FindChild ("bullet").GetComponent<SpriteRenderer> ().enabled = false;
 		if(target == aimTowards.mouse){
 			if(Input.GetMouseButton(0)){
 				// Do some sort of aim effect when holding the mouse button
 				if(aimingComplete < aimDelay){
 					aimingComplete += Time.deltaTime;
-					//Aim ();
+					Aim ();
 				// Shoot after the mouse button is held down for required time
 				} else if(aimingComplete > aimDelay){
 					// Get mouse position from screen and convert that position to the game world + get the position of fire point
@@ -78,6 +82,7 @@ public class Weapon : MonoBehaviour {
 
 
 	void Aim(){
+		/*
 		// Get mouse position from screen and convert that position to the game world
 		Vector2 mousePosition = new Vector2 (Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
 		Vector2 firePointPosition = new Vector2 (firePoint.position.x, firePoint.position.y);
@@ -93,6 +98,21 @@ public class Weapon : MonoBehaviour {
 			linerenderer.SetPosition(1, mousePosition);
 		}
 		Destroy (line.gameObject, 0.04f);
+		*/
+
+		//Vector2 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+		//aimTestPrefab.FindChild ("bullet").GetComponent<SpriteRenderer> ().enabled = true;
+		//aimTestPrefab.position = mousePosition;
+
+		if (GameObject.Find ("Crosshair") != null) {
+			Vector3 firePosition = Camera.main.WorldToScreenPoint (firePoint.position);
+			Vector3 direction = (Input.mousePosition - firePosition).normalized;
+			
+			Quaternion crosshairRotation = Quaternion.Euler (-firePoint.rotation.eulerAngles.z, 90, 0f);
+
+			//Crosshair
+		}
+		
 	}
 
 

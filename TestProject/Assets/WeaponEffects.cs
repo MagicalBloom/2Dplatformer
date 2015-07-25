@@ -34,9 +34,12 @@ public class WeaponEffects : MonoBehaviour {
 
 	public void BulletHit(Vector3 hitDirection ,Vector3 hitPosition, Vector3 hitNormal, Collider2D collider){
 		if(collider.CompareTag("enemy")){
-			//asd
+			// Instantiate the bloodsplater to the opposite direction of the hit
+			Transform bloodParticle = Instantiate (BloodSplatterPrefab, hitPosition, Quaternion.FromToRotation (Vector3.back, -hitDirection)) as Transform;
+			Destroy (bloodParticle.gameObject, 1.0f);
 		}
-		else if(collider != null){ //hitNormal != new Vector3(9999, 9999, 9999
+		else if(collider != null){
+			// Instantiate the bullet hit effect
 			Transform hitParticle = Instantiate (BulletHitPrefab, hitPosition, Quaternion.Inverse(Quaternion.FromToRotation (Vector3.back, hitNormal))) as Transform;
 			//Transform hitParticle = Instantiate (BulletHitPrefab, hitPosition, Quaternion.Euler(Vector3.Reflect(hitDirection, hitNormal).x*-1, 90f, 0f)) as Transform;
 			Destroy (hitParticle.gameObject, 1.0f);
