@@ -6,6 +6,7 @@ public class WeaponEffects : MonoBehaviour {
 	public Transform BulletTrailPrefab;
 	public Transform MuzzleFlashPrefab;
 	public Transform BulletHitPrefab;
+	public Transform BloodSplatterPrefab;
 
 	Transform firePoint;
 	Quaternion muzzleFlashRotation;
@@ -32,7 +33,10 @@ public class WeaponEffects : MonoBehaviour {
 	}
 
 	public void BulletHit(Vector3 hitDirection ,Vector3 hitPosition, Vector3 hitNormal, Collider2D collider){
-		if(collider != null){ //hitNormal != new Vector3(9999, 9999, 9999
+		if(collider.CompareTag("enemy")){
+			//asd
+		}
+		else if(collider != null){ //hitNormal != new Vector3(9999, 9999, 9999
 			Transform hitParticle = Instantiate (BulletHitPrefab, hitPosition, Quaternion.Inverse(Quaternion.FromToRotation (Vector3.back, hitNormal))) as Transform;
 			//Transform hitParticle = Instantiate (BulletHitPrefab, hitPosition, Quaternion.Euler(Vector3.Reflect(hitDirection, hitNormal).x*-1, 90f, 0f)) as Transform;
 			Destroy (hitParticle.gameObject, 1.0f);

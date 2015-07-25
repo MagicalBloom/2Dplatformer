@@ -13,6 +13,7 @@ public class Weapon : MonoBehaviour {
 	WeaponEffects weaponEffects;
 
 	Player player; //test
+	Enemy enemy;
 
 	float hitRange = 100;
 	float aimingComplete = 0;
@@ -114,7 +115,7 @@ public class Weapon : MonoBehaviour {
 			collider = hit.collider; // for different hit collision effects based on collision
 
 			if(hit.collider.tag == "enemy") {
-				//do something
+				hit.collider.GetComponent<Enemy>().DamageEnemy(damage);
 			} else if(hit.collider.tag == "hittable") {
 				player.DamagePlayer(damage); //test
 			} else if(hit.collider.tag == "player") {
