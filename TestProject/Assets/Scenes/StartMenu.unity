@@ -133,6 +133,7 @@ MonoBehaviour:
   m_SubmitButton: Submit
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
+  m_RepeatDelay: .5
   m_AllowActivationOnMobileDevice: 0
 --- !u!114 &33299456
 MonoBehaviour:
@@ -207,9 +208,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: .0181818008, a: 1}
+  m_Color: {r: .894117653, g: .894117653, b: .894117653, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 42d1f9410cdf81747a6cae12f9d3c471, type: 3}
+    m_Font: {fileID: 12800000, guid: 06808336da203964eab2c901e4df2784, type: 3}
     m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
@@ -247,7 +248,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 1, g: 0, b: .847058833, a: 1}
+    m_HighlightedColor: {r: .705882311, g: .0934256017, b: .0934256017, a: 1}
     m_PressedColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
     m_DisabledColor: {r: .784313738, g: .784313738, b: .784313738, a: .501960814}
     m_ColorMultiplier: 1
@@ -351,6 +352,7 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
+  m_StereoMirrorMode: 0
 --- !u!4 &299321076
 Transform:
   m_ObjectHideFlags: 0
@@ -393,9 +395,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: .110294104, b: .183925182, a: 1}
+  m_Color: {r: .897058845, g: .897058845, b: .897058845, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 42d1f9410cdf81747a6cae12f9d3c471, type: 3}
+    m_Font: {fileID: 12800000, guid: 06808336da203964eab2c901e4df2784, type: 3}
     m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
@@ -406,7 +408,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The Shootter
+  m_Text: 'Insert Game Name
+
+'
 --- !u!222 &486307461
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -425,18 +429,18 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1358372409}
   m_RootOrder: 1
-  m_AnchorMin: {x: .5, y: .5}
-  m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 100, y: 170}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 100, y: -50}
   m_SizeDelta: {x: 528, y: 92}
-  m_Pivot: {x: .5, y: .5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &486307463
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 486307459}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
@@ -608,7 +612,6 @@ GameObject:
   - 224: {fileID: 1080566758}
   - 222: {fileID: 1080566760}
   - 114: {fileID: 1080566759}
-  - 114: {fileID: 1080566762}
   - 114: {fileID: 1080566761}
   m_Layer: 5
   m_Name: Start
@@ -646,9 +649,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: .0206899643, a: 1}
+  m_Color: {r: .894117653, g: .894117653, b: .894117653, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 42d1f9410cdf81747a6cae12f9d3c471, type: 3}
+    m_Font: {fileID: 12800000, guid: 06808336da203964eab2c901e4df2784, type: 3}
     m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
@@ -686,7 +689,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 1, g: 0, b: .848275661, a: 1}
+    m_HighlightedColor: {r: .701960802, g: .0901960805, b: .0901960805, a: 1}
     m_PressedColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
     m_DisabledColor: {r: .784313738, g: .784313738, b: .784313738, a: .501960814}
     m_ColorMultiplier: 1
@@ -718,20 +721,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &1080566762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1080566757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 0, b: 0, a: .5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!1 &1104948328
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,9 +768,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: .609000027}
+  m_Color: {r: .894117653, g: .894117653, b: .894117653, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 42d1f9410cdf81747a6cae12f9d3c471, type: 3}
+    m_Font: {fileID: 12800000, guid: 06808336da203964eab2c901e4df2784, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
@@ -819,7 +808,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: .960784316, g: .960784316, b: .960784316, a: 1}
+    m_HighlightedColor: {r: .701960802, g: .0901960805, b: .0901960805, a: 1}
     m_PressedColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
     m_DisabledColor: {r: .784313738, g: .784313738, b: .784313738, a: .501960814}
     m_ColorMultiplier: 1
@@ -898,9 +887,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: .652999997}
+  m_Color: {r: .894117653, g: .894117653, b: .894117653, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 42d1f9410cdf81747a6cae12f9d3c471, type: 3}
+    m_Font: {fileID: 12800000, guid: 06808336da203964eab2c901e4df2784, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
@@ -938,7 +927,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: .960784316, g: .960784316, b: .960784316, a: 1}
+    m_HighlightedColor: {r: .701960802, g: .0901960805, b: .0901960805, a: 1}
     m_PressedColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
     m_DisabledColor: {r: .784313738, g: .784313738, b: .784313738, a: .501960814}
     m_ColorMultiplier: 1
@@ -1107,9 +1096,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: .894117653, g: .894117653, b: .894117653, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 42d1f9410cdf81747a6cae12f9d3c471, type: 3}
+    m_Font: {fileID: 12800000, guid: 06808336da203964eab2c901e4df2784, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
@@ -1141,7 +1130,7 @@ RectTransform:
   m_RootOrder: 3
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 0, y: 35}
+  m_AnchoredPosition: {x: 0, y: 25}
   m_SizeDelta: {x: 300, y: 30}
   m_Pivot: {x: .5, y: .5}
 --- !u!1 &2073784973

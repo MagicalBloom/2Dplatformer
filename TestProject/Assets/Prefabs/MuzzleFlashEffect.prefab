@@ -248,7 +248,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     type: 7
-    radius: .100000001
+    radius: .00999999978
     angle: 4
     length: 5
     boxX: 1
@@ -294,7 +294,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
       minMaxState: 0
-    cnt0: 20
+    cnt0: 25
     cnt1: 30
     cnt2: 30
     cnt3: 30
@@ -1161,8 +1161,16 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: EmissionModule.cnt0
-      value: 20
+      value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ShapeModule.radius
+      value: .00999999978
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9f3080141f1f64197825663e067f94f8, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 137960}

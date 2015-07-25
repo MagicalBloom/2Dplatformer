@@ -31,9 +31,10 @@ public class WeaponEffects : MonoBehaviour {
 		Destroy (trail.gameObject, 0.04f);
 	}
 
-	public void BulletHit(Vector3 hitPosition, Vector3 hitNormal, Collider2D collider){
+	public void BulletHit(Vector3 hitDirection ,Vector3 hitPosition, Vector3 hitNormal, Collider2D collider){
 		if(collider != null){ //hitNormal != new Vector3(9999, 9999, 9999
-			Transform hitParticle = Instantiate (BulletHitPrefab, hitPosition, Quaternion.FromToRotation (Vector3.right, hitNormal)) as Transform;
+			Transform hitParticle = Instantiate (BulletHitPrefab, hitPosition, Quaternion.Inverse(Quaternion.FromToRotation (Vector3.back, hitNormal))) as Transform;
+			//Transform hitParticle = Instantiate (BulletHitPrefab, hitPosition, Quaternion.Euler(Vector3.Reflect(hitDirection, hitNormal).x*-1, 90f, 0f)) as Transform;
 			Destroy (hitParticle.gameObject, 1.0f);
 		}
 	}

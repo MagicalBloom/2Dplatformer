@@ -5,18 +5,33 @@ public class Player : MonoBehaviour {
 
 	[System.Serializable]
 	public class PlayerStats{
-		public int health = 100;
-		//jump height
-		//runspeed
-		//something like that
+		public int maxHealth = 100;
+		private int curHealth;
+
+		public int CurHealth{
+			get { return curHealth; }
+			set { curHealth = Mathf.Clamp(value, 0, maxHealth);}
+		}
+
+		public void Init(){
+			curHealth = maxHealth;
+		}
+
 	}
 
-	public PlayerStats playerStats = new PlayerStats ();
+	public PlayerStats playerStats = new PlayerStats();
+	//GameMaster gameMaster;
+
+	void Start(){
+		playerStats.Init ();
+		//gameMaster = GameObject.Find("GM").GetComponent<GameMaster>();
+	}
 
 	public void DamagePlayer(int damage){
-		playerStats.health -= damage;
+		playerStats.CurHealth -= damage;
 
-		if(playerStats.health <= 0){
+		GameMaster.UpdatePlayerHealthbar (playerStats.CurHealth);
+		if(playerStats.CurHealth <= 0){
 			GameMaster.KillPlayer(this);
 		}
 	}

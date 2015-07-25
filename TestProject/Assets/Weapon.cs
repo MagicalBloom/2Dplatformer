@@ -4,7 +4,7 @@ using System.Collections;
 public class Weapon : MonoBehaviour {
 	public enum aimTowards {mouse, player};
 
-	public float damage = 10;
+	public int damage = 10;
 	public float aimDelay;
 	public LayerMask whatToHit;
 	public aimTowards target;
@@ -38,6 +38,7 @@ public class Weapon : MonoBehaviour {
 	}
 
 	void Update () {
+		// Check which aiming mode is selected and do stuff accordingly
 		if(target == aimTowards.mouse){
 			if(Input.GetMouseButton(0)){
 				// Do some sort of aim effect when holding the mouse button
@@ -46,9 +47,24 @@ public class Weapon : MonoBehaviour {
 					//Aim ();
 				// Shoot after the mouse button is held down for required time
 				} else if(aimingComplete > aimDelay){
+					// Get mouse position from screen and convert that position to the game world + get the position of fire point
+					Vector2 mousePosition = new Vector2 (Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+					Vector2 firePointPosition = new Vector2 (firePoint.position.x, firePoint.position.y);
+
+					//Randomize aim
+					/*
+					float minValX = mousePosition.x - 0.2f;
+					float maxValX = mousePosition.x + 0.2f;
+					float minValY = mousePosition.y - 0.2f;
+					float maxValY = mousePosition.y + 0.2f;
+
+					mousePosition.x = Random.Range(minValX,maxValX);
+					mousePosition.y = Random.Range(minValY,maxValY);
+					*/
+
 					Debug.Log("SHOOT");
 					aimingComplete = 0;
-					Shoot ();
+					Shoot (mousePosition, firePointPosition);
 				}
 			}
 			else if(Input.GetMouseButtonUp(0)) {
@@ -79,21 +95,20 @@ public class Weapon : MonoBehaviour {
 	}
 
 
-	void Shoot(){
+	void Shoot(Vector2 aimPosition, Vector2 firePointPosition){
+		Vector3 hitDirection;
 		Vector3 hitPosition; 
 		Vector3 hitNormal;
 		Collider2D collider;
-
-		// Get mouse position from screen and convert that position to the game world
-		Vector2 mousePosition = new Vector2 (Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
-		Vector2 firePointPosition = new Vector2 (firePoint.position.x, firePoint.position.y);
+		
 		// raycast is used to see when player hits something
-		RaycastHit2D hit = Physics2D.Raycast (firePointPosition, mousePosition-firePointPosition, hitRange, whatToHit);
+		RaycastHit2D hit = Physics2D.Raycast (firePointPosition, aimPosition-firePointPosition, hitRange, whatToHit);
 
 		if (hit.collider != null) {
 			// Logic after we hit something
 			Debug.Log ("We hit " + hit.collider.name + " and did " + damage + " damage.");
 
+			hitDirection = aimPosition-firePointPosition; // direction of the bullet
 			hitPosition = hit.point; // point where bullet collided with something
 			hitNormal = hit.normal; // normal vector of collided surface
 			collider = hit.collider; // for different hit collision effects based on collision
@@ -101,15 +116,17 @@ public class Weapon : MonoBehaviour {
 			if(hit.collider.tag == "enemy") {
 				//do something
 			} else if(hit.collider.tag == "hittable") {
-				player.DamagePlayer(50); //test
+				player.DamagePlayer(damage); //test
+			} else if(hit.collider.tag == "player") {
+				// do damage to the player
 			} else{
 				//do something
 			}
 
 			weaponEffects.BulletTrail(hitPosition);
-			weaponEffects.BulletHit(hitPosition, hitNormal, collider);
+			weaponEffects.BulletHit(hitDirection ,hitPosition, hitNormal, collider);
 		} else {
-			hitPosition = (mousePosition-firePointPosition)*30; // Get the mouse cursor direction and add some distance
+			hitPosition = (aimPosition-firePointPosition)*30; // Get the mouse cursor direction and add some distance
 			hitPosition += firePoint.position;
 			hitNormal = new Vector3 (9999, 9999, 9999); // used for checking if bullet hit something in effect method... kinda bad solution but whatever
 			collider = null;
