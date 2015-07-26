@@ -16,7 +16,6 @@ public class GameMaster : MonoBehaviour {
 	Slider PlayerHealthbarSlider;
 
 	public void Start(){
-		
 		// Set cursor with a slight delay
 		Invoke ("SetCustomCursor", 0.1f);
 

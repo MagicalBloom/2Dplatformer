@@ -13,7 +13,6 @@ public class Weapon : MonoBehaviour {
 	WeaponEffects weaponEffects;
 	GameObject crosshair;
 
-	float playerDistance;
 	Player player; //test
 	Enemy enemy;
 
@@ -46,9 +45,20 @@ public class Weapon : MonoBehaviour {
 
 	void Update () {
 		// Check which aiming mode is selected and do stuff accordingly
-		//if (Input.GetKeyDown(KeyCode.Space))
-		//	Debug.Log ("asdasdasd");
 		if (target == aimTowards.mouse) {
+			if(shootComplete > aimDelay) {
+				if (Input.GetMouseButtonDown (0)) {
+					Vector2 mousePosition = new Vector2 (Camera.main.ScreenToWorldPoint (Input.mousePosition).x, Camera.main.ScreenToWorldPoint (Input.mousePosition).y);
+					Vector2 firePointPosition = new Vector2 (firePoint.position.x, firePoint.position.y);
+					//Debug.Log(firePoint.parent.parent.TransformVector(firePoint.forward)); //.InverseTransformDirection(transform.forward)
+
+					Shoot (mousePosition, firePointPosition);
+					shootComplete = 0;
+				} 
+			} else if (shootComplete < aimDelay) {
+				shootComplete += Time.deltaTime;
+			}
+			/*
 			if (Input.GetMouseButton (0)) {
 				// Do some sort of aim effect when holding the mouse button
 				if (aimingComplete < aimDelay) {
@@ -61,7 +71,7 @@ public class Weapon : MonoBehaviour {
 					Vector2 firePointPosition = new Vector2 (firePoint.position.x, firePoint.position.y);
 
 					//Randomize aim
-					/*
+
 					float minValX = mousePosition.x - 0.2f;
 					float maxValX = mousePosition.x + 0.2f;
 					float minValY = mousePosition.y - 0.2f;
@@ -69,7 +79,7 @@ public class Weapon : MonoBehaviour {
 
 					mousePosition.x = Random.Range(minValX,maxValX);
 					mousePosition.y = Random.Range(minValY,maxValY);
-					*/
+
 
 					Debug.Log ("SHOOT");
 					aimingComplete = 0;
@@ -82,15 +92,19 @@ public class Weapon : MonoBehaviour {
 				aimingComplete = 0; // Reset the timer for aiming
 				crosshair.GetComponent<SpriteRenderer> ().enabled = false; // hide crosshair
 			}
+			*/
 		} else if (target == aimTowards.player) {
-			//Enemy aiming logic... this might not work but I'll leave it here anyway
-			playerDistance = Vector3.Distance (player.transform.position, transform.position);
+
+			// booleans for checking if enemy or player is on camera
+			bool playerVisible = player.transform.FindChild("Graphics").GetComponent<SpriteRenderer>().isVisible;
+			bool enemyVisible = this.transform.GetComponent<SpriteRenderer>().isVisible;
 
 			// Check if player is close enough to start aiming
-			if (playerDistance < 20.0f) { //playerDistance < 20.0f
+			if (playerVisible && enemyVisible) { //playerDistance < 20.0f
+
 				if (shootComplete < aimDelay) {
 					shootComplete += Time.deltaTime;
-				} else if (shootComplete > aimDelay) {
+				} else { //if (shootComplete > aimDelay)
 					shootComplete = 0;
 					Debug.Log ("ENEMY SHOOT");
 					Vector3 playerPosition = new Vector3(player.transform.position.x + player.GetComponent<BoxCollider2D>().offset.x, 
@@ -177,7 +191,7 @@ public class Weapon : MonoBehaviour {
 
 		if (hit.collider != null) {
 			// Logic after we hit something
-			Debug.Log ("We hit " + hit.collider.name + " and did " + damage + " damage.");
+			Debug.Log ("Hit " + hit.collider.name + " and did " + damage + " damage.");
 
 			hitDirection = aimPosition-firePointPosition; // direction of the bullet
 			hitPosition = hit.point; // point where bullet collided with something

@@ -25,6 +25,7 @@ GameObject:
   - 4: {fileID: 469534}
   - 212: {fileID: 21258180}
   - 114: {fileID: 11409932}
+  - 114: {fileID: 11426998}
   m_Layer: 0
   m_Name: Pistol
   m_TagString: Untagged
@@ -68,18 +69,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc1a38f0eb264a49837bb3a585f3345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 0
   damage: 10
-  range: 100
-  bulletVelocity: 100
-  aimDelay: 0
+  aimDelay: 1
   whatToHit:
     serializedVersion: 2
     m_Bits: 4294967035
+  target: 0
+  aimTestPrefab: {fileID: 0}
+--- !u!114 &11426998
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 191952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 513f78fe6157d3c439c844abeb49ecea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   BulletTrailPrefab: {fileID: 434554, guid: e0d62f1fd06e34643ba5697c53d21642, type: 2}
   MuzzleFlashPrefab: {fileID: 402830, guid: d69998fc853dc234d8e87aa105836d94, type: 2}
   BulletHitPrefab: {fileID: 439392, guid: bbfe5dac5bc793b4680f6f6759f9749e, type: 2}
-  aimTestPrefab: {fileID: 0}
+  BloodSplatterPrefab: {fileID: 498942, guid: 1b71d3cb884a4594592f7d40f2cc573f, type: 2}
 --- !u!212 &21258180
 SpriteRenderer:
   m_ObjectHideFlags: 1

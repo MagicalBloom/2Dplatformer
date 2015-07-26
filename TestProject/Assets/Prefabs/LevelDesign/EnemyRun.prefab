@@ -12,7 +12,7 @@ GameObject:
   - 23: {fileID: 2311752}
   - 114: {fileID: 11404630}
   - 61: {fileID: 6118912}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: EnemyRun
   m_TagString: enemy
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ GameObject:
   - 212: {fileID: 21254188}
   - 114: {fileID: 11403376}
   - 114: {fileID: 11402380}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 484294}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ MonoBehaviour:
   BulletTrailPrefab: {fileID: 434554, guid: e0d62f1fd06e34643ba5697c53d21642, type: 2}
   MuzzleFlashPrefab: {fileID: 402830, guid: d69998fc853dc234d8e87aa105836d94, type: 2}
   BulletHitPrefab: {fileID: 439392, guid: bbfe5dac5bc793b4680f6f6759f9749e, type: 2}
-  BloodSplatterPrefab: {fileID: 0}
+  BloodSplatterPrefab: {fileID: 498942, guid: 1b71d3cb884a4594592f7d40f2cc573f, type: 2}
 --- !u!114 &11403376
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -160,12 +160,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc1a38f0eb264a49837bb3a585f3345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  aimDelay: 0
+  damage: 20
+  aimDelay: 2
   whatToHit:
     serializedVersion: 2
-    m_Bits: 4294967035
-  target: 0
+    m_Bits: 4294964219
+  target: 1
   aimTestPrefab: {fileID: 0}
 --- !u!114 &11404630
 MonoBehaviour:
@@ -224,6 +224,30 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_TagString
       value: enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: aimDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: target
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: whatToHit.m_Bits
+      value: 4294964219
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: damage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: BloodSplatterPrefab
+      value: 
+      objectReference: {fileID: 498942, guid: 1b71d3cb884a4594592f7d40f2cc573f, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
