@@ -12,9 +12,14 @@ public class GameMaster : MonoBehaviour {
 	public GameObject ExitMenu;
 	public GameObject OptionsMenu;
 	public GameObject PlayerHealthbar;
+	public Texture2D CustomCursor;
 	Slider PlayerHealthbarSlider;
 
 	public void Start(){
+		
+		// Set cursor with a slight delay
+		Invoke ("SetCustomCursor", 0.1f);
+
 		if(gm == null){
 			gm = GameObject.Find("GM").GetComponent<GameMaster>();
 		}
@@ -27,6 +32,12 @@ public class GameMaster : MonoBehaviour {
 			Time.timeScale = 0; // This is probably a bad idea but it will do for now
 			PauseMenu.SetActive(true); // Need to do toggle
 		}
+	}
+
+	// Set custom cursor
+	public void SetCustomCursor(){
+		Cursor.SetCursor (CustomCursor, Vector2.zero, CursorMode.Auto);
+		Debug.Log ("Custom cursor has been set");
 	}
 
 	// Restart current scene
@@ -80,5 +91,5 @@ public class GameMaster : MonoBehaviour {
 
 	public static void KillEnemy(Enemy enemy){
 		Destroy (enemy.gameObject); // just delete the enemy for now
-	}
+	}	
 }

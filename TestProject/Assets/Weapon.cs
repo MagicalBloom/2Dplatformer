@@ -11,7 +11,7 @@ public class Weapon : MonoBehaviour {
 
 	public Transform aimTestPrefab;
 	WeaponEffects weaponEffects;
-	Transform crosshair;
+	GameObject crosshair;
 
 	Player player; //test
 	Enemy enemy;
@@ -27,8 +27,9 @@ public class Weapon : MonoBehaviour {
 		firePoint = transform.FindChild ("FirePoint");
 		arm = GameObject.Find ("Player/Arm").transform;
 		weaponEffects = GetComponent<WeaponEffects> ();
-		
-		//crosshair.GetComponent<SpriteRenderer>().enabled = false;
+
+		crosshair = GameObject.Find("Crosshair");
+		crosshair.GetComponent<SpriteRenderer>().enabled = false;
 
 		if(firePoint == null){
 			Debug.LogError ("No 'firePoint' object found.");
@@ -74,6 +75,7 @@ public class Weapon : MonoBehaviour {
 			}
 			else if(Input.GetMouseButtonUp(0)) {
 				aimingComplete = 0; // Reset the timer for aiming
+				crosshair.GetComponent<SpriteRenderer>().enabled = false; // hide crosshair
 			}
 		} else if(target == aimTowards.player){
 			//Enemy aiming logic... this might not work but I'll leave it here anyway
@@ -105,12 +107,42 @@ public class Weapon : MonoBehaviour {
 		//aimTestPrefab.position = mousePosition;
 
 		if (GameObject.Find ("Crosshair") != null) {
-			Vector3 firePosition = Camera.main.WorldToScreenPoint (firePoint.position);
-			Vector3 direction = (Input.mousePosition - firePosition).normalized;
-			
-			Quaternion crosshairRotation = Quaternion.Euler (-firePoint.rotation.eulerAngles.z, 90, 0f);
+			crosshair.GetComponent<SpriteRenderer>().enabled = true;
+			Quaternion crosshairRotation = Quaternion.Euler (0f, 0f, firePoint.rotation.eulerAngles.z);
+			crosshair.transform.position = firePoint.position;    //new Vector3(arm.position.x, arm.position.y + 0.19f, 0f);
+			//crosshair.transform.rotation = crosshairRotation;
 
-			//Crosshair
+			//rotation
+			Vector3 mousePos = Input.mousePosition;
+			mousePos.z = 5.23f;
+			
+			Vector3 objectPos = Camera.main.WorldToScreenPoint (firePoint.position);
+			mousePos.x = mousePos.x - objectPos.x;
+			mousePos.y = mousePos.y - objectPos.y;
+			
+			float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+			crosshair.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+			/*
+			Debug.Log ("AIM");
+			Vector2 mousePosition = new Vector2 (Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+			Vector2 firePointPosition = new Vector2 (firePoint.position.x, firePoint.position.y);
+			Vector3 direction; 
+			direction = mousePosition - firePointPosition;
+			direction += firePoint.position;//.normalized;
+			
+			Quaternion crosshairRotation = Quaternion.Euler (0f, 0f, firePoint.rotation.eulerAngles.z);
+
+			LineRenderer linerenderer = crosshair.GetComponent<LineRenderer> ();
+			
+			if(linerenderer != null){
+				linerenderer.SetPosition(0, firePoint.position);
+				linerenderer.SetPosition(1, direction);
+			}
+			//crosshair.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0f);
+			//crosshair.transform.position = new Vector3(firePoint.position.x, firePoint.position.y, 0f);
+			//crosshair.transform.rotation = firePoint.rotation;
+			*/
 		}
 		
 	}
