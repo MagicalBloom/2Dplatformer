@@ -499,6 +499,18 @@ Prefab:
       propertyPath: m_Name
       value: EnemyStat 4
       objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: target
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: aimDelay
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
   m_IsPrefabParent: 0
@@ -506,52 +518,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 451372, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
   m_PrefabInternal: {fileID: 99189850}
---- !u!1001 &178270184
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 361378249}
-    m_Modifications:
-    - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 1.50831604
-      objectReference: {fileID: 0}
-    - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -3.13959479
-      objectReference: {fileID: 0}
-    - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
-  m_IsPrefabParent: 0
---- !u!4 &178270185 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
-  m_PrefabInternal: {fileID: 178270184}
 --- !u!1 &179122300
 GameObject:
   m_ObjectHideFlags: 0
@@ -1082,7 +1048,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11409932, guid: cb290795f86f7a04f8789d287ea6453c, type: 2}
       propertyPath: aimDelay
-      value: 1
+      value: .100000001
       objectReference: {fileID: 0}
     - target: {fileID: 11409932, guid: cb290795f86f7a04f8789d287ea6453c, type: 2}
       propertyPath: BulletPrefab
@@ -1095,6 +1061,10 @@ Prefab:
     - target: {fileID: 11409932, guid: cb290795f86f7a04f8789d287ea6453c, type: 2}
       propertyPath: target
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11409932, guid: cb290795f86f7a04f8789d287ea6453c, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 4294967035
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cb290795f86f7a04f8789d287ea6453c, type: 2}
@@ -1141,6 +1111,14 @@ Prefab:
     - target: {fileID: 107698, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_Name
       value: EnemyRun 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: target
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
@@ -1219,6 +1197,18 @@ Prefab:
       propertyPath: target
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: aimDelay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11448470, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: BloodSplatterPrefab
+      value: 
+      objectReference: {fileID: 498942, guid: 1b71d3cb884a4594592f7d40f2cc573f, type: 2}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
@@ -1264,7 +1254,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 107698, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_Name
@@ -1273,6 +1263,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: target
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
@@ -1311,7 +1309,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1515344841}
-  - {fileID: 178270185}
   - {fileID: 962408288}
   - {fileID: 757989508}
   - {fileID: 1336236312}
@@ -1670,6 +1667,18 @@ Prefab:
       propertyPath: m_Name
       value: EnemyStat 11
       objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: target
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: aimDelay
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
   m_IsPrefabParent: 0
@@ -1719,6 +1728,18 @@ Prefab:
     - target: {fileID: 173838, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
       propertyPath: m_Name
       value: EnemyStat 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: target
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: aimDelay
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
@@ -2543,7 +2564,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 107698, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_Name
@@ -2552,6 +2573,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: target
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
@@ -2926,7 +2955,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 107698, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_Name
@@ -2935,6 +2964,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: target
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
@@ -2985,6 +3022,18 @@ Prefab:
     - target: {fileID: 173838, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
       propertyPath: m_Name
       value: EnemyStat 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: target
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: aimDelay
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
@@ -3236,6 +3285,18 @@ Prefab:
       propertyPath: m_Name
       value: EnemyStat 10
       objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: target
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: aimDelay
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
   m_IsPrefabParent: 0
@@ -3281,6 +3342,18 @@ Prefab:
     - target: {fileID: 173838, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
       propertyPath: m_Name
       value: EnemyStat 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: target
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: aimDelay
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
@@ -3511,6 +3584,18 @@ Prefab:
       propertyPath: m_Name
       value: EnemyStat 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: target
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: aimDelay
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
   m_IsPrefabParent: 0
@@ -3555,11 +3640,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 107698, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_Name
       value: EnemyRun 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: target
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
@@ -3658,7 +3751,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 107698, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_Name
@@ -3667,6 +3760,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: target
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
@@ -4307,11 +4408,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 107698, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_Name
       value: EnemyRun 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: target
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
@@ -4358,6 +4467,18 @@ Prefab:
     - target: {fileID: 173838, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
       propertyPath: m_Name
       value: EnemyStat 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: target
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: aimDelay
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
@@ -4745,11 +4866,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 107698, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_Name
       value: EnemyRun 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: target
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
@@ -4827,6 +4956,18 @@ Prefab:
       propertyPath: m_Name
       value: EnemyStat 8
       objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: target
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: aimDelay
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
   m_IsPrefabParent: 0
@@ -4880,6 +5021,18 @@ Prefab:
     - target: {fileID: 173838, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
       propertyPath: m_Name
       value: EnemyStat 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: target
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: aimDelay
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
@@ -5072,6 +5225,18 @@ Prefab:
       propertyPath: m_Name
       value: EnemyStat 6
       objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: target
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11454082, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
+      propertyPath: aimDelay
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1d95f30171e16dc4dbdd265b7240eea1, type: 2}
   m_IsPrefabParent: 0
@@ -5166,11 +5331,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 416248, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 107698, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
       propertyPath: m_Name
       value: EnemyRun 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: whatToHit.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403376, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}
+      propertyPath: target
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11b44a63a01b8d241914d5cd0c3bb0e6, type: 2}

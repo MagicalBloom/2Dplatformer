@@ -13,14 +13,17 @@ public class Weapon : MonoBehaviour {
 	WeaponEffects weaponEffects;
 	Transform crosshair;
 
+	public float playerDistance;
 	Player player; //test
 	Enemy enemy;
 
 	float hitRange = 100;
 	float aimingComplete = 0;
+	float shootComplete;
 	Transform firePoint;
 	Transform arm;
 
+	
 
 	void Awake () {
 		player = GameObject.Find("Player").GetComponent<Player>(); //test
@@ -42,6 +45,22 @@ public class Weapon : MonoBehaviour {
 	}
 
 	void Update () {
+		playerDistance = Vector3.Distance (player.transform.position, transform.position);
+		if (target == aimTowards.player) {
+			if (playerDistance < 10.0f) { 			
+				if (shootComplete < aimDelay) {
+					shootComplete += Time.deltaTime;
+				} else if (shootComplete > aimDelay) {
+					shootComplete = 0;
+					Debug.Log ("SHOOT");
+					Shoot (player.transform.position, firePoint.position);
+				
+				} else if (target == aimTowards.player) {
+				} 
+				//Enemy aiming logic... this might not work but I'll leave it here anyway
+			}
+		}
+
 		// Check which aiming mode is selected and do stuff accordingly
 		//aimTestPrefab.FindChild ("bullet").GetComponent<SpriteRenderer> ().enabled = false;
 		if(target == aimTowards.mouse){
@@ -71,6 +90,9 @@ public class Weapon : MonoBehaviour {
 					aimingComplete = 0;
 					Shoot (mousePosition, firePointPosition);
 				}
+
+
+
 			}
 			else if(Input.GetMouseButtonUp(0)) {
 				aimingComplete = 0; // Reset the timer for aiming
@@ -79,7 +101,6 @@ public class Weapon : MonoBehaviour {
 			//Enemy aiming logic... this might not work but I'll leave it here anyway
 		}
 	}
-
 
 	void Aim(){
 		/*
