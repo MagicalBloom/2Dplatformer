@@ -47,6 +47,8 @@ public class Weapon : MonoBehaviour {
 
 	void Update () {
 		// Check which aiming mode is selected and do stuff accordingly
+		//if (Input.GetKeyDown(KeyCode.Space))
+		//	Debug.Log ("asdasdasd");
 		if (target == aimTowards.mouse) {
 			if (Input.GetMouseButton (0)) {
 				// Do some sort of aim effect when holding the mouse button
