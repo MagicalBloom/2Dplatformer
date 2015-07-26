@@ -23,7 +23,6 @@ public class Weapon : MonoBehaviour {
 	Transform firePoint;
 	Transform arm;
 
-	
 
 	void Awake () {
 		player = GameObject.Find("Player").GetComponent<Player>(); //test
@@ -54,7 +53,7 @@ public class Weapon : MonoBehaviour {
 				// Do some sort of aim effect when holding the mouse button
 				if (aimingComplete < aimDelay) {
 					aimingComplete += Time.deltaTime;
-					Aim ();
+					//Aim ();
 					// Shoot after the mouse button is held down for required time
 				} else if (aimingComplete > aimDelay) {
 					// Get mouse position from screen and convert that position to the game world + get the position of fire point
@@ -88,13 +87,17 @@ public class Weapon : MonoBehaviour {
 			playerDistance = Vector3.Distance (player.transform.position, transform.position);
 
 			// Check if player is close enough to start aiming
-			if (playerDistance < 20.0f) {
+			if (playerDistance < 20.0f) { //playerDistance < 20.0f
 				if (shootComplete < aimDelay) {
 					shootComplete += Time.deltaTime;
 				} else if (shootComplete > aimDelay) {
 					shootComplete = 0;
 					Debug.Log ("ENEMY SHOOT");
-					Shoot (player.transform.position, firePoint.position);
+					Vector3 playerPosition = new Vector3(player.transform.position.x + player.GetComponent<BoxCollider2D>().offset.x, 
+					                                     player.transform.position.y + player.GetComponent<BoxCollider2D>().offset.y,
+					                                     0f);
+					//Debug.DrawRay (firePoint.position, (playerPosition-firePoint.position)*30, Color.white, 1);
+					Shoot (playerPosition, firePoint.position);
 				}
 			}
 		}
@@ -125,9 +128,7 @@ public class Weapon : MonoBehaviour {
 
 		if (GameObject.Find ("Crosshair") != null) {
 			crosshair.GetComponent<SpriteRenderer>().enabled = true;
-			Quaternion crosshairRotation = Quaternion.Euler (0f, 0f, firePoint.rotation.eulerAngles.z);
 			crosshair.transform.position = firePoint.position;    //new Vector3(arm.position.x, arm.position.y + 0.19f, 0f);
-			//crosshair.transform.rotation = crosshairRotation;
 
 			//rotation
 			Vector3 mousePos = Input.mousePosition;
@@ -186,9 +187,9 @@ public class Weapon : MonoBehaviour {
 			if(hit.collider.tag == "enemy") {
 				hit.collider.GetComponent<Enemy>().DamageEnemy(damage);
 			} else if(hit.collider.tag == "hittable") {
-				player.DamagePlayer(damage); //test
-			} else if(hit.collider.tag == "player") {
-				// do damage to the player
+				 // wall
+			} else if(hit.collider.tag == "Player") {
+				player.DamagePlayer(damage);
 			} else{
 				//do something
 			}
