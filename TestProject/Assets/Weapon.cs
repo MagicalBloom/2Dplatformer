@@ -13,7 +13,7 @@ public class Weapon : MonoBehaviour {
 	WeaponEffects weaponEffects;
 	GameObject crosshair;
 
-	public float playerDistance;
+	float playerDistance;
 	Player player; //test
 	Enemy enemy;
 
@@ -46,34 +46,17 @@ public class Weapon : MonoBehaviour {
 	}
 
 	void Update () {
-		playerDistance = Vector3.Distance (player.transform.position, transform.position);
-		if (target == aimTowards.player) {
-			if (playerDistance < 10.0f) { 			
-				if (shootComplete < aimDelay) {
-					shootComplete += Time.deltaTime;
-				} else if (shootComplete > aimDelay) {
-					shootComplete = 0;
-					Debug.Log ("SHOOT");
-					Shoot (player.transform.position, firePoint.position);
-				
-				} else if (target == aimTowards.player) {
-				} 
-				//Enemy aiming logic... this might not work but I'll leave it here anyway
-			}
-		}
-
 		// Check which aiming mode is selected and do stuff accordingly
-		//aimTestPrefab.FindChild ("bullet").GetComponent<SpriteRenderer> ().enabled = false;
-		if(target == aimTowards.mouse){
-			if(Input.GetMouseButton(0)){
+		if (target == aimTowards.mouse) {
+			if (Input.GetMouseButton (0)) {
 				// Do some sort of aim effect when holding the mouse button
-				if(aimingComplete < aimDelay){
+				if (aimingComplete < aimDelay) {
 					aimingComplete += Time.deltaTime;
 					Aim ();
-				// Shoot after the mouse button is held down for required time
-				} else if(aimingComplete > aimDelay){
+					// Shoot after the mouse button is held down for required time
+				} else if (aimingComplete > aimDelay) {
 					// Get mouse position from screen and convert that position to the game world + get the position of fire point
-					Vector2 mousePosition = new Vector2 (Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+					Vector2 mousePosition = new Vector2 (Camera.main.ScreenToWorldPoint (Input.mousePosition).x, Camera.main.ScreenToWorldPoint (Input.mousePosition).y);
 					Vector2 firePointPosition = new Vector2 (firePoint.position.x, firePoint.position.y);
 
 					//Randomize aim
@@ -87,20 +70,31 @@ public class Weapon : MonoBehaviour {
 					mousePosition.y = Random.Range(minValY,maxValY);
 					*/
 
-					Debug.Log("SHOOT");
+					Debug.Log ("SHOOT");
 					aimingComplete = 0;
 					Shoot (mousePosition, firePointPosition);
 				}
 
 
 
-			}
-			else if(Input.GetMouseButtonUp(0)) {
+			} else if (Input.GetMouseButtonUp (0)) {
 				aimingComplete = 0; // Reset the timer for aiming
-				crosshair.GetComponent<SpriteRenderer>().enabled = false; // hide crosshair
+				crosshair.GetComponent<SpriteRenderer> ().enabled = false; // hide crosshair
 			}
-		} else if(target == aimTowards.player){
+		} else if (target == aimTowards.player) {
 			//Enemy aiming logic... this might not work but I'll leave it here anyway
+			playerDistance = Vector3.Distance (player.transform.position, transform.position);
+
+			// Check if player is close enough to start aiming
+			if (playerDistance < 20.0f) {
+				if (shootComplete < aimDelay) {
+					shootComplete += Time.deltaTime;
+				} else if (shootComplete > aimDelay) {
+					shootComplete = 0;
+					Debug.Log ("ENEMY SHOOT");
+					Shoot (player.transform.position, firePoint.position);
+				}
+			}
 		}
 	}
 

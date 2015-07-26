@@ -36,7 +36,8 @@ public class GameMaster : MonoBehaviour {
 
 	// Set custom cursor
 	public void SetCustomCursor(){
-		Cursor.SetCursor (CustomCursor, Vector2.zero, CursorMode.Auto);
+		Vector2 hotspot = new Vector2 (CustomCursor.width / 2, CustomCursor.height / 2);
+		Cursor.SetCursor (CustomCursor, hotspot, CursorMode.Auto);
 		Debug.Log ("Custom cursor has been set");
 	}
 
