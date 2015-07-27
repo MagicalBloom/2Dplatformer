@@ -16,7 +16,7 @@ public class Weapon : MonoBehaviour {
 	Player player; //test
 	Enemy enemy;
 
-	float hitRange = 100;
+	float hitRange = 45;
 	float aimingComplete = 0;
 	float shootComplete;
 	Transform firePoint;
