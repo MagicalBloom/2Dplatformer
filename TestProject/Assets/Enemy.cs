@@ -18,6 +18,8 @@ public class Enemy : MonoBehaviour {
 		}
 		
 	}
+
+	public enum EnemyType {still, runInFront, runInBack};
 	
 	public EnemyStats enemyStats = new EnemyStats();
 	

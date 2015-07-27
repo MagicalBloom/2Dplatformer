@@ -2,25 +2,43 @@
 using System.Collections;
 
 public class Weapon : MonoBehaviour {
-	public enum aimTowards {mouse, player};
 
-	public int damage = 10;
-	public float aimDelay;
+	[System.Serializable]
+	public class WeaponStats{
+		public int damage;
+		public float fireRate;
+		public weaponTypes weaponType;
+		public float reloadTime;
+	}
+
+	public WeaponStats weaponStats = new WeaponStats();
+
+	public enum aimTowards {mouse, player};
+	public enum weaponTypes {full, semi, single};
+
+	public float enemyAimDelay;
 	public LayerMask whatToHit;
 	public aimTowards target;
 
 	public Transform aimTestPrefab;
-	WeaponEffects weaponEffects;
-	GameObject crosshair;
 
-	Player player; //test
-	Enemy enemy;
+	private WeaponEffects weaponEffects;
+	private GameObject crosshair;
 
-	float hitRange = 45;
-	float aimingComplete = 0;
-	float shootComplete;
-	Transform firePoint;
-	Transform arm;
+	private Player player; //test
+	private Enemy enemy;
+
+	private float randomAimDelay;
+	private float hitRange = 45;
+	private float aimingComplete = 0;
+	private float shootTimer;
+	private bool shootComplete = true;
+	private float reloadTimer;
+	private bool reloadComplete = true;
+	private Transform firePoint;
+	private Transform arm;
+
+	private AudioSource audioSource;
 
 
 	void Awake () {
@@ -28,6 +46,8 @@ public class Weapon : MonoBehaviour {
 		firePoint = transform.FindChild ("FirePoint");
 		arm = GameObject.Find ("Player/Arm").transform;
 		weaponEffects = GetComponent<WeaponEffects> ();
+		audioSource = GetComponent<AudioSource> ();
+		randomAimDelay = enemyAimDelay;
 
 		crosshair = GameObject.Find("Crosshair");
 		crosshair.GetComponent<SpriteRenderer>().enabled = false;
@@ -46,8 +66,41 @@ public class Weapon : MonoBehaviour {
 	void Update () {
 		// Check which aiming mode is selected and do stuff accordingly
 		if (target == aimTowards.mouse) {
+
+			// Player mouse position
+			Vector2 mousePosition = new Vector2 (Camera.main.ScreenToWorldPoint (Input.mousePosition).x, Camera.main.ScreenToWorldPoint (Input.mousePosition).y);
+			Vector2 firePointPosition = new Vector2 (firePoint.position.x, firePoint.position.y);
+
+			shootTimer += Time.deltaTime;
+
+			// Reloading
+			if(Input.GetKeyDown(KeyCode.R) && reloadComplete){
+				reloadComplete = false;
+				StartCoroutine(Reload());
+			}
+
+			// Shooting
+			if(weaponStats.weaponType == weaponTypes.full){
+				if (Input.GetMouseButton (0) && reloadComplete) {
+					if(shootTimer > weaponStats.fireRate){
+						audioSource.Play(); // play audio
+						Shoot (mousePosition, firePointPosition);
+						shootTimer = 0;
+					}
+				}
+			} else {
+				if (Input.GetMouseButtonDown (0) && reloadComplete) {
+					if(shootTimer > weaponStats.fireRate){
+						audioSource.Play(); // play audio
+						Shoot (mousePosition, firePointPosition);
+						shootTimer = 0;
+					}
+				}
+			}
+
+			/*
 			if(shootComplete > aimDelay) {
-				if (Input.GetMouseButtonDown (0)) {
+				if (Input.GetMouseButton (0)) {
 					Vector2 mousePosition = new Vector2 (Camera.main.ScreenToWorldPoint (Input.mousePosition).x, Camera.main.ScreenToWorldPoint (Input.mousePosition).y);
 					Vector2 firePointPosition = new Vector2 (firePoint.position.x, firePoint.position.y);
 					//Debug.Log(firePoint.parent.parent.TransformVector(firePoint.forward)); //.InverseTransformDirection(transform.forward)
@@ -57,7 +110,9 @@ public class Weapon : MonoBehaviour {
 				} 
 			} else if (shootComplete < aimDelay) {
 				shootComplete += Time.deltaTime;
+
 			}
+			*/
 			/*
 			if (Input.GetMouseButton (0)) {
 				// Do some sort of aim effect when holding the mouse button
@@ -102,19 +157,28 @@ public class Weapon : MonoBehaviour {
 			// Check if player is close enough to start aiming
 			if (playerVisible && enemyVisible) { //playerDistance < 20.0f
 
-				if (shootComplete < aimDelay) {
-					shootComplete += Time.deltaTime;
+				if (shootTimer < randomAimDelay) {
+					shootTimer += Time.deltaTime;
 				} else { //if (shootComplete > aimDelay)
-					shootComplete = 0;
+					randomAimDelay = Random.Range(enemyAimDelay - 0.3f, enemyAimDelay);
+					shootTimer = 0;
 					Debug.Log ("ENEMY SHOOT");
 					Vector3 playerPosition = new Vector3(player.transform.position.x + player.GetComponent<BoxCollider2D>().offset.x, 
 					                                     player.transform.position.y + player.GetComponent<BoxCollider2D>().offset.y,
 					                                     0f);
 					//Debug.DrawRay (firePoint.position, (playerPosition-firePoint.position)*30, Color.white, 1);
+					audioSource.Play(); // play audio
 					Shoot (playerPosition, firePoint.position);
 				}
 			}
 		}
+	}
+
+	IEnumerator Reload(){
+		Debug.Log ("Reloading");
+		yield return new WaitForSeconds(weaponStats.reloadTime);
+		reloadComplete = true;
+		Debug.Log ("Done reloading");
 	}
 
 	void Aim(){
@@ -185,13 +249,15 @@ public class Weapon : MonoBehaviour {
 		Vector3 hitPosition; 
 		Vector3 hitNormal;
 		Collider2D collider;
-		
+
+		// reminder: http://answers.unity3d.com/questions/211910/getting-object-local-direction.html
+
 		// raycast is used to see when player hits something
 		RaycastHit2D hit = Physics2D.Raycast (firePointPosition, aimPosition-firePointPosition, hitRange, whatToHit);
 
 		if (hit.collider != null) {
 			// Logic after we hit something
-			Debug.Log ("Hit " + hit.collider.name + " and did " + damage + " damage.");
+			Debug.Log ("Hit " + hit.collider.name + " and did " + weaponStats.damage + " damage.");
 
 			hitDirection = aimPosition-firePointPosition; // direction of the bullet
 			hitPosition = hit.point; // point where bullet collided with something
@@ -199,11 +265,11 @@ public class Weapon : MonoBehaviour {
 			collider = hit.collider; // for different hit collision effects based on collision
 
 			if(hit.collider.tag == "enemy") {
-				hit.collider.GetComponent<Enemy>().DamageEnemy(damage);
+				hit.collider.GetComponent<Enemy>().DamageEnemy(weaponStats.damage);
 			} else if(hit.collider.tag == "hittable") {
 				 // wall
 			} else if(hit.collider.tag == "Player") {
-				player.DamagePlayer(damage);
+				player.DamagePlayer(weaponStats.damage);
 			} else{
 				//do something
 			}
