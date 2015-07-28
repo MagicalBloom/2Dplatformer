@@ -5,18 +5,17 @@ public class Enemy : MonoBehaviour {
 
 	[System.Serializable]
 	public class EnemyStats{
-		public int maxHealth = 100;
-		private int curHealth;
+		public int MaxHealth = 100;
+		private int currentHealth;
 		
-		public int CurHealth{
-			get { return curHealth; }
-			set { curHealth = Mathf.Clamp(value, 0, maxHealth);}
+		public int CurrentHealth{
+			get { return currentHealth; }
+			set { currentHealth = Mathf.Clamp(value, 0, MaxHealth);}
 		}
 		
 		public void Init(){
-			curHealth = maxHealth;
-		}
-		
+			CurrentHealth = MaxHealth;
+		}	
 	}
 
 	public enum EnemyType {still, runInFront, runInBack};
@@ -29,9 +28,9 @@ public class Enemy : MonoBehaviour {
 	}
 	
 	public void DamageEnemy(int damage){
-		enemyStats.CurHealth -= damage;
+		enemyStats.CurrentHealth -= damage;
 
-		if(enemyStats.CurHealth <= 0){
+		if(enemyStats.CurrentHealth <= 0){
 			GameMaster.KillEnemy(this);
 		}
 	}

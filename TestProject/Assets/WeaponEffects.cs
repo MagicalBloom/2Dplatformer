@@ -8,22 +8,22 @@ public class WeaponEffects : MonoBehaviour {
 	public Transform BulletHitPrefab;
 	public Transform BloodSplatterPrefab;
 
-	Transform firePoint;
-	Quaternion muzzleFlashRotation;
+	Transform FirePoint;
+	Quaternion MuzzleFlashRotation;
 
 	void Awake(){
-		firePoint = transform.FindChild ("FirePoint");
-		if(firePoint == null){
-			Debug.LogError ("No 'firePoint' object found.");
+		FirePoint = transform.GetChild(0);
+		if(FirePoint == null){
+			Debug.LogError ("No 'FirePoint' object found.");
 		}
 	}
 	
 	public void BulletTrail(Vector3 hitPosition){
-		Transform trail = Instantiate (BulletTrailPrefab, firePoint.position, firePoint.rotation) as Transform;
+		Transform trail = Instantiate (BulletTrailPrefab, FirePoint.position, FirePoint.rotation) as Transform;
 		LineRenderer linerenderer = trail.GetComponent<LineRenderer> ();
 		
 		if(linerenderer != null){
-			linerenderer.SetPosition(0, firePoint.position);
+			linerenderer.SetPosition(0, FirePoint.position);
 			linerenderer.SetPosition(1, hitPosition);
 		}
 		Destroy (trail.gameObject, 0.04f);
@@ -44,8 +44,8 @@ public class WeaponEffects : MonoBehaviour {
 	}
 
 	public void MuzzleFlash() {
-		muzzleFlashRotation = Quaternion.Euler (-firePoint.rotation.eulerAngles.z, 90, 0f);
-		Transform clone = Instantiate (MuzzleFlashPrefab, firePoint.position, muzzleFlashRotation) as Transform;
+		MuzzleFlashRotation = Quaternion.Euler (-FirePoint.rotation.eulerAngles.z, 90, 0f);
+		Transform clone = Instantiate (MuzzleFlashPrefab, FirePoint.position, MuzzleFlashRotation) as Transform;
 		float size = Random.Range (0.6f, 0.9f);
 		clone.localScale = new Vector3 (size, size, 0);
 		Destroy (clone.gameObject, 2.0f);

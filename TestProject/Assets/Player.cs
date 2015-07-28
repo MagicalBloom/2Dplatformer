@@ -5,27 +5,27 @@ public class Player : MonoBehaviour {
 
 	[System.Serializable]
 	public class PlayerStats{
-		public int maxHealth = 100;
-		public int regenAmount = 10;
-		public float regenRate = 2;
-		public float regenDelay = 5;
-		private int curHealth;
+		public int MaxHealth = 100;
+		public int RegenAmount = 10;
+		public float RegenRate = 2;
+		public float RegenDelay = 5;
+		private int CurrentHealth;
 
 		public int CurHealth{
-			get { return curHealth; }
-			set { curHealth = Mathf.Clamp(value, 0, maxHealth);}
+			get { return CurrentHealth; }
+			set { CurrentHealth = Mathf.Clamp(value, 0, MaxHealth);}
 		}
 
 		public void Init(){
-			curHealth = maxHealth;
+			CurrentHealth = MaxHealth;
 		}
 
 	}
 
 	public PlayerStats playerStats = new PlayerStats();
 
-	float regenTimerRate = 0;
-	float regenTimerDelay = 0;
+	float RegenTimerRate = 0;
+	float RegenTimerDelay = 0;
 
 	void Start(){
 		playerStats.Init ();
@@ -33,26 +33,26 @@ public class Player : MonoBehaviour {
 
 	void Update(){
 		// Player health regeneration
-		regenTimerRate += Time.deltaTime;
-		regenTimerDelay += Time.deltaTime;
-		if(regenTimerRate > playerStats.regenRate && regenTimerDelay > playerStats.regenDelay){
+		RegenTimerRate += Time.deltaTime;
+		RegenTimerDelay += Time.deltaTime;
+		if(RegenTimerRate > playerStats.RegenRate && RegenTimerDelay > playerStats.RegenDelay){
 			RegenPlayer();
-			regenTimerRate = 0;
+			RegenTimerRate = 0;
 		}
 	}
 
 	public void RegenPlayer(){
-		if (playerStats.CurHealth + playerStats.regenAmount <= playerStats.maxHealth) {
-			playerStats.CurHealth += playerStats.regenAmount;
+		if (playerStats.CurHealth + playerStats.RegenAmount <= playerStats.MaxHealth) {
+			playerStats.CurHealth += playerStats.RegenAmount;
 		} else {
-			playerStats.CurHealth += playerStats.regenAmount - ((playerStats.CurHealth + playerStats.regenAmount) % playerStats.maxHealth);
+			playerStats.CurHealth += playerStats.RegenAmount - ((playerStats.CurHealth + playerStats.RegenAmount) % playerStats.MaxHealth);
 		}
 		GUIManager.UpdatePlayerHealthbar(playerStats.CurHealth);
 	}
 
 	public void DamagePlayer(int damage){
 		playerStats.CurHealth -= damage;
-		regenTimerDelay = 0; // Reset regenTimer so regen won't kick in if player takes damage
+		RegenTimerDelay = 0; // Reset regenTimer so regen won't kick in if player takes damage
 
 		GUIManager.UpdatePlayerHealthbar (playerStats.CurHealth);
 		if(playerStats.CurHealth <= 0){

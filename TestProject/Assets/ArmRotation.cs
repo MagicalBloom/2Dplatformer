@@ -5,19 +5,19 @@ public class ArmRotation : MonoBehaviour {
 
 	public enum AttachedTo {player, enemy};
 
-	public int rotationOffset = 0;
-	private Transform firePoint;
+	public int RotationOffset = 0;
+	private Transform FirePoint;
 	public AttachedTo attachedTo;
 
-	private bool mouseRightSide = true; // For determining which way the player is currently aiming.
-	private Vector3 direction;
+	private bool MouseRightSide = true; // For determining which way the player is currently aiming.
+	private Vector3 Direction;
 	private Player player;
-	private float rotationZ;
+	private float RotationZ;
 
 
 	private void Awake() {
 		player = GameObject.Find("Player").GetComponent<Player>();
-		firePoint = this.transform.GetChild (0).GetChild (0).transform;
+		FirePoint = this.transform.GetChild (0).GetChild (0);
 	}
 
 	// Update is called once per frame
@@ -25,41 +25,41 @@ public class ArmRotation : MonoBehaviour {
 		Vector3 armScale = this.transform.localScale;
 
 		if (attachedTo == AttachedTo.player) {
-			direction = Input.mousePosition - Camera.main.WorldToScreenPoint (transform.position);
+			Direction = Input.mousePosition - Camera.main.WorldToScreenPoint (transform.position);
 
 			Vector3 difference = Camera.main.ScreenToWorldPoint (Input.mousePosition)- transform.position;		// Subtract the position of the player from the mouse position
 			difference.Normalize ();	// Normalize the vector
 			
-			rotationZ = Mathf.Atan2 (difference.y, difference.x) * Mathf.Rad2Deg;	// Find the angle in degrees
+			RotationZ = Mathf.Atan2 (difference.y, difference.x) * Mathf.Rad2Deg;	// Find the angle in degrees
 
 		} else {
-			direction = player.transform.position - firePoint.position;
+			Direction = player.transform.position - FirePoint.position;
 
 			Vector3 difference = player.transform.position - transform.position;	// Subtract the position of the player from the mouse position
 			difference.Normalize ();	// Normalize the vector
 			
-			rotationZ = Mathf.Atan2 (difference.y, difference.x) * Mathf.Rad2Deg;	// Find the angle in degrees
+			RotationZ = Mathf.Atan2 (difference.y, difference.x) * Mathf.Rad2Deg;	// Find the angle in degrees
 		}
 
-		if (direction.x >= 0) {
-			if(mouseRightSide == false) {
+		if (Direction.x >= 0) {
+			if(MouseRightSide == false) {
 				armScale.x *= -1;
 				this.transform.localScale = armScale;
 			}
 
-			mouseRightSide = true;
-			transform.rotation = Quaternion.Euler (0f, 0f, rotationZ + rotationOffset);
-			firePoint.rotation = Quaternion.Euler (0f, 0f, rotationZ + rotationOffset);
+			MouseRightSide = true;
+			transform.rotation = Quaternion.Euler (0f, 0f, RotationZ + RotationOffset);
+			FirePoint.rotation = Quaternion.Euler (0f, 0f, RotationZ + RotationOffset);
 		}
 		else {
-			if(mouseRightSide == true){
+			if(MouseRightSide == true){
 				armScale.x *= -1;
 				this.transform.localScale = armScale;
 			}
 
-			mouseRightSide = false;
-			transform.rotation = Quaternion.Euler (0f, 0f, rotationZ + rotationOffset + 180);
-			firePoint.rotation = Quaternion.Euler (0f, 0f, rotationZ + rotationOffset);
+			MouseRightSide = false;
+			transform.rotation = Quaternion.Euler (0f, 0f, RotationZ + RotationOffset + 180);
+			FirePoint.rotation = Quaternion.Euler (0f, 0f, RotationZ + RotationOffset);
 		}
 	}
 }
