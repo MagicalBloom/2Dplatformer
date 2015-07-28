@@ -47,14 +47,14 @@ public class Player : MonoBehaviour {
 		} else {
 			playerStats.CurHealth += playerStats.regenAmount - ((playerStats.CurHealth + playerStats.regenAmount) % playerStats.maxHealth);
 		}
-		GameMaster.UpdatePlayerHealthbar(playerStats.CurHealth);
+		GUIManager.UpdatePlayerHealthbar(playerStats.CurHealth);
 	}
 
 	public void DamagePlayer(int damage){
 		playerStats.CurHealth -= damage;
 		regenTimerDelay = 0; // Reset regenTimer so regen won't kick in if player takes damage
 
-		GameMaster.UpdatePlayerHealthbar (playerStats.CurHealth);
+		GUIManager.UpdatePlayerHealthbar (playerStats.CurHealth);
 		if(playerStats.CurHealth <= 0){
 			GameMaster.KillPlayer(this);
 		}

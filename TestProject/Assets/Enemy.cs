@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public enum EnemyType {still, runInFront, runInBack};
+	public EnemyType enemyType;
 	
 	public EnemyStats enemyStats = new EnemyStats();
 	
@@ -34,4 +35,12 @@ public class Enemy : MonoBehaviour {
 			GameMaster.KillEnemy(this);
 		}
 	}
+
+	void Update(){
+		if(enemyType == EnemyType.runInFront){
+			//Vector3 temp = new Vector3(-0.2f, 0f, 0f);
+			//this.transform.position += temp;
+		}
+	}
+
 }
