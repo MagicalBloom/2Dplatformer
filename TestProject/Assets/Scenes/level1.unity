@@ -944,6 +944,51 @@ Transform:
   - {fileID: 696048885}
   m_Father: {fileID: 1339854600}
   m_RootOrder: 0
+--- !u!1 &190591050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 190591052}
+  - 114: {fileID: 190591051}
+  m_Layer: 0
+  m_Name: GUIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &190591051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 190591050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e475f7fcd5ff5a14a9baa4b38f539f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameOverMenu: {fileID: 1014470047}
+  PauseMenu: {fileID: 363496468}
+  ExitMenu: {fileID: 44857017}
+  OptionsMenu: {fileID: 1123142470}
+  PlayerHealthbar: {fileID: 1825097910}
+  CustomCursor: {fileID: 2800000, guid: 51c2a36737454704b9c62597d8bcd636, type: 3}
+--- !u!4 &190591052
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 190591050}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 48.8626671, y: 8.4453783, z: -136.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
 --- !u!1 &195128665
 GameObject:
   m_ObjectHideFlags: 0
@@ -2986,12 +3031,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 666455720}
+      - m_Target: {fileID: 190591051}
         m_MethodName: DisplayExitMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3536,12 +3582,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 666455720}
+      - m_Target: {fileID: 190591051}
         m_MethodName: ClosePauseMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3592,7 +3639,7 @@ GameObject:
   - 4: {fileID: 666455721}
   - 114: {fileID: 666455720}
   m_Layer: 0
-  m_Name: GM
+  m_Name: GameMaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3609,12 +3656,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acca8acb9acd91041b38b5aff4110c36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameOverMenu: {fileID: 1014470047}
-  PauseMenu: {fileID: 363496468}
-  ExitMenu: {fileID: 44857017}
-  OptionsMenu: {fileID: 0}
-  PlayerHealthbar: {fileID: 1825097910}
-  CustomCursor: {fileID: 2800000, guid: 51c2a36737454704b9c62597d8bcd636, type: 3}
 --- !u!4 &666455721
 Transform:
   m_ObjectHideFlags: 0
@@ -3851,12 +3892,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 666455720}
+      - m_Target: {fileID: 190591051}
         m_MethodName: ExitMenuNo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10492,6 +10534,33 @@ MonoBehaviour:
   lookAheadMoveThreshold: 0
   minYposition: -5
   maxYposition: 5
+--- !u!1 &2033308668
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 2033308669}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2033308669
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2033308668}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 48.8626671, y: 8.4453783, z: -136.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
 --- !u!1001 &2043248111
 Prefab:
   m_ObjectHideFlags: 0
