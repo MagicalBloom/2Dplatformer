@@ -36,7 +36,7 @@ public class Weapon : MonoBehaviour {
 	private bool ReloadComplete = true;
 	private Transform FirePoint;
 
-	public AudioSource audioSource;
+	private AudioSource audioSource;
 	public AudioClip WeaponFireSoundEffect;
 
 
@@ -48,6 +48,8 @@ public class Weapon : MonoBehaviour {
 
 		Crosshair = GameObject.Find("Crosshair");
 		Crosshair.GetComponent<SpriteRenderer>().enabled = false;
+
+		audioSource = GameObject.Find ("AudioManager/EffectsAudio").GetComponent<AudioSource> ();
 
 		if(FirePoint == null){
 			Debug.LogError ("No 'FirePoint' object found.");

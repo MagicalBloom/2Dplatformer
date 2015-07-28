@@ -12,6 +12,8 @@ GameObject:
   - 23: {fileID: 2386146}
   - 114: {fileID: 11442212}
   - 61: {fileID: 6111908}
+  - 50: {fileID: 5071950}
+  - 95: {fileID: 9567216}
   m_Layer: 11
   m_Name: EnemyBehindTest
   m_TagString: enemy
@@ -151,6 +153,22 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 107932}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!50 &5071950
+Rigidbody2D:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 107932}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!61 &6111908
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -164,6 +182,23 @@ BoxCollider2D:
   m_Offset: {x: 5.96046448e-08, y: 0}
   serializedVersion: 2
   m_Size: {x: 1.00000012, y: 2}
+--- !u!95 &9567216
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 107932}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6ea4d1e91f48f1744a0fb502b1948337, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11425630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -188,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f4d8e83b71d8f44f9ff8f20750d3b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
+  enemyType: 2
   enemyStats:
     MaxHealth: 100
 --- !u!114 &11444732
@@ -223,13 +258,12 @@ MonoBehaviour:
     WeaponType: 0
     ReloadTime: 1
     ClipSize: 10
-  EnemyAimDelay: 1
+  EnemyAimDelay: 2
   WhatToHit:
     serializedVersion: 2
     m_Bits: 768
   Target: 1
   AimTestPrefab: {fileID: 0}
-  audioSource: {fileID: 0}
   WeaponFireSoundEffect: {fileID: 8300000, guid: f9a7a94a8ff5ba4419d35303c1c79741,
     type: 3}
 --- !u!212 &21223078

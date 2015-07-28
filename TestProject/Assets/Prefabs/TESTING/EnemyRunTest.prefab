@@ -229,7 +229,6 @@ MonoBehaviour:
     m_Bits: 768
   Target: 1
   AimTestPrefab: {fileID: 0}
-  audioSource: {fileID: 0}
   WeaponFireSoundEffect: {fileID: 8300000, guid: f9a7a94a8ff5ba4419d35303c1c79741,
     type: 3}
 --- !u!212 &21273466

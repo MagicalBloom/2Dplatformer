@@ -18,13 +18,18 @@ public class Enemy : MonoBehaviour {
 		}	
 	}
 
+	private Rigidbody2D rigidbody2D;
+	private Animator animator;
+
 	public enum EnemyType {still, runInFront, runInBack};
 	public EnemyType enemyType;
 	
 	public EnemyStats enemyStats = new EnemyStats();
 	
-	void Start(){
+	void Awake (){
 		enemyStats.Init ();
+		rigidbody2D = GetComponent<Rigidbody2D>();
+		animator = GetComponent<Animator>();
 	}
 	
 	public void DamageEnemy(int damage){
@@ -35,11 +40,14 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	void Update(){
-		if(enemyType == EnemyType.runInFront){
-			//Vector3 temp = new Vector3(-0.2f, 0f, 0f);
-			//this.transform.position += temp;
+	void FixedUpdate(){
+		if(enemyType == EnemyType.runInBack){
+			//MoveEnemy(new Vector2(10f, rigidbody2D.position.y));
 		}
+	}
+
+	public void MoveEnemy(Vector2 movement) {
+		rigidbody2D.MovePosition(rigidbody2D.position + movement);
 	}
 
 }
