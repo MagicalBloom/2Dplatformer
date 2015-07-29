@@ -11,6 +11,7 @@ public class GUIManager : MonoBehaviour {
 	public GameObject ExitMenu;
 	public GameObject OptionsMenu;
 	public GameObject PlayerHealthbar;
+	public GameObject PlayerAmmo;
 
 	public Texture2D CustomCursor;
 
@@ -18,13 +19,18 @@ public class GUIManager : MonoBehaviour {
 
 
 	void Start () {
+
+	}
+
+	void Awake() {
 		// Set cursor with a slight delay
 		Invoke ("SetCustomCursor", 0.1f);
+		
+		PlayerHealthbarSlider = PlayerHealthbar.GetComponent<Slider>();
 
 		if(guiManager == null){
 			guiManager = GetComponent<GUIManager>();
 		}
-		PlayerHealthbarSlider = PlayerHealthbar.GetComponent<Slider>();
 	}
 
 	void Update () {
@@ -68,5 +74,9 @@ public class GUIManager : MonoBehaviour {
 	// Set new value to the healtbar
 	public static void UpdatePlayerHealthbar(int newValue){
 		guiManager.PlayerHealthbarSlider.value = newValue; 
+	}
+
+	public static void UpdatePlayerAmmo(int clipSize, int remainingAmmo){
+		guiManager.PlayerAmmo.GetComponent<Text> ().text = remainingAmmo + "/" + clipSize;
 	}
 }

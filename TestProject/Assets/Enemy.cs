@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour {
 	[System.Serializable]
 	public class EnemyStats{
 		public int MaxHealth = 100;
+		public float MovementSpeed;
+
 		private int currentHealth;
 		
 		public int CurrentHealth{
@@ -24,7 +26,6 @@ public class Enemy : MonoBehaviour {
 	public bool EnemyMoving = false;
 	public float MovementDuration;
 	private float MovementDirection;
-	public float MovementSpeed;
 	private float MovementTimer = 0;
 
 	public enum EnemyType {still, runInFront, runInBack};
@@ -37,7 +38,7 @@ public class Enemy : MonoBehaviour {
 		if (enemyType == EnemyType.runInBack) {
 			MovementDirection = 1f;
 		} else if (enemyType == EnemyType.runInFront) {
-			MovementDirection = -1f; // REMEMBER VELOCITY AND ROTATION....OR NOT
+			MovementDirection = -1f;
 		} else {
 			MovementDirection = 0f;
 		}
@@ -56,10 +57,11 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		if(enemyType == EnemyType.runInBack && EnemyMoving == true){
+		// Check if the enemy type is a moving one and that the EnemyMoving variable is set to true
+		if((enemyType == EnemyType.runInBack || enemyType == EnemyType.runInFront) && EnemyMoving == true){
 			MovementTimer += Time.fixedDeltaTime;
 			if(MovementTimer < MovementDuration){
-				MoveEnemy(MovementDirection * MovementSpeed); // FUCK
+				MoveEnemy(MovementDirection * enemyStats.MovementSpeed);
 			} else {
 				EnemyMoving = false;
 				MovementTimer = 0;

@@ -5,26 +5,14 @@ namespace UnityStandardAssets._2D
 {
     public class Camera2DFollow : MonoBehaviour
     {
-        public Transform target;
-        public float damping = 1;
-        public float lookAheadFactor = 3;
-        public float lookAheadReturnSpeed = 0.5f;
-        public float lookAheadMoveThreshold = 0.1f;
-
-		public float minYposition = 5f;
-		public float maxYposition = 5f;
-		private float minXposition = 0f;
-
-        private float m_OffsetZ;
-        private Vector3 m_LastTargetPosition;
-        private Vector3 m_CurrentVelocity;
-        private Vector3 m_LookAheadPos;
+        public Transform Target;
+		public float PositionYOffset;
+		public float MinXposition = 0f;
+		
 
         // Use this for initialization
         private void Start()
         {
-            m_LastTargetPosition = target.position;
-            m_OffsetZ = (transform.position - target.position).z;
             transform.parent = null;
         }
 
@@ -33,35 +21,19 @@ namespace UnityStandardAssets._2D
         private void Update()
         {
 			// In case the player Gameobject is destroyed
-			if (target == null)
+			if (Target == null)
 				return;
 
-            // only update lookahead pos if accelerating or changed direction
-            float xMoveDelta = (target.position - m_LastTargetPosition).x;
-
-            bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > lookAheadMoveThreshold;
-
-            if (updateLookAheadTarget)
-            {
-                m_LookAheadPos = lookAheadFactor*Vector3.right*Mathf.Sign(xMoveDelta);
-            }
-            else
-            {
-                m_LookAheadPos = Vector3.MoveTowards(m_LookAheadPos, Vector3.zero, Time.deltaTime*lookAheadReturnSpeed);
-            }
-
-            Vector3 aheadTargetPos = target.position + m_LookAheadPos + Vector3.forward*m_OffsetZ;
-            Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref m_CurrentVelocity, damping);
+			Vector3 newPosition = new Vector3 (Target.position.x, Target.position.y, transform.position.z);;
 
 			// Lock camera on y-axis and keep it from going back along x-axis
-			if(minXposition < newPos.x){
-				minXposition = newPos.x;
+			if(MinXposition < newPosition.x){
+				MinXposition = newPosition.x;
 			}
-			newPos = new Vector3 (Mathf.Clamp(newPos.x, minXposition, Mathf.Infinity), Mathf.Clamp(newPos.y, minYposition, maxYposition), newPos.z);
+			newPosition = new Vector3 (Mathf.Clamp(newPosition.x, MinXposition, Mathf.Infinity), newPosition.y + PositionYOffset, newPosition.z);
 
-            transform.position = newPos;
+			transform.position = newPosition;
 
-            m_LastTargetPosition = target.position;
         }
     }
 }

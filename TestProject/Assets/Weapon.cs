@@ -41,6 +41,10 @@ public class Weapon : MonoBehaviour {
 	public AudioClip WeaponFireSoundEffect;
 
 
+	void Start() {
+		GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
+	}
+
 	void Awake () {
 		player = GameObject.Find("Player").GetComponent<Player>(); //test
 		FirePoint = transform.GetChild(0);
@@ -86,6 +90,7 @@ public class Weapon : MonoBehaviour {
 					if(ShootTimer > weaponStats.FireRate){
 						Shoot (mousePosition, firePointPosition);
 						ShootTimer = 0;
+						GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
 					}
 				}
 			} else {
@@ -93,6 +98,7 @@ public class Weapon : MonoBehaviour {
 					if(ShootTimer > weaponStats.FireRate){
 						Shoot (mousePosition, firePointPosition);
 						ShootTimer = 0;
+						GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
 					}
 				}
 			}
@@ -131,6 +137,7 @@ public class Weapon : MonoBehaviour {
 		yield return new WaitForSeconds(weaponStats.ReloadTime);
 		CurrentAmmo = weaponStats.ClipSize;
 		ReloadComplete = true;
+		GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
 		Debug.Log ("Done reloading");
 	}
 
