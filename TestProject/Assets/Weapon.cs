@@ -29,6 +29,7 @@ public class Weapon : MonoBehaviour {
 	private Player player; //test
 	private Enemy enemy;
 
+	private int CurrentAmmo;
 	private float RandomAimDelay;
 	private float HitRange = 45;
 	private float ShootTimer;
@@ -45,6 +46,7 @@ public class Weapon : MonoBehaviour {
 		FirePoint = transform.GetChild(0);
 		weaponEffects = GetComponent<WeaponEffects> ();
 		RandomAimDelay = EnemyAimDelay;
+		CurrentAmmo = weaponStats.ClipSize;
 
 		Crosshair = GameObject.Find("Crosshair");
 		Crosshair.GetComponent<SpriteRenderer>().enabled = false;
@@ -80,14 +82,14 @@ public class Weapon : MonoBehaviour {
 
 			// Shooting
 			if(weaponStats.WeaponType == WeaponTypes.full){
-				if (Input.GetMouseButton (0) && ReloadComplete) {
+				if (Input.GetMouseButton (0) && ReloadComplete && CurrentAmmo > 0) {
 					if(ShootTimer > weaponStats.FireRate){
 						Shoot (mousePosition, firePointPosition);
 						ShootTimer = 0;
 					}
 				}
 			} else {
-				if (Input.GetMouseButtonDown (0) && ReloadComplete) {
+				if (Input.GetMouseButtonDown (0) && ReloadComplete && CurrentAmmo > 0) {
 					if(ShootTimer > weaponStats.FireRate){
 						Shoot (mousePosition, firePointPosition);
 						ShootTimer = 0;
@@ -105,7 +107,7 @@ public class Weapon : MonoBehaviour {
 
 				if (ShootTimer < RandomAimDelay) {
 					ShootTimer += Time.deltaTime;
-				} else { //if (ShootComplete > aimDelay)
+				} else if(ShootTimer > RandomAimDelay && ReloadComplete && CurrentAmmo > 0) { //if (ShootComplete > aimDelay)
 					RandomAimDelay = Random.Range(EnemyAimDelay - 0.3f, EnemyAimDelay);
 					ShootTimer = 0;
 					Debug.Log ("ENEMY SHOOT");
@@ -114,6 +116,11 @@ public class Weapon : MonoBehaviour {
 					                                     0f);
 					//Debug.DrawRay (FirePoint.position, (playerPosition-FirePoint.position)*30, Color.white, 1);
 					Shoot (playerPosition, FirePoint.position);
+
+					// Enemy reload
+					if(CurrentAmmo < 1){
+						StartCoroutine(Reload());
+					}
 				}
 			}
 		}
@@ -122,6 +129,7 @@ public class Weapon : MonoBehaviour {
 	IEnumerator Reload(){
 		Debug.Log ("Reloading");
 		yield return new WaitForSeconds(weaponStats.ReloadTime);
+		CurrentAmmo = weaponStats.ClipSize;
 		ReloadComplete = true;
 		Debug.Log ("Done reloading");
 	}
@@ -187,6 +195,10 @@ public class Weapon : MonoBehaviour {
 			collider = null;
 			weaponEffects.BulletTrail(hitPosition);
 		}
+
+		// Remove bullet from the magazine
+		CurrentAmmo -= 1;
+
 		weaponEffects.MuzzleFlash ();
 
 

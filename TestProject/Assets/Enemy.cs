@@ -18,8 +18,14 @@ public class Enemy : MonoBehaviour {
 		}	
 	}
 
-	private Rigidbody2D rigidbody2D;
+	private Rigidbody2D EnemyRigidbody2D;
 	private Animator animator;
+
+	public bool EnemyMoving = false;
+	public float MovementDuration;
+	private float MovementDirection;
+	public float MovementSpeed;
+	private float MovementTimer = 0;
 
 	public enum EnemyType {still, runInFront, runInBack};
 	public EnemyType enemyType;
@@ -27,8 +33,17 @@ public class Enemy : MonoBehaviour {
 	public EnemyStats enemyStats = new EnemyStats();
 	
 	void Awake (){
+		// Set movement direction based on enemy type
+		if (enemyType == EnemyType.runInBack) {
+			MovementDirection = 1f;
+		} else if (enemyType == EnemyType.runInFront) {
+			MovementDirection = -1f; // REMEMBER VELOCITY AND ROTATION....OR NOT
+		} else {
+			MovementDirection = 0f;
+		}
+
 		enemyStats.Init ();
-		rigidbody2D = GetComponent<Rigidbody2D>();
+		EnemyRigidbody2D = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
 	}
 	
@@ -41,13 +56,19 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		if(enemyType == EnemyType.runInBack){
-			//MoveEnemy(new Vector2(10f, rigidbody2D.position.y));
+		if(enemyType == EnemyType.runInBack && EnemyMoving == true){
+			MovementTimer += Time.fixedDeltaTime;
+			if(MovementTimer < MovementDuration){
+				MoveEnemy(MovementDirection * MovementSpeed); // FUCK
+			} else {
+				EnemyMoving = false;
+				MovementTimer = 0;
+			}
 		}
 	}
 
-	public void MoveEnemy(Vector2 movement) {
-		rigidbody2D.MovePosition(rigidbody2D.position + movement);
+	public void MoveEnemy(float direction) {
+		EnemyRigidbody2D.velocity = new Vector2(direction, EnemyRigidbody2D.velocity.y);
 	}
 
 }

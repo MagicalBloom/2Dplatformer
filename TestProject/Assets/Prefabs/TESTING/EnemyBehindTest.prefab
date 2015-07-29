@@ -155,7 +155,6 @@ MeshFilter:
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!50 &5071950
 Rigidbody2D:
-  serializedVersion: 2
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -164,11 +163,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
+  m_FixedAngle: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!61 &6111908
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -223,6 +222,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f4d8e83b71d8f44f9ff8f20750d3b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyMoving: 0
+  MovementDuration: 3
+  MovementSpeed: 3
   enemyType: 2
   enemyStats:
     MaxHealth: 100

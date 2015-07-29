@@ -283,6 +283,10 @@ Prefab:
       propertyPath: EnemyAimDelay
       value: .699999988
       objectReference: {fileID: 0}
+    - target: {fileID: 11474648, guid: f87b03f74b8581c41b40a90d282611e6, type: 2}
+      propertyPath: weaponStats.ReloadTime
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f87b03f74b8581c41b40a90d282611e6, type: 2}
   m_IsPrefabParent: 0
@@ -317,6 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyRunInBackPrefab: {fileID: 107932, guid: 656faf218ca58544ab78f66972a0b6e3, type: 2}
+  EnemyRunInFrontPrefab: {fileID: 812068041}
 --- !u!61 &459251975
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -460,6 +465,10 @@ Prefab:
       propertyPath: playerStats.RegenAmount
       value: 500
       objectReference: {fileID: 0}
+    - target: {fileID: 5041050, guid: a139ea138ee17be4aab83663ed3ef0c3, type: 2}
+      propertyPath: m_FixedAngle
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8254312, guid: a139ea138ee17be4aab83663ed3ef0c3, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: a139ea138ee17be4aab83663ed3ef0c3, type: 2}
@@ -503,13 +512,13 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 11467268, guid: 967cb04106ee41d4e90023531b79f00d, type: 2}
-      propertyPath: audioSource
-      value: 
-      objectReference: {fileID: 326333658}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 967cb04106ee41d4e90023531b79f00d, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &812068041 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 163668, guid: 967cb04106ee41d4e90023531b79f00d, type: 2}
+  m_PrefabInternal: {fileID: 640719000}
 --- !u!1 &841601238 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 187148, guid: 7bdbcbdbe83f35745bc2a6f6466ff4be, type: 2}
@@ -603,10 +612,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 11473296, guid: 656faf218ca58544ab78f66972a0b6e3, type: 2}
-      propertyPath: audioSource
-      value: 
-      objectReference: {fileID: 326333658}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 656faf218ca58544ab78f66972a0b6e3, type: 2}
   m_IsPrefabParent: 0
@@ -695,11 +700,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22478056, guid: 7bdbcbdbe83f35745bc2a6f6466ff4be, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22478056, guid: 7bdbcbdbe83f35745bc2a6f6466ff4be, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7bdbcbdbe83f35745bc2a6f6466ff4be, type: 2}
