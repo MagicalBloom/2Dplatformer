@@ -39,6 +39,8 @@ public class Weapon : MonoBehaviour {
 
 	private AudioSource audioSource;
 	public AudioClip WeaponFireSoundEffect;
+	public AudioClip WeaponReloadStartSoundEffect;
+	public AudioClip WeaponReloadEndSoundEffect;
 
 
 	void Start() {
@@ -69,7 +71,12 @@ public class Weapon : MonoBehaviour {
 	}
 
 	void Update () {
+		// When player dies
+		if (player == null)
+			return;
+
 		// Check which aiming mode is selected and do stuff accordingly
+		// Logic for player shooting
 		if (Target == aimTowards.mouse) {
 
 			// Player mouse position
@@ -102,6 +109,7 @@ public class Weapon : MonoBehaviour {
 					}
 				}
 			}
+		// Logic for enemy shooting
 		} else if (Target == aimTowards.player) {
 
 			// booleans for checking if enemy or player is on camera
@@ -109,11 +117,11 @@ public class Weapon : MonoBehaviour {
 			bool enemyVisible = this.transform.GetComponent<SpriteRenderer>().isVisible;
 
 			// Check if player is close enough to start aiming
-			if (playerVisible && enemyVisible) { //playerDistance < 20.0f
+			if (playerVisible && enemyVisible) {
 
 				if (ShootTimer < RandomAimDelay) {
 					ShootTimer += Time.deltaTime;
-				} else if(ShootTimer > RandomAimDelay && ReloadComplete && CurrentAmmo > 0) { //if (ShootComplete > aimDelay)
+				} else if(ShootTimer > RandomAimDelay && ReloadComplete && CurrentAmmo > 0) {
 					RandomAimDelay = Random.Range(EnemyAimDelay - 0.3f, EnemyAimDelay);
 					ShootTimer = 0;
 					Debug.Log ("ENEMY SHOOT");
@@ -134,10 +142,12 @@ public class Weapon : MonoBehaviour {
 
 	IEnumerator Reload(){
 		Debug.Log ("Reloading");
-		yield return new WaitForSeconds(weaponStats.ReloadTime);
-		CurrentAmmo = weaponStats.ClipSize;
+		audioSource.PlayOneShot (WeaponReloadStartSoundEffect, 0.3f); // Clip out sound effect
+		yield return new WaitForSeconds(weaponStats.ReloadTime); // Reload wait time
+		audioSource.PlayOneShot (WeaponReloadEndSoundEffect, 0.3f); // Clip in sound effect
+		CurrentAmmo = weaponStats.ClipSize; // Reset current ammo to max
 		ReloadComplete = true;
-		GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
+		GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo); // Update player HUD
 		Debug.Log ("Done reloading");
 	}
 

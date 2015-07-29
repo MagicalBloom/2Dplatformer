@@ -458,6 +458,14 @@ Prefab:
       propertyPath: m_FixedAngle
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11473870, guid: a139ea138ee17be4aab83663ed3ef0c3, type: 2}
+      propertyPath: WeaponReloadStartSoundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 9e1444906eb210c419e36c164d7193a6, type: 3}
+    - target: {fileID: 11473870, guid: a139ea138ee17be4aab83663ed3ef0c3, type: 2}
+      propertyPath: WeaponReloadEndSoundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 96adad5e3cc9fb848ada1a1f9d146cdb, type: 3}
     m_RemovedComponents:
     - {fileID: 8254312, guid: a139ea138ee17be4aab83663ed3ef0c3, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: a139ea138ee17be4aab83663ed3ef0c3, type: 2}
@@ -784,6 +792,18 @@ Prefab:
     - target: {fileID: 22478056, guid: 7bdbcbdbe83f35745bc2a6f6466ff4be, type: 2}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 103186, guid: 7bdbcbdbe83f35745bc2a6f6466ff4be, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198454, guid: 7bdbcbdbe83f35745bc2a6f6466ff4be, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403052, guid: 7bdbcbdbe83f35745bc2a6f6466ff4be, type: 2}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7bdbcbdbe83f35745bc2a6f6466ff4be, type: 2}
