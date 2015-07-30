@@ -123,4 +123,22 @@ public class RandomThings : MonoBehaviour {
 			//crosshair.transform.position = new Vector3(FirePoint.position.x, FirePoint.position.y, 0f);
 			//crosshair.transform.rotation = FirePoint.rotation;
 			*/
+
+	/*
+		if (GameObject.Find ("Crosshair") != null) {
+			Crosshair.GetComponent<SpriteRenderer>().enabled = true;
+			Crosshair.transform.position = FirePoint.position;
+
+			//rotation
+			Vector3 mousePos = Input.mousePosition;
+			mousePos.z = 5.23f;
+			
+			Vector3 objectPos = Camera.main.WorldToScreenPoint (FirePoint.position);
+			mousePos.x = mousePos.x - objectPos.x;
+			mousePos.y = mousePos.y - objectPos.y;
+			
+			float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+			Crosshair.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+		}
+		*/
 }

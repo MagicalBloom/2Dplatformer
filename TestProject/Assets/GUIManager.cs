@@ -12,10 +12,12 @@ public class GUIManager : MonoBehaviour {
 	public GameObject OptionsMenu;
 	public GameObject PlayerHealthbar;
 	public GameObject PlayerAmmo;
+	public GameObject PlayerLives;
 
 	public Texture2D CustomCursor;
 
 	Slider PlayerHealthbarSlider;
+	Slider PlayerLivesSlider;
 
 
 	void Start () {
@@ -27,6 +29,7 @@ public class GUIManager : MonoBehaviour {
 		Invoke ("SetCustomCursor", 0.1f);
 		
 		PlayerHealthbarSlider = PlayerHealthbar.GetComponent<Slider>();
+		PlayerLivesSlider = PlayerLives.GetComponent<Slider> ();
 
 		if(guiManager == null){
 			guiManager = GetComponent<GUIManager>();
@@ -76,7 +79,13 @@ public class GUIManager : MonoBehaviour {
 		guiManager.PlayerHealthbarSlider.value = newValue; 
 	}
 
+	// Set new valie to the ammo display
 	public static void UpdatePlayerAmmo(int clipSize, int remainingAmmo){
 		guiManager.PlayerAmmo.GetComponent<Text> ().text = remainingAmmo + "/" + clipSize;
+	}
+
+	// Set new value to the player lives
+	public static void UpdatePlayerLives(int newValue){
+		guiManager.PlayerLivesSlider.value = newValue; // tee se slider
 	}
 }

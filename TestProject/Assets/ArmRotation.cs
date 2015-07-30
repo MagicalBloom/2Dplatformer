@@ -5,6 +5,8 @@ public class ArmRotation : MonoBehaviour {
 
 	public enum AttachedTo {player, enemy};
 
+	public bool FreezeArmAndDirection = false;
+
 	public int RotationOffset = 0;
 	private Transform FirePoint;
 	public AttachedTo attachedTo;
@@ -23,6 +25,8 @@ public class ArmRotation : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Vector3 armScale = this.transform.localScale;
+		Vector3 lastDirection = Direction;
+		float lastRotation = RotationZ;
 
 		if (attachedTo == AttachedTo.player) {
 			Direction = Input.mousePosition - Camera.main.WorldToScreenPoint (transform.position);
@@ -33,12 +37,17 @@ public class ArmRotation : MonoBehaviour {
 			RotationZ = Mathf.Atan2 (difference.y, difference.x) * Mathf.Rad2Deg;	// Find the angle in degrees
 
 		} else {
-			Direction = player.transform.position - FirePoint.position;
-
 			Vector3 difference = player.transform.position - transform.position;	// Subtract the position of the player from the mouse position
 			difference.Normalize ();	// Normalize the vector
-			
-			RotationZ = Mathf.Atan2 (difference.y, difference.x) * Mathf.Rad2Deg;	// Find the angle in degrees
+
+			// For enemy aim effects
+			if(FreezeArmAndDirection == true){
+				Direction = lastDirection;
+				RotationZ = lastRotation;
+			} else {
+				Direction = player.transform.position - FirePoint.position;
+				RotationZ = Mathf.Atan2 (difference.y, difference.x) * Mathf.Rad2Deg;	// Find the angle in degrees
+			}
 		}
 
 		if (Direction.x >= 0) {

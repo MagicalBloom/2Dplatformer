@@ -5,19 +5,27 @@ public class Player : MonoBehaviour {
 
 	[System.Serializable]
 	public class PlayerStats{
+		public int MaxLives = 3;
 		public int MaxHealth = 100;
 		public int RegenAmount = 10;
 		public float RegenRate = 2;
 		public float RegenDelay = 5;
 		private int CurrentHealth;
+		private int CurrentLives;
 
 		public int CurHealth{
 			get { return CurrentHealth; }
 			set { CurrentHealth = Mathf.Clamp(value, 0, MaxHealth);}
 		}
 
+		public int CurLives{
+			get { return CurrentLives; }
+			set { CurrentLives = Mathf.Clamp(value, 0, MaxLives); }
+		}
+
 		public void Init(){
 			CurrentHealth = MaxHealth;
+			CurrentLives = MaxLives;
 		}
 
 	}
@@ -57,6 +65,8 @@ public class Player : MonoBehaviour {
 		GUIManager.UpdatePlayerHealthbar (playerStats.CurHealth);
 		if(playerStats.CurHealth <= 0){
 			GameMaster.KillPlayer(this);
+			playerStats.CurLives -= 1;
+			GUIManager.UpdatePlayerLives(playerStats.CurLives);
 		}
 	}
 }

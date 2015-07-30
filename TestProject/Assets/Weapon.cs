@@ -10,24 +10,26 @@ public class Weapon : MonoBehaviour {
 		public WeaponTypes WeaponType;
 		public float ReloadTime;
 		public int ClipSize;
+		public float ChargeTime;
 	}
 
 	public WeaponStats weaponStats = new WeaponStats();
 
-	public enum aimTowards {mouse, player};
+	public enum ObjectTypes {player, enemy, boss};
 	public enum WeaponTypes {full, semi, single};
 
 	public float EnemyAimDelay;
 	public LayerMask WhatToHit;
-	public aimTowards Target;
+	public ObjectTypes ObjectType;
 
 	public Transform AimTestPrefab;
 
 	private WeaponEffects weaponEffects;
-	private GameObject Crosshair;
+	private GameObject AimEffectSprite;
 
 	private Player player; //test
 	private Enemy enemy;
+	private ArmRotation Arm;
 
 	private int CurrentAmmo;
 	private float RandomAimDelay;
@@ -42,6 +44,7 @@ public class Weapon : MonoBehaviour {
 	public AudioClip WeaponReloadStartSoundEffect;
 	public AudioClip WeaponReloadEndSoundEffect;
 
+	private bool Flag = true;
 
 	void Start() {
 		GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
@@ -53,9 +56,9 @@ public class Weapon : MonoBehaviour {
 		weaponEffects = GetComponent<WeaponEffects> ();
 		RandomAimDelay = EnemyAimDelay;
 		CurrentAmmo = weaponStats.ClipSize;
+		Arm = this.transform.parent.GetComponent<ArmRotation> ();
 
-		Crosshair = GameObject.Find("Crosshair");
-		Crosshair.GetComponent<SpriteRenderer>().enabled = false;
+		AimEffectSprite = GameObject.Find("AimEffectSprite");
 
 		audioSource = GameObject.Find ("AudioManager/EffectsAudio").GetComponent<AudioSource> ();
 
@@ -68,16 +71,24 @@ public class Weapon : MonoBehaviour {
 		if(WeaponFireSoundEffect == null){
 			Debug.LogError ("WeaponFireSoundEffect is missing!");
 		}
+		if(AimEffectSprite == null){
+			Debug.LogError ("No 'AimEffectSprite' object found.");
+		}
 	}
 
 	void Update () {
+
 		// When player dies
 		if (player == null)
 			return;
 
-		// Check which aiming mode is selected and do stuff accordingly
+		// booleans for checking if enemy or player is on camera
+		bool playerVisible = player.transform.FindChild("Graphics").GetComponent<SpriteRenderer>().isVisible;
+		bool enemyVisible = this.transform.GetComponent<SpriteRenderer>().isVisible;
+
+		// Check which object type is selected and do stuff accordingly
 		// Logic for player shooting
-		if (Target == aimTowards.mouse) {
+		if (ObjectType == ObjectTypes.player) {
 
 			// Player mouse position
 			Vector2 mousePosition = new Vector2 (Camera.main.ScreenToWorldPoint (Input.mousePosition).x, Camera.main.ScreenToWorldPoint (Input.mousePosition).y);
@@ -110,11 +121,7 @@ public class Weapon : MonoBehaviour {
 				}
 			}
 		// Logic for enemy shooting
-		} else if (Target == aimTowards.player) {
-
-			// booleans for checking if enemy or player is on camera
-			bool playerVisible = player.transform.FindChild("Graphics").GetComponent<SpriteRenderer>().isVisible;
-			bool enemyVisible = this.transform.GetComponent<SpriteRenderer>().isVisible;
+		} else if (ObjectType == ObjectTypes.enemy) {
 
 			// Check if player is close enough to start aiming
 			if (playerVisible && enemyVisible) {
@@ -125,16 +132,29 @@ public class Weapon : MonoBehaviour {
 					RandomAimDelay = Random.Range(EnemyAimDelay - 0.3f, EnemyAimDelay);
 					ShootTimer = 0;
 					Debug.Log ("ENEMY SHOOT");
+
+					// Player position with collider offset
 					Vector3 playerPosition = new Vector3(player.transform.position.x + player.GetComponent<BoxCollider2D>().offset.x, 
 					                                     player.transform.position.y + player.GetComponent<BoxCollider2D>().offset.y,
 					                                     0f);
-					//Debug.DrawRay (FirePoint.position, (playerPosition-FirePoint.position)*30, Color.white, 1);
+
 					Shoot (playerPosition, FirePoint.position);
 
 					// Enemy reload
 					if(CurrentAmmo < 1){
 						StartCoroutine(Reload());
 					}
+				}
+			}
+		} else if (ObjectType == ObjectTypes.boss) {
+			if (playerVisible && enemyVisible) {
+				// Player position with collider offset
+
+				Vector3 playerPosition = new Vector3(player.transform.position.x + player.GetComponent<BoxCollider2D>().offset.x, 
+				                                     player.transform.position.y + player.GetComponent<BoxCollider2D>().offset.y,
+				                                     0f);
+				if(Flag){
+					StartCoroutine(Aim(playerPosition, FirePoint.position));
 				}
 			}
 		}
@@ -151,24 +171,35 @@ public class Weapon : MonoBehaviour {
 		Debug.Log ("Done reloading");
 	}
 
-	void Aim(){		
-		if (GameObject.Find ("Crosshair") != null) {
-			Crosshair.GetComponent<SpriteRenderer>().enabled = true;
-			Crosshair.transform.position = FirePoint.position;
+	IEnumerator Aim(Vector2 aimPosition, Vector2 firePointPosition){ //Vector2 aimPosition, Vector2 firePointPosition
+		Debug.Log ("Start aiming");
+		Flag = false;
+		float time = 0;
+		AimEffect(aimPosition, firePointPosition);
 
-			//rotation
-			Vector3 mousePos = Input.mousePosition;
-			mousePos.z = 5.23f;
-			
-			Vector3 objectPos = Camera.main.WorldToScreenPoint (FirePoint.position);
-			mousePos.x = mousePos.x - objectPos.x;
-			mousePos.y = mousePos.y - objectPos.y;
-			
-			float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
-			Crosshair.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+		while(time < weaponStats.ChargeTime){
+			Arm.FreezeArmAndDirection = true;
+			//Debug.DrawRay (firePointPosition, (aimPosition-firePointPosition), Color.white, 0.1f);
+			time += Time.deltaTime;
+			yield return null;
+			//Debug.Log(time);
 		}
+		Arm.FreezeArmAndDirection = false;
+		Debug.Log ("Stop aiming");
 	}
 
+	void AimEffect(Vector2 aimPosition, Vector2 firePointPosition){
+		Debug.Log ("aimeffect");
+		Transform line = Instantiate (AimTestPrefab, FirePoint.position, FirePoint.rotation) as Transform;
+		LineRenderer linerenderer = line.GetComponent<LineRenderer> ();
+		
+		if(linerenderer != null){
+			linerenderer.SetPosition(0, firePointPosition);
+			linerenderer.SetPosition(1, (aimPosition - firePointPosition) * 3); // If aim is all over the place... fix this
+		}
+		Destroy (line.gameObject, weaponStats.ChargeTime);
+
+	}
 
 	void Shoot(Vector2 aimPosition, Vector2 firePointPosition){
 		Vector3 hitDirection;
