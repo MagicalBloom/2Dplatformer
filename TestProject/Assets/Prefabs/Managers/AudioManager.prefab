@@ -40,6 +40,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 488360}
+  - 114: {fileID: 11409148}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -98,7 +99,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Priority: 128
   DopplerLevel: 1
@@ -223,6 +224,23 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!114 &11409148
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 193790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b5d6c73e373b7347bcac876ff9a6264, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackgroundMusicTitle: {fileID: 0}
+  BackgroundMusicLevel1: {fileID: 8300000, guid: a6a1366b76428cd4c8a18a41ddcd61ca,
+    type: 3}
+  BackgroundMusicLevel2: {fileID: 8300000, guid: 78c8877a7a61cf14396ed666718d95b4,
+    type: 3}
+  BackgroundMusicBoss: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

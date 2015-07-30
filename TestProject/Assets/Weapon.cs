@@ -42,11 +42,15 @@ public class Weapon : MonoBehaviour {
 	public AudioClip WeaponFireSoundEffect;
 	public AudioClip WeaponReloadStartSoundEffect;
 	public AudioClip WeaponReloadEndSoundEffect;
+	public AudioClip WeaponClipEmptySoundEffect;
 
+	private bool ClipIsEmpty = false;
 	private bool Flag = true;
 
 	void Start() {
-		GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo); // Not working for some reason -.-
+		CurrentAmmo = weaponStats.ClipSize;
+		int x = weaponStats.ClipSize;
+		GUIManager.UpdatePlayerAmmo (30, 30); // Not working for some reason -.- weaponStats.ClipSize, CurrentAmmo
 	}
 
 	void Awake () {
@@ -54,7 +58,6 @@ public class Weapon : MonoBehaviour {
 		FirePoint = transform.GetChild(0);
 		weaponEffects = GetComponent<WeaponEffects> ();
 		RandomAimDelay = EnemyAimDelay;
-		CurrentAmmo = weaponStats.ClipSize;
 		Arm = this.transform.parent.GetComponent<ArmRotation> ();
 
 		audioSource = GameObject.Find ("AudioManager/EffectsAudio").GetComponent<AudioSource> ();
@@ -96,22 +99,36 @@ public class Weapon : MonoBehaviour {
 				StartCoroutine(Reload());
 			}
 
+			// Clip empty
+			if(CurrentAmmo <= 0){
+				ClipIsEmpty = true;
+			}
+
+			if(Input.GetMouseButton (0) && CurrentAmmo <= 0 && ClipIsEmpty && ReloadComplete){
+
+
+			}
+
 			// Shooting
 			if(weaponStats.WeaponType == WeaponTypes.full){
-				if (Input.GetMouseButton (0) && ReloadComplete && CurrentAmmo > 0) {
-					if(ShootTimer > weaponStats.FireRate){
+				if (Input.GetMouseButton (0) && ReloadComplete && ShootTimer > weaponStats.FireRate) {
+					if(CurrentAmmo > 0){
 						Shoot (mousePosition, firePointPosition);
-						ShootTimer = 0;
 						GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
+					} else {
+						audioSource.PlayOneShot (WeaponClipEmptySoundEffect, 0.4f);
 					}
+					ShootTimer = 0;
 				}
 			} else {
-				if (Input.GetMouseButtonDown (0) && ReloadComplete && CurrentAmmo > 0) {
-					if(ShootTimer > weaponStats.FireRate){
+				if (Input.GetMouseButtonDown (0) && ReloadComplete && ShootTimer > weaponStats.FireRate) {
+					if(CurrentAmmo > 0){
 						Shoot (mousePosition, firePointPosition);
-						ShootTimer = 0;
 						GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
+					} else {
+						audioSource.PlayOneShot (WeaponClipEmptySoundEffect, 0.4f);
 					}
+					ShootTimer = 0;
 				}
 			}
 		// Logic for enemy shooting
