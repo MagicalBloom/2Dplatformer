@@ -8,6 +8,9 @@ TagManager:
   - Fire
   - hittable
   - enemy
+  - trig_spawnEnemy
+  - trig_startEvent
+  - trig_goal
   layers:
   - Default
   - TransparentFX
@@ -21,7 +24,7 @@ TagManager:
   - Ground
   - GroundUnhittable
   - Enemy
-  - 
+  - Trigger
   - 
   - 
   - 
