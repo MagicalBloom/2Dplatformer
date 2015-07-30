@@ -17,7 +17,6 @@ public class GUIManager : MonoBehaviour {
 	public Texture2D CustomCursor;
 
 	Slider PlayerHealthbarSlider;
-	Slider PlayerLivesSlider;
 
 
 	void Start () {
@@ -25,15 +24,14 @@ public class GUIManager : MonoBehaviour {
 	}
 
 	void Awake() {
+		if(guiManager == null){
+			guiManager = GetComponent<GUIManager>();
+		}
+
 		// Set cursor with a slight delay
 		Invoke ("SetCustomCursor", 0.1f);
 		
 		PlayerHealthbarSlider = PlayerHealthbar.GetComponent<Slider>();
-		PlayerLivesSlider = PlayerLives.GetComponent<Slider> ();
-
-		if(guiManager == null){
-			guiManager = GetComponent<GUIManager>();
-		}
 	}
 
 	void Update () {
@@ -86,6 +84,7 @@ public class GUIManager : MonoBehaviour {
 
 	// Set new value to the player lives
 	public static void UpdatePlayerLives(int newValue){
-		guiManager.PlayerLivesSlider.value = newValue; // tee se slider
+		//guiManager.PlayerLivesSlider.value = newValue;
+		guiManager.PlayerLives.transform.GetChild(0).GetComponent<Text> ().text = "Lives: " + newValue;
 	}
 }

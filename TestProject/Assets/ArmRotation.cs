@@ -22,8 +22,11 @@ public class ArmRotation : MonoBehaviour {
 		FirePoint = this.transform.GetChild (0).GetChild (0);
 	}
 
-	// Update is called once per frame
 	void Update () {
+		// If player dies
+		if(player == null)
+			return;
+
 		Vector3 armScale = this.transform.localScale;
 		Vector3 lastDirection = Direction;
 		float lastRotation = RotationZ;

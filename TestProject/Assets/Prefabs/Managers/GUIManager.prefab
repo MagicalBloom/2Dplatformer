@@ -23,7 +23,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126930}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 48.8626671, y: 8.4453783, z: -136.75}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -44,6 +44,8 @@ MonoBehaviour:
   ExitMenu: {fileID: 0}
   OptionsMenu: {fileID: 0}
   PlayerHealthbar: {fileID: 0}
+  PlayerAmmo: {fileID: 0}
+  PlayerLives: {fileID: 0}
   CustomCursor: {fileID: 2800000, guid: 51c2a36737454704b9c62597d8bcd636, type: 3}
 --- !u!1001 &100100000
 Prefab:

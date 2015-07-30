@@ -13,10 +13,6 @@ public class GameMaster : MonoBehaviour {
 		}
 	}
 
-	public void Update(){
-
-	}
-
 	// Restart current scene
 	public void RestartLevel() {
 		Application.LoadLevel(Application.loadedLevel); // reload current scene

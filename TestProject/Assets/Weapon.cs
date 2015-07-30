@@ -25,7 +25,6 @@ public class Weapon : MonoBehaviour {
 	public Transform AimTestPrefab;
 
 	private WeaponEffects weaponEffects;
-	private GameObject AimEffectSprite;
 
 	private Player player; //test
 	private Enemy enemy;
@@ -47,7 +46,7 @@ public class Weapon : MonoBehaviour {
 	private bool Flag = true;
 
 	void Start() {
-		GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
+		GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo); // Not working for some reason -.-
 	}
 
 	void Awake () {
@@ -57,8 +56,6 @@ public class Weapon : MonoBehaviour {
 		RandomAimDelay = EnemyAimDelay;
 		CurrentAmmo = weaponStats.ClipSize;
 		Arm = this.transform.parent.GetComponent<ArmRotation> ();
-
-		AimEffectSprite = GameObject.Find("AimEffectSprite");
 
 		audioSource = GameObject.Find ("AudioManager/EffectsAudio").GetComponent<AudioSource> ();
 
@@ -70,9 +67,6 @@ public class Weapon : MonoBehaviour {
 		}
 		if(WeaponFireSoundEffect == null){
 			Debug.LogError ("WeaponFireSoundEffect is missing!");
-		}
-		if(AimEffectSprite == null){
-			Debug.LogError ("No 'AimEffectSprite' object found.");
 		}
 	}
 
