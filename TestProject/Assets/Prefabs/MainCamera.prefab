@@ -64,6 +64,7 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
+  m_StereoMirrorMode: 0
 --- !u!81 &8186134
 AudioListener:
   m_ObjectHideFlags: 1
@@ -89,13 +90,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d8238cc53530b64fbb7828c3d3bb591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  damping: 0
-  lookAheadFactor: 0
-  lookAheadReturnSpeed: 0
-  lookAheadMoveThreshold: 0
-  minYposition: -5
-  maxYposition: 5
+  Target: {fileID: 0}
+  PositionYOffset: 3
+  MinXposition: 0
 --- !u!124 &12492398
 Behaviour:
   m_ObjectHideFlags: 1

@@ -22,7 +22,7 @@ public class Parallaxing : MonoBehaviour {
 
 		// Assign parrallax amount to each background
 		for(int i = 0; i < Backgrounds.Length; i++){
-			ParallaxAmount[i] = Backgrounds[i].position.z-1;
+			ParallaxAmount[i] = Backgrounds[i].position.z * -1;
 		}
 	}
 

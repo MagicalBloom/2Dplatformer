@@ -31,7 +31,7 @@ public class Weapon : MonoBehaviour {
 	private ArmRotation Arm;
 
 	private int CurrentAmmo;
-	private float RandomAimDelay;
+	private float RandomizeFirerate;
 	private float HitRange = 45;
 	private float ShootTimer;
 	private float ReloadTimer;
@@ -48,16 +48,18 @@ public class Weapon : MonoBehaviour {
 	private bool Flag = true;
 
 	void Start() {
+		// Update player HUD
 		CurrentAmmo = weaponStats.ClipSize;
-		int x = weaponStats.ClipSize;
-		//GUIManager.UpdatePlayerAmmo (30, 30); // Not working for some reason -.- weaponStats.ClipSize, CurrentAmmo
+		if(ObjectType == ObjectTypes.player){
+			GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
+		}
 	}
 
 	void Awake () {
 		player = GameObject.Find("Player").GetComponent<Player>(); //test
 		FirePoint = transform.GetChild(0);
 		weaponEffects = GetComponent<WeaponEffects> ();
-		RandomAimDelay = EnemyAimDelay;
+		RandomizeFirerate = EnemyAimDelay;
 		Arm = this.transform.parent.GetComponent<ArmRotation> ();
 
 		audioSource = GameObject.Find ("AudioManager/EffectsAudio").GetComponent<AudioSource> ();
@@ -124,7 +126,7 @@ public class Weapon : MonoBehaviour {
 				if (Input.GetMouseButtonDown (0) && ReloadComplete && ShootTimer > weaponStats.FireRate) {
 					if(CurrentAmmo > 0){
 						Shoot (mousePosition, firePointPosition);
-						//GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
+						GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
 					} else {
 						audioSource.PlayOneShot (WeaponClipEmptySoundEffect, 0.4f);
 					}
@@ -137,18 +139,38 @@ public class Weapon : MonoBehaviour {
 			// Check if player is close enough to start aiming
 			if (playerVisible && enemyVisible) {
 
-				if (ShootTimer < RandomAimDelay) {
+				// Initial delay before enemy starts to shoot
+				bool startShooting = false;
+				if(!startShooting){
+					StartCoroutine(WaitSomeSeconds(EnemyAimDelay));
+					startShooting = true;
+				}
+
+				// Enemy shooting logic
+				if (ShootTimer < RandomizeFirerate && startShooting) {
 					ShootTimer += Time.deltaTime;
-				} else if(ShootTimer > RandomAimDelay && ReloadComplete && CurrentAmmo > 0) {
-					RandomAimDelay = Random.Range(EnemyAimDelay - 0.3f, EnemyAimDelay);
+				} else if(ShootTimer > RandomizeFirerate && ReloadComplete && CurrentAmmo > 0) {
+					// Randomize enemy aim delay a bit
+					RandomizeFirerate = Random.Range(weaponStats.FireRate - 0.3f, weaponStats.FireRate);
+
+					// Reset the timer
 					ShootTimer = 0;
-					Debug.Log ("ENEMY SHOOT");
 
 					// Player position with collider offset
 					Vector3 playerPosition = new Vector3(player.transform.position.x + player.GetComponent<BoxCollider2D>().offset.x, 
 					                                     player.transform.position.y + player.GetComponent<BoxCollider2D>().offset.y,
 					                                     0f);
 
+					// Randomize enemy aiming a bit
+					float minValX = playerPosition.x - 0.2f;
+					float maxValX = playerPosition.x + 0.2f;
+					float minValY = playerPosition.y - 0.2f;
+					float maxValY = playerPosition.y + 0.2f;
+					
+					playerPosition.x = Random.Range(minValX,maxValX);
+					playerPosition.y = Random.Range(minValY,maxValY);
+
+					// Call the shoot method
 					Shoot (playerPosition, FirePoint.position);
 
 					// Enemy reload
@@ -171,15 +193,22 @@ public class Weapon : MonoBehaviour {
 		}
 	}
 
+	// Just for creating delays
+	IEnumerator WaitSomeSeconds(float seconds){
+		yield return new WaitForSeconds(seconds);
+	}
+
 	IEnumerator Reload(){
-		Debug.Log ("Reloading");
 		audioSource.PlayOneShot (WeaponReloadStartSoundEffect, 0.3f); // Clip out sound effect
 		yield return new WaitForSeconds(weaponStats.ReloadTime); // Reload wait time
 		audioSource.PlayOneShot (WeaponReloadEndSoundEffect, 0.3f); // Clip in sound effect
 		CurrentAmmo = weaponStats.ClipSize; // Reset current ammo to max
 		ReloadComplete = true;
-		GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo); // Update player HUD
-		Debug.Log ("Done reloading");
+
+		// Check if player is reloading
+		if(ObjectType == ObjectTypes.player) {
+			GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo); // Update player HUD
+		}
 	}
 
 	IEnumerator Aim(Vector2 aimPosition, Vector2 firePointPosition){ //Vector2 aimPosition, Vector2 firePointPosition
@@ -219,6 +248,8 @@ public class Weapon : MonoBehaviour {
 		Collider2D collider;
 
 		// reminder: http://answers.unity3d.com/questions/211910/getting-object-local-direction.html
+
+		//HitRange = Camera.main.orthographicSize * Screen.width / Screen.height; half of camera width
 
 		// raycast is used to see when player hits something
 		RaycastHit2D hit = Physics2D.Raycast (firePointPosition, aimPosition-firePointPosition, HitRange, WhatToHit);
