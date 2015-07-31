@@ -26,7 +26,8 @@ public class Weapon : MonoBehaviour {
 
 	private WeaponEffects weaponEffects;
 
-	private Player player; //test
+	private Player player;
+	private Collider2D PlayerCollider;
 	private Enemy enemy;
 	private ArmRotation Arm;
 
@@ -56,7 +57,8 @@ public class Weapon : MonoBehaviour {
 	}
 
 	void Awake () {
-		player = GameObject.Find("Player").GetComponent<Player>(); //test
+		player = GameObject.Find("Player").GetComponent<Player>();
+		PlayerCollider = GameObject.Find("Player").GetComponent<BoxCollider2D>();
 		FirePoint = transform.GetChild(0);
 		weaponEffects = GetComponent<WeaponEffects> ();
 		RandomizeFirerate = EnemyAimDelay;
@@ -157,9 +159,7 @@ public class Weapon : MonoBehaviour {
 					ShootTimer = 0;
 
 					// Player position with collider offset
-					Vector3 playerPosition = new Vector3(player.transform.position.x + player.GetComponent<BoxCollider2D>().offset.x, 
-					                                     player.transform.position.y + player.GetComponent<BoxCollider2D>().offset.y,
-					                                     0f);
+					Vector3 playerPosition = PlayerCollider.transform.TransformPoint(new Vector3(PlayerCollider.offset.x, PlayerCollider.offset.y, 0));
 
 					// Randomize enemy aiming a bit
 					float minValX = playerPosition.x - 0.2f;
@@ -183,10 +183,13 @@ public class Weapon : MonoBehaviour {
 			if (playerVisible && enemyVisible) {
 				// Player position with collider offset
 
-				Vector3 playerPosition = new Vector3(player.transform.position.x + player.GetComponent<BoxCollider2D>().offset.x, 
-				                                     player.transform.position.y + player.GetComponent<BoxCollider2D>().offset.y,
+				Vector3 playerPosition = PlayerCollider.transform.TransformPoint(new Vector3(PlayerCollider.offset.x, PlayerCollider.offset.y, 0));
+				/*
+				Vector3 playerPosition = new Vector3(PlayerCollider.transform.position.x + PlayerCollider.offset.x, 
+				                                     PlayerCollider.transform.position.y + PlayerCollider.offset.y,
 				                                     0f);
-				if(Flag){
+				 */
+				if(Flag){ // Set the flag based on boss behaviour or something
 					StartCoroutine(Aim(playerPosition, FirePoint.position));
 				}
 			}
@@ -199,9 +202,9 @@ public class Weapon : MonoBehaviour {
 	}
 
 	IEnumerator Reload(){
-		audioSource.PlayOneShot (WeaponReloadStartSoundEffect, 0.3f); // Clip out sound effect
+		audioSource.PlayOneShot (WeaponReloadStartSoundEffect, 0.4f); // Clip out sound effect
 		yield return new WaitForSeconds(weaponStats.ReloadTime); // Reload wait time
-		audioSource.PlayOneShot (WeaponReloadEndSoundEffect, 0.3f); // Clip in sound effect
+		audioSource.PlayOneShot (WeaponReloadEndSoundEffect, 0.4f); // Clip in sound effect
 		CurrentAmmo = weaponStats.ClipSize; // Reset current ammo to max
 		ReloadComplete = true;
 
@@ -226,16 +229,21 @@ public class Weapon : MonoBehaviour {
 		}
 		Arm.FreezeArmAndDirection = false;
 		Debug.Log ("Stop aiming");
+		Shoot(aimPosition, firePointPosition);
+		Debug.Log ("Shoot after aiming");
 	}
 
 	void AimEffect(Vector2 aimPosition, Vector2 firePointPosition){
-		Debug.Log ("aimeffect");
+		//Vector3 hitDirection = new Vector3();
+		Vector2 hitPosition; 
+		hitPosition = (aimPosition - firePointPosition) * 3;
+		hitPosition += firePointPosition;
 		Transform line = Instantiate (AimTestPrefab, FirePoint.position, FirePoint.rotation) as Transform;
 		LineRenderer linerenderer = line.GetComponent<LineRenderer> ();
 		
 		if(linerenderer != null){
 			linerenderer.SetPosition(0, firePointPosition);
-			linerenderer.SetPosition(1, (aimPosition - firePointPosition) * 3); // If aim is all over the place... fix this
+			linerenderer.SetPosition(1, hitPosition); // If aim is all over the place... fix this (aimPosition - firePointPosition) * 3
 		}
 		Destroy (line.gameObject, weaponStats.ChargeTime);
 
@@ -248,8 +256,11 @@ public class Weapon : MonoBehaviour {
 		Collider2D collider;
 
 		// reminder: http://answers.unity3d.com/questions/211910/getting-object-local-direction.html
+		Vector2 cameraCornerPosition = Camera.main.ViewportToWorldPoint (new Vector3(1f, 1f, -10f));
+		Vector2 playerPostition = new Vector2 (player.transform.position.x, player.transform.position.y);
+		HitRange = Vector2.Distance(playerPostition, cameraCornerPosition); //half of camera width + distance between camera and player //(Camera.main.orthographicSize * Screen.width / Screen.height) + 
+		// direction somehow
 
-		//HitRange = Camera.main.orthographicSize * Screen.width / Screen.height; half of camera width
 
 		// raycast is used to see when player hits something
 		RaycastHit2D hit = Physics2D.Raycast (firePointPosition, aimPosition-firePointPosition, HitRange, WhatToHit);
