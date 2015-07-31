@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour {
 	}
 
 	void Update(){
+		/*
 		if(Input.GetKeyDown(KeyCode.M)){
 			audioSource.clip = BackgroundMusicLevel2;
 			audioSource.volume = 0.5f;
@@ -25,10 +26,11 @@ public class AudioManager : MonoBehaviour {
 			audioSource.volume = 0.5f;
 			audioSource.Play();
 		}
-
+		*/
 		if(Input.GetKeyDown(KeyCode.N)){
 			audioSource.Stop();
 		}
+
 	}
 
 	void OnLevelWasLoaded(int level){
@@ -41,6 +43,9 @@ public class AudioManager : MonoBehaviour {
 			audioSource.Play();
 			break;
 		case 2: // Level 2
+			audioSource.clip = BackgroundMusicLevel2;
+			audioSource.volume = 0.4f;
+			audioSource.Play();
 			break;
 		case 3: // Boss
 			break;

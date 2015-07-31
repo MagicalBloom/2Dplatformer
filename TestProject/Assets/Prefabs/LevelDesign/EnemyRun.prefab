@@ -155,7 +155,6 @@ MeshFilter:
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!50 &5038132
 Rigidbody2D:
-  serializedVersion: 2
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -164,11 +163,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
+  m_FixedAngle: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &6118912
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -260,18 +259,23 @@ MonoBehaviour:
     Damage: 5
     FireRate: 1
     WeaponType: 0
-    ReloadTime: 0
-    ClipSize: 0
+    ReloadTime: 2
+    ClipSize: 12
     ChargeTime: 0
-  EnemyAimDelay: 0
+  EnemyAimDelay: 1
   WhatToHit:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 768
   ObjectType: 1
   AimTestPrefab: {fileID: 0}
-  WeaponFireSoundEffect: {fileID: 0}
-  WeaponReloadStartSoundEffect: {fileID: 0}
-  WeaponReloadEndSoundEffect: {fileID: 0}
+  WeaponFireSoundEffect: {fileID: 8300000, guid: 27d4c21caf811cb479b84b4a7ec5ff0b,
+    type: 3}
+  WeaponReloadStartSoundEffect: {fileID: 8300000, guid: 8bd5b35d0b3520c459896830a9ad4f62,
+    type: 3}
+  WeaponReloadEndSoundEffect: {fileID: 8300000, guid: fda62645c97b98148ab86e07028546a6,
+    type: 3}
+  WeaponClipEmptySoundEffect: {fileID: 8300000, guid: ecc766ad20e59f44e9e9830797bc5a12,
+    type: 3}
 --- !u!212 &21220238
 SpriteRenderer:
   m_ObjectHideFlags: 1

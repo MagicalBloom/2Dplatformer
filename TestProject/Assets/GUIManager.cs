@@ -79,6 +79,7 @@ public class GUIManager : MonoBehaviour {
 
 	// Set new valie to the ammo display
 	public static void UpdatePlayerAmmo(int clipSize, int remainingAmmo){
+		//Debug.Log ("aaa");
 		guiManager.PlayerAmmo.transform.GetChild(0).GetComponent<Text> ().text = remainingAmmo + "/" + clipSize;
 	}
 

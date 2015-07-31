@@ -50,7 +50,7 @@ public class Weapon : MonoBehaviour {
 	void Start() {
 		CurrentAmmo = weaponStats.ClipSize;
 		int x = weaponStats.ClipSize;
-		GUIManager.UpdatePlayerAmmo (30, 30); // Not working for some reason -.- weaponStats.ClipSize, CurrentAmmo
+		//GUIManager.UpdatePlayerAmmo (30, 30); // Not working for some reason -.- weaponStats.ClipSize, CurrentAmmo
 	}
 
 	void Awake () {
@@ -124,7 +124,7 @@ public class Weapon : MonoBehaviour {
 				if (Input.GetMouseButtonDown (0) && ReloadComplete && ShootTimer > weaponStats.FireRate) {
 					if(CurrentAmmo > 0){
 						Shoot (mousePosition, firePointPosition);
-						GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
+						//GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
 					} else {
 						audioSource.PlayOneShot (WeaponClipEmptySoundEffect, 0.4f);
 					}
