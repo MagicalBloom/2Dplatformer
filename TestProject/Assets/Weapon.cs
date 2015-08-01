@@ -279,6 +279,8 @@ public class Weapon : MonoBehaviour {
 
 			if(hit.collider.tag == "enemy") {
 				hit.collider.GetComponent<Enemy>().DamageEnemy(weaponStats.Damage);
+			} else if(hit.collider.tag == "boss") {
+				hit.collider.GetComponent<Boss>().DamageBoss(weaponStats.Damage);
 			} else if(hit.collider.tag == "hittable") {
 				 // wall
 			} else if(hit.collider.tag == "Player") {

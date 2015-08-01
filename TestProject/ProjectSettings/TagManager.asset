@@ -11,6 +11,7 @@ TagManager:
   - trig_spawnEnemy
   - trig_startEvent
   - trig_goal
+  - boss
   layers:
   - Default
   - TransparentFX
@@ -25,8 +26,8 @@ TagManager:
   - GroundUnhittable
   - Enemy
   - Trigger
-  - 
-  - 
+  - Boss
+  - Explosive
   - 
   - 
   - 

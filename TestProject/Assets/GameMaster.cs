@@ -36,5 +36,9 @@ public class GameMaster : MonoBehaviour {
 
 	public static void KillEnemy(Enemy enemy){
 		Destroy (enemy.gameObject); // just delete the enemy for now
-	}	
+	}
+
+	public static void KillBoss(Boss boss){
+		Destroy (boss.gameObject); // just delete the boss for now
+	}
 }

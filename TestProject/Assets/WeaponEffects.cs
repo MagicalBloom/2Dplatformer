@@ -30,7 +30,7 @@ public class WeaponEffects : MonoBehaviour {
 	}
 
 	public void BulletHit(Vector3 hitDirection ,Vector3 hitPosition, Vector3 hitNormal, Collider2D collider){
-		if(collider.CompareTag("enemy") || collider.CompareTag("Player")){
+		if(collider.CompareTag("enemy") || collider.CompareTag("Player") || collider.CompareTag("boss")){
 			// Instantiate the bloodsplater to the opposite direction of the hit
 			Transform bloodParticle = Instantiate (BloodSplatterPrefab, hitPosition, Quaternion.FromToRotation (Vector3.back, -hitDirection)) as Transform;
 			Destroy (bloodParticle.gameObject, 1.0f);
