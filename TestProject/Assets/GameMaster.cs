@@ -28,6 +28,15 @@ public class GameMaster : MonoBehaviour {
 		Application.Quit (); // quit the game
 	}
 
+	// This is kinda confusing way of doing this :D
+	// Just to make this wait method available everywhere easily
+	IEnumerator WaitSomeSeconds2(float seconds){
+		yield return new WaitForSeconds(seconds);
+	}
+	public static void WaitSomeSeconds(float seconds){
+		gm.WaitSomeSeconds2 (seconds);
+	}
+
 	// Destroy the player gameobject and display the game over menu with DisplayGameOverMenu method
 	public static void KillPlayer(Player player){
 		Destroy (player.gameObject); // just delete the player for now

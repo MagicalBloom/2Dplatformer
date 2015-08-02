@@ -60,16 +60,17 @@ public class Boss : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
 		//MoveBoss (Waypoints[1].position);
-		MoveBoss (CalcMoveBoss());
+		//MoveBoss (CalcMoveBoss());
 		if (TestBoolean == false) {
-			ThrowGrenades ();
+			StartCoroutine(ThrowGrenades (10));
 			TestBoolean = true;
 		}
+
+		//Problems with stopping movement and getting the boss to stop at right position
 		/*
-		 * Problems with stopping movement and actually getting the boss to stop at right position
 		MovementTimer += Time.fixedDeltaTime;
 		if(MovementTimer < MovementDuration && EnemyMoving == true){
 			if(MovementTimer > MovementDuration - 0.5f){
@@ -84,6 +85,7 @@ public class Boss : MonoBehaviour {
 			MovementTimer = 0;
 		}
 		*/
+
 	}
 
 	public void DamageBoss(int damage){
@@ -94,17 +96,16 @@ public class Boss : MonoBehaviour {
 		}
 	}
 
-	public void MoveBoss(Vector3 velocity){
-		BossRigidbody2D.velocity = velocity;
+	public void MoveBoss(Vector3 targetWaypoint){
+		//BossRigidbody2D.velocity = velocity;
+		BossRigidbody2D.velocity = (targetWaypoint - transform.position) * bossStats.MovementSpeed;
+		//BossRigidbody2D.velocity = new Vector2(-1f * bossStats.MovementSpeed, BossRigidbody2D.velocity.y);
 	}
 
-	public Vector3 CalcMoveBoss() {
+	Vector3 CalcMoveBoss() {
+		// Lerp isn't working quite right with rigidbody
 		fromWaypointIndex %= globalWaypoints.Length;
 		int toWaypointIndex = fromWaypointIndex + 1;
-
-		//BossRigidbody2D.velocity = (targetWaypoint - transform.position) * bossStats.MovementSpeed;
-		//BossRigidbody2D.velocity = new Vector2(-1f * bossStats.MovementSpeed, BossRigidbody2D.velocity.y);
-
 		float distance = Vector3.Distance(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex]);
 
 		percentBetweenWaypoints += Time.deltaTime * bossStats.MovementSpeed/distance;
@@ -126,18 +127,26 @@ public class Boss : MonoBehaviour {
 		return newPosition - transform.position;
 	}
 
-	public void ThrowGrenades() {
-		float randomX = Random.Range (-0.5f, 0.5f);
-		float randomY = Random.Range (0f, 1f);
-		float randomVelocity = Random.Range (10f, 20f);
-		Vector3 direction = new Vector3 (randomX, randomY, 0f);
+	public IEnumerator ThrowGrenades(int amount) {
+		for(int i = 0; i < amount; i++) {
+			// Create a small delay between grenades
+			yield return new WaitForSeconds(0.2f);
 
-		Transform grenadeClone = Instantiate (Grenade, transform.position, transform.rotation) as Transform;
-		grenadeClone.GetComponent<Rigidbody2D> ().velocity = direction * randomVelocity;
+			// Randomize direction of the grenades
+			float randomX = Random.Range (-0.5f, 0.5f);
+			float randomY = Random.Range (0.2f, 0.8f);
+			float randomVelocity = Random.Range (5f, 10f);
+			Vector3 direction = new Vector3 (randomX, randomY, 0f);
+
+			// Instantiate the grenades
+			Transform grenadeClone = Instantiate (Grenade, transform.position, transform.rotation) as Transform;
+			grenadeClone.GetComponent<Rigidbody2D> ().velocity = direction * randomVelocity;
+		}
 	}
 	
 
 	void OnDrawGizmos() {
+		// Visualize waypoints
 		if (localWaypoints != null) {
 			Gizmos.color = Color.red;
 			float size = .3f;

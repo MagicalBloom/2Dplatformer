@@ -1252,32 +1252,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cf273950c4e723941b464320583ac5f5, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &681946664 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 174656, guid: c1151886dd3435141bc10893de1d310d, type: 2}
-  m_PrefabInternal: {fileID: 1220899601}
---- !u!114 &681946666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 681946664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9119027b3b1675f4abbe98394c487e57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bossStats:
-    MaxHealth: 100
-    MovementSpeed: 20
-    AimDelay: 0
-  Waypoints:
-  - {fileID: 46497659}
-  - {fileID: 598542725}
-  Grenade: {fileID: 444356, guid: cf273950c4e723941b464320583ac5f5, type: 2}
-  localWaypoints:
-  - {x: -18, y: 0, z: 0}
-  - {x: 5, y: 0, z: 0}
 --- !u!1 &791570158
 GameObject:
   m_ObjectHideFlags: 0
@@ -2286,7 +2260,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 429860, guid: c1151886dd3435141bc10893de1d310d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 12.3900003
+      value: 21.4899998
       objectReference: {fileID: 0}
     - target: {fileID: 429860, guid: c1151886dd3435141bc10893de1d310d, type: 2}
       propertyPath: m_LocalPosition.y
@@ -2316,36 +2290,15 @@ Prefab:
       propertyPath: m_RootOrder
       value: 12
       objectReference: {fileID: 0}
-    - target: {fileID: 5027054, guid: c1151886dd3435141bc10893de1d310d, type: 2}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5027054, guid: c1151886dd3435141bc10893de1d310d, type: 2}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5027054, guid: c1151886dd3435141bc10893de1d310d, type: 2}
-      propertyPath: m_LinearDrag
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 174656, guid: c1151886dd3435141bc10893de1d310d, type: 2}
-      propertyPath: m_TagString
-      value: boss
-      objectReference: {fileID: 0}
-    - target: {fileID: 174656, guid: c1151886dd3435141bc10893de1d310d, type: 2}
-      propertyPath: m_Layer
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 174656, guid: c1151886dd3435141bc10893de1d310d, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5027054, guid: c1151886dd3435141bc10893de1d310d, type: 2}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 11470456, guid: c1151886dd3435141bc10893de1d310d, type: 2}
+    - target: {fileID: 11421104, guid: c1151886dd3435141bc10893de1d310d, type: 2}
+      propertyPath: Waypoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 46497659}
+    - target: {fileID: 11421104, guid: c1151886dd3435141bc10893de1d310d, type: 2}
+      propertyPath: Waypoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 598542725}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c1151886dd3435141bc10893de1d310d, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1233740640

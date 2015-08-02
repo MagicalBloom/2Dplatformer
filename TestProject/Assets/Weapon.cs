@@ -144,7 +144,7 @@ public class Weapon : MonoBehaviour {
 				// Initial delay before enemy starts to shoot
 				bool startShooting = false;
 				if(!startShooting){
-					StartCoroutine(WaitSomeSeconds(EnemyAimDelay));
+					GameMaster.WaitSomeSeconds(EnemyAimDelay);
 					startShooting = true;
 				}
 
@@ -194,11 +194,6 @@ public class Weapon : MonoBehaviour {
 				}
 			}
 		}
-	}
-
-	// Just for creating delays
-	IEnumerator WaitSomeSeconds(float seconds){
-		yield return new WaitForSeconds(seconds);
 	}
 
 	IEnumerator Reload(){
