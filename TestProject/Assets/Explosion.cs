@@ -15,8 +15,7 @@ public class Explosion : MonoBehaviour {
 	public ExplosionStats explosionStats = new ExplosionStats();
 	public GameObject ExplosionEffect;
 	public AudioClip ExplosionSoundEffect;
-
-	private Transform ExplosiveObject;
+	
 	private AudioSource audioSource;
 	private Player player;
 	private CircleCollider2D ExplosionRadius;
@@ -28,7 +27,6 @@ public class Explosion : MonoBehaviour {
 
 	void Awake () {
 		ExplosionRadius = GetComponent<CircleCollider2D> ();
-		ExplosiveObject = this.transform;
 
 		// Disable collider so it can pass trough the floor when boss trows them. (This isn't good if we want to use this class later for other explosives :/)
 		ParentCollider = transform.parent.GetComponent<CircleCollider2D> ();
@@ -59,8 +57,8 @@ public class Explosion : MonoBehaviour {
 			} else if(CurrentExplosionRadius >= explosionStats.ExplosionSize && Exploded == false) {
 				Exploded = true;
 				audioSource.PlayOneShot (ExplosionSoundEffect, 0.3f);
-				Transform clone = Instantiate(ExplosionEffect, transform.position, transform.rotation) as Transform;
-				//Destroy (clone.gameObject, 0.2f); This or parenting won't work -.-
+				GameObject clone = Instantiate(ExplosionEffect, transform.position, transform.rotation) as GameObject;
+				clone.transform.SetParent(transform);
 				Destroy(this.transform.parent.gameObject, 0.2f);
 			}
 			ExplosionRadius.radius = CurrentExplosionRadius;

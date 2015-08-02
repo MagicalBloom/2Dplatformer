@@ -62,10 +62,10 @@ public class Boss : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 
-		//MoveBoss (Waypoints[1].position);
+		MoveBoss (Waypoints[0].position);
 		//MoveBoss (CalcMoveBoss());
 		if (TestBoolean == false) {
-			StartCoroutine(ThrowGrenades (10));
+			StartCoroutine(ThrowGrenades (4, -1));
 			TestBoolean = true;
 		}
 
@@ -127,15 +127,15 @@ public class Boss : MonoBehaviour {
 		return newPosition - transform.position;
 	}
 
-	public IEnumerator ThrowGrenades(int amount) {
+	public IEnumerator ThrowGrenades(int amount, int throwDirection) {
 		for(int i = 0; i < amount; i++) {
 			// Create a small delay between grenades
 			yield return new WaitForSeconds(0.2f);
 
 			// Randomize direction of the grenades
-			float randomX = Random.Range (-0.5f, 0.5f);
-			float randomY = Random.Range (0.2f, 0.8f);
-			float randomVelocity = Random.Range (5f, 10f);
+			float randomX = Random.Range (0.3f, 0.6f) * throwDirection;
+			float randomY = Random.Range (0f, 0.15f);
+			float randomVelocity = Random.Range (5f, 25f);
 			Vector3 direction = new Vector3 (randomX, randomY, 0f);
 
 			// Instantiate the grenades
