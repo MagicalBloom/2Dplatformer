@@ -22,10 +22,16 @@ public class Boss : MonoBehaviour {
 		}	
 	}
 
+	public static bool FreezeBoss = false;
+
 	public BossStats bossStats = new BossStats();
 
-	public Transform[] Waypoints;
+	public Transform[] Waypoints; // right center left
+	private Transform fromWaypoint;
 	public Transform Grenade;
+
+	private GameObject Rifle;
+	private GameObject Uzi;
 
 	public Vector3[] localWaypoints;
 	private Vector3[] globalWaypoints;
@@ -47,8 +53,11 @@ public class Boss : MonoBehaviour {
 		bossStats.Init ();
 		BossRigidbody2D = GetComponent<Rigidbody2D>();
 		BossAnimator = GetComponent<Animator>();
-		//this.transform.position = Waypoints [0].position;
 
+		Rifle = transform.GetChild (0).FindChild ("AWP").gameObject;
+		Uzi = transform.GetChild (0).FindChild ("Uzi").gameObject;
+
+		fromWaypoint = Waypoints[0];
 		globalWaypoints = new Vector3[localWaypoints.Length];
 		for (int i =0; i < localWaypoints.Length; i++) {
 			globalWaypoints[i] = localWaypoints[i] + transform.position;
@@ -62,12 +71,14 @@ public class Boss : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 
-		MoveBoss (Waypoints[0].position);
+		//MoveBoss (Waypoints[0].position);
 		//MoveBoss (CalcMoveBoss());
+		/*
 		if (TestBoolean == false) {
 			StartCoroutine(ThrowGrenades (4, -1));
 			TestBoolean = true;
 		}
+		*/
 
 		//Problems with stopping movement and getting the boss to stop at right position
 		/*
@@ -88,6 +99,17 @@ public class Boss : MonoBehaviour {
 
 	}
 
+	void Update(){
+		if(FreezeBoss == true){
+			StopBossFromMoving();
+		}
+	}
+
+	void StopBossFromMoving(){
+		BossRigidbody2D.velocity = new Vector2(0, 0);
+		BossRigidbody2D.angularVelocity = 0;
+	}
+
 	public void DamageBoss(int damage){
 		bossStats.CurrentHealth -= damage;
 		
@@ -96,10 +118,22 @@ public class Boss : MonoBehaviour {
 		}
 	}
 
-	public void MoveBoss(Vector3 targetWaypoint){
-		//BossRigidbody2D.velocity = velocity;
-		BossRigidbody2D.velocity = (targetWaypoint - transform.position) * bossStats.MovementSpeed;
-		//BossRigidbody2D.velocity = new Vector2(-1f * bossStats.MovementSpeed, BossRigidbody2D.velocity.y);
+	public void MoveBoss(Transform targetWaypoint){
+		//BossRigidbody2D.velocity = (targetWaypoint - transform.position) * bossStats.MovementSpeed;
+
+		Vector3 direction = targetWaypoint.position - fromWaypoint.position;
+		direction.Normalize();
+		BossRigidbody2D.velocity = direction * bossStats.MovementSpeed;
+
+		float distance = Vector3.Distance(targetWaypoint.position, fromWaypoint.position);
+		percentBetweenWaypoints += Time.deltaTime * bossStats.MovementSpeed/distance;
+
+		if(percentBetweenWaypoints >= 1){
+			percentBetweenWaypoints = 0;
+			//Debug.Log("STOOOOOOOOOOOOOOOOOOOP");
+			BossRigidbody2D.velocity = new Vector2(0, 0);
+			fromWaypoint = targetWaypoint;
+		}
 	}
 
 	Vector3 CalcMoveBoss() {
@@ -127,6 +161,7 @@ public class Boss : MonoBehaviour {
 		return newPosition - transform.position;
 	}
 
+	// Throw grenades to left or right with random angle and force
 	public IEnumerator ThrowGrenades(int amount, int throwDirection) {
 		for(int i = 0; i < amount; i++) {
 			// Create a small delay between grenades
@@ -143,7 +178,17 @@ public class Boss : MonoBehaviour {
 			grenadeClone.GetComponent<Rigidbody2D> ().velocity = direction * randomVelocity;
 		}
 	}
-	
+
+	// Switch weapons between Uzi and Rifle
+	public void SwitchWeapon(){
+		if (Rifle.activeInHierarchy) {
+			Rifle.SetActive(false);
+			Uzi.SetActive(true);
+		} else {
+			Rifle.SetActive(true);
+			Uzi.SetActive(false);
+		}
+	}
 
 	void OnDrawGizmos() {
 		// Visualize waypoints

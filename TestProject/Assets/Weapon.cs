@@ -46,7 +46,8 @@ public class Weapon : MonoBehaviour {
 	public AudioClip WeaponClipEmptySoundEffect;
 
 	private bool ClipIsEmpty = false;
-	private bool Flag = true;
+
+	public bool ExecuteAttack = false;
 
 	void Start() {
 		// Update player HUD
@@ -158,20 +159,8 @@ public class Weapon : MonoBehaviour {
 					// Reset the timer
 					ShootTimer = 0;
 
-					// Player position with collider offset
-					Vector3 playerPosition = PlayerCollider.transform.TransformPoint(new Vector3(PlayerCollider.offset.x, PlayerCollider.offset.y, 0));
-
-					// Randomize enemy aiming a bit
-					float minValX = playerPosition.x - 0.2f;
-					float maxValX = playerPosition.x + 0.2f;
-					float minValY = playerPosition.y - 0.2f;
-					float maxValY = playerPosition.y + 0.2f;
-					
-					playerPosition.x = Random.Range(minValX,maxValX);
-					playerPosition.y = Random.Range(minValY,maxValY);
-
-					// Call the shoot method
-					Shoot (playerPosition, FirePoint.position);
+					// Call the Shoot method
+					Shoot (playerPositionRandomized(0.2f), FirePoint.position);
 
 					// Enemy reload
 					if(CurrentAmmo < 1){
@@ -189,11 +178,42 @@ public class Weapon : MonoBehaviour {
 				                                     PlayerCollider.transform.position.y + PlayerCollider.offset.y,
 				                                     0f);
 				 */
-				if(Flag){ // Set the flag based on boss behaviour or something
-					StartCoroutine(Aim(playerPosition, FirePoint.position));
+				if(weaponStats.WeaponType == WeaponTypes.single){ // Boss is using single shot rifle
+					if(ExecuteAttack){ // Set the flag based on boss behaviour or something
+						StartCoroutine(Aim(playerPosition, FirePoint.position));
+					}
+				} else { // Boss is using uzi
+					if(ExecuteAttack){
+						if(ShootTimer < weaponStats.FireRate){
+							ShootTimer += Time.deltaTime;
+						} else {
+							// Reset the timer
+							ShootTimer = 0;
+
+							// Call the Shoot method
+							Shoot (playerPositionRandomized(3f), FirePoint.position);
+						}
+					}
 				}
 			}
 		}
+	}
+
+	// Method for randomizing enemy aiming
+	Vector2 playerPositionRandomized(float randomness) {
+		// Player position with collider offset
+		Vector2 playerPosition = PlayerCollider.transform.TransformPoint(new Vector3(PlayerCollider.offset.x, PlayerCollider.offset.y));
+		
+		// Randomize enemy aiming a bit
+		float minValX = playerPosition.x - randomness;
+		float maxValX = playerPosition.x + randomness;
+		float minValY = playerPosition.y - randomness;
+		float maxValY = playerPosition.y + randomness;
+		
+		playerPosition.x = Random.Range(minValX,maxValX);
+		playerPosition.y = Random.Range(minValY,maxValY);
+
+		return playerPosition;
 	}
 
 	IEnumerator Reload(){
@@ -211,7 +231,8 @@ public class Weapon : MonoBehaviour {
 
 	IEnumerator Aim(Vector2 aimPosition, Vector2 firePointPosition){ //Vector2 aimPosition, Vector2 firePointPosition
 		Debug.Log ("Start aiming");
-		Flag = false;
+		Boss.FreezeBoss = true;
+		ExecuteAttack = false;
 		float time = 0;
 		AimEffect(aimPosition, firePointPosition);
 
@@ -225,6 +246,7 @@ public class Weapon : MonoBehaviour {
 		Arm.FreezeArmAndDirection = false;
 		Debug.Log ("Stop aiming");
 		Shoot(aimPosition, firePointPosition);
+		Boss.FreezeBoss = false;
 		Debug.Log ("Shoot after aiming");
 	}
 
