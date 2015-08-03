@@ -9,6 +9,15 @@ public class AudioManager : MonoBehaviour {
 	public AudioClip BackgroundMusicLevel2;
 	public AudioClip BackgroundMusicBoss;
 
+	void Start(){
+		// Play the title music
+		if(Application.loadedLevel == 0){
+			audioSource.clip = BackgroundMusicTitle;
+			audioSource.volume = 0.6f;
+			audioSource.Play();
+		}
+	}
+
 	void Awake(){
 		audioSource = GameObject.Find ("AudioManager/MusicAudio").GetComponent<AudioSource> ();
 	}
@@ -16,7 +25,7 @@ public class AudioManager : MonoBehaviour {
 	void Update(){
 		/*
 		if(Input.GetKeyDown(KeyCode.M)){
-			audioSource.clip = BackgroundMusicLevel2;
+			audioSource.clip = BackgroundMusicTitle;
 			audioSource.volume = 0.5f;
 			audioSource.Play();
 		}
@@ -26,25 +35,24 @@ public class AudioManager : MonoBehaviour {
 			audioSource.volume = 0.5f;
 			audioSource.Play();
 		}
-		*/
+
 		if(Input.GetKeyDown(KeyCode.N)){
 			audioSource.Stop();
 		}
+		*/
 
 	}
 
 	void OnLevelWasLoaded(int level){
 		switch (level) {
-		case 0: // Title
-			break;
 		case 1: // Level 1
 			audioSource.clip = BackgroundMusicLevel1;
-			audioSource.volume = 0.4f;
+			audioSource.volume = 0.5f;
 			audioSource.Play();
 			break;
 		case 2: // Level 2
 			audioSource.clip = BackgroundMusicLevel2;
-			audioSource.volume = 0.4f;
+			audioSource.volume = 0.5f;
 			audioSource.Play();
 			break;
 		case 3: // Boss

@@ -39,6 +39,7 @@ public class Boss : MonoBehaviour {
 	private int fromWaypointIndex = 0;
 	private float percentBetweenWaypoints;
 
+	private float CurrentSpeed = 0f;
 	private float MovementTimer = 0f;
 	private float MovementDuration = 4f;
 	private bool EnemyMoving = true;
@@ -123,13 +124,15 @@ public class Boss : MonoBehaviour {
 
 		Vector3 direction = targetWaypoint.position - fromWaypoint.position;
 		direction.Normalize();
-		BossRigidbody2D.velocity = direction * bossStats.MovementSpeed;
+		CurrentSpeed = Mathf.Lerp (CurrentSpeed, bossStats.MovementSpeed, Time.deltaTime * 4f); // Boss starts his movement gradually
+		BossRigidbody2D.velocity = direction * CurrentSpeed; //direction * bossStats.MovementSpeed
 
 		float distance = Vector3.Distance(targetWaypoint.position, fromWaypoint.position);
-		percentBetweenWaypoints += Time.deltaTime * bossStats.MovementSpeed/distance;
+		percentBetweenWaypoints += Time.deltaTime * CurrentSpeed/distance; // bossStats.MovementSpeed/distance
 
 		if(percentBetweenWaypoints >= 1){
 			percentBetweenWaypoints = 0;
+			CurrentSpeed = 0f;
 			//Debug.Log("STOOOOOOOOOOOOOOOOOOOP");
 			BossRigidbody2D.velocity = new Vector2(0, 0);
 			fromWaypoint = targetWaypoint;
@@ -163,6 +166,7 @@ public class Boss : MonoBehaviour {
 
 	// Throw grenades to left or right with random angle and force
 	public IEnumerator ThrowGrenades(int amount, int throwDirection) {
+		Debug.Log ("Throw grenades!");
 		for(int i = 0; i < amount; i++) {
 			// Create a small delay between grenades
 			yield return new WaitForSeconds(0.2f);

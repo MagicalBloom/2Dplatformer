@@ -168,6 +168,7 @@ public class Weapon : MonoBehaviour {
 					}
 				}
 			}
+		// Logic for boss shooting
 		} else if (ObjectType == ObjectTypes.boss) {
 			if (playerVisible && enemyVisible) {
 				// Player position with collider offset

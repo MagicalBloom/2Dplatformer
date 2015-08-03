@@ -9,10 +9,13 @@ public class BossAI : MonoBehaviour {
 	
 	private float BossSpeed;
 	private int MovingTowardsWaypoint;
+	private int CurrentWaypoint;
 
-	private bool ExecutionStopper = false;
+	private bool ExecutionStopperWeapons = false;
+	private bool ExecutionStopperGrenades = false;
 	private bool Waiting = false;
 	private float Timer;
+	private float Timer2 = 0f;
 
 	void Awake() {
 		boss = GetComponent<Boss> ();
@@ -23,40 +26,52 @@ public class BossAI : MonoBehaviour {
 	void Update(){
 		BossSpeed = boss.GetComponent<Rigidbody2D> ().velocity.magnitude;
 
+		// Boss movement
 		if (BossSpeed <= 0f) {
 			// Get next random waypoint
 			MovingTowardsWaypoint = Random.Range (0, 3);
 
 			// Create a delay before boss starts moving
-			if (Timer < 1f) {
+			if (Timer < 1.5f) {
 				Timer += Time.deltaTime;
 			} else {
 				BossMovement(); // Set the boss in motion so code can continue to the else block
 				Timer = 0;
+				ExecutionStopperGrenades = false;
 			}
 		} else {
 			BossMovement();
 		}
 
-		//Debug.Log (Vector3.Distance(boss.Waypoints[1].position, transform.position));
-
-		if (Vector3.Distance (boss.Waypoints [1].position, transform.position) < 1f) {
-			BossShootRifle();
+		// Check if boss should use his rifle
+		if (Vector3.Distance (boss.Waypoints [1].position, transform.position) < 1f && MovingTowardsWaypoint == 1) {
+			BossShootRifle ();
 		} else {
-			BossShootUzi();
+			// Dont't shoot for 0.5 seconds
+			if(Timer2 <= 0.5f){
+				Uzi.ExecuteAttack = false;
+				Timer2 += Time.deltaTime;
+			// Shoot for 0.5 seconds
+			} else {
+				BossShootUzi();
+				Timer2 += Time.deltaTime;
+			}
+
+			// Reset Timer2
+			if(Timer2 > 1f){
+				Timer2 = 0f;
+			}
 		}
 
-		/*
-		if (MovingTowardsWaypoint == 0) {
-			BossShootUzi();
-		} else if (Vector3.Distance(boss.Waypoints[1].position, transform.position) < 2f) {
-			BossShootRifle();
-		} else if (MovingTowardsWaypoint == 2) {
-			BossShootUzi();
-		} else {
-			// something
+		// Check if boss should throw some grenades
+		if (Vector3.Distance (boss.Waypoints [0].position, transform.position) < 0.2f && MovingTowardsWaypoint == 0 && ExecutionStopperGrenades == false) {
+			StartCoroutine(boss.ThrowGrenades(4, -1));
+			ExecutionStopperGrenades = true;
+		} else if(Vector3.Distance (boss.Waypoints [2].position, transform.position) < 0.5f && MovingTowardsWaypoint == 2 && ExecutionStopperGrenades == false) {
+			StartCoroutine(boss.ThrowGrenades(4, 1));
+			ExecutionStopperGrenades = true;
 		}
-		*/
+
 	}
 
 	void BossMovement(){
@@ -64,7 +79,7 @@ public class BossAI : MonoBehaviour {
 	}
 
 	void BossShootRifle(){
-		if(BossSpeed < 0.05f && ExecutionStopper == false){
+		if(BossSpeed < 0.05f && ExecutionStopperWeapons == false){
 			// Check if weapon switch is needed
 			if(!Rifle.gameObject.activeInHierarchy){
 				boss.SwitchWeapon ();
@@ -72,12 +87,12 @@ public class BossAI : MonoBehaviour {
 
 			Debug.Log("Rifle Execute");
 			Rifle.ExecuteAttack = true;
-			ExecutionStopper = true;
+			ExecutionStopperWeapons = true;
 		}
 	}
 
 	void BossShootUzi(){
-		if (BossSpeed > 0.25f) {
+		if (BossSpeed > 0.5f) {
 			// Check if weapon switch is needed
 			if(!Uzi.gameObject.activeInHierarchy){
 				boss.SwitchWeapon ();
@@ -85,7 +100,7 @@ public class BossAI : MonoBehaviour {
 			
 			//Debug.Log ("Uzi Execute");
 			Uzi.ExecuteAttack = true;
-			ExecutionStopper = false;
+			ExecutionStopperWeapons = false;
 		} else {
 			//Debug.Log ("Uzi Stop");
 			Uzi.ExecuteAttack = false;

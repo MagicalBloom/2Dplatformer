@@ -11,6 +11,8 @@ public class menuScript : MonoBehaviour
 	public Button ControlsText;
 	public Button AboutText;
 	public Button ExitText;
+
+	private AudioSource audioSource;
 	
 	void Start () {
 		QuitMenu = QuitMenu.GetComponent<Canvas>();
@@ -23,6 +25,8 @@ public class menuScript : MonoBehaviour
 		QuitMenu.enabled = false;
 		ControlsMenu.enabled = false;
 		AboutMenu.enabled = false;
+
+		audioSource = GameObject.Find ("AudioManager/MusicAudio").GetComponent<AudioSource> ();
 	}
 	
 	public void ExitPress() { //this function will be used on our Exit button
@@ -59,11 +63,20 @@ public class menuScript : MonoBehaviour
 	
 	public void StartLevel () { //this function will be used on our Play button	
 		//Application.LoadLevel ("level1"); //this will load our first level from our build settings. "1" is the second scene in our game
+		StartCoroutine (MusicFadeOut()); // This is behaving wierdly..
 		AutoFade.LoadLevel ("level1", 2, 1, Color.black);
 	}
 	
 	public void ExitGame () { //This function will be used on our "Yes" button in our Quit menu
 		Application.Quit(); //this will quit our game. Note this will only work after building the game
 	}
-	
+
+	IEnumerator MusicFadeOut(){
+		float time = 0;
+		while(time < 2f){
+			time += Time.deltaTime;
+			audioSource.volume -= 0.005f;
+			yield return null;
+		}
+	}
 }
