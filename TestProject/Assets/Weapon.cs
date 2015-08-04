@@ -109,35 +109,37 @@ public class Weapon : MonoBehaviour {
 				ClipIsEmpty = true;
 			}
 
-			if(Input.GetMouseButton (0) && CurrentAmmo <= 0 && ClipIsEmpty && ReloadComplete){
-
-
-			}
-
 			// Shooting
 			if(weaponStats.WeaponType == WeaponTypes.full){
+
 				if (Input.GetMouseButton (0) && ReloadComplete && ShootTimer > weaponStats.FireRate) {
 					if(CurrentAmmo > 0){
 						Shoot (mousePosition, firePointPosition);
 						GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
-					} else {
+					}
+					else {
 						audioSource.PlayOneShot (WeaponClipEmptySoundEffect, 0.4f);
 					}
+
 					ShootTimer = 0;
 				}
-			} else {
+			}
+			else {
+
 				if (Input.GetMouseButtonDown (0) && ReloadComplete && ShootTimer > weaponStats.FireRate) {
 					if(CurrentAmmo > 0){
 						Shoot (mousePosition, firePointPosition);
 						GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
-					} else {
+					}
+					else {
 						audioSource.PlayOneShot (WeaponClipEmptySoundEffect, 0.4f);
 					}
+
 					ShootTimer = 0;
 				}
 			}
-		// Logic for enemy shooting
-		} else if (ObjectType == ObjectTypes.enemy) {
+		} // Logic for enemy shooting
+		else if (ObjectType == ObjectTypes.enemy) {
 
 			// Check if player is close enough to start aiming
 			if (playerVisible && enemyVisible) {
@@ -152,7 +154,8 @@ public class Weapon : MonoBehaviour {
 				// Enemy shooting logic
 				if (ShootTimer < RandomizeFirerate && startShooting) {
 					ShootTimer += Time.deltaTime;
-				} else if(ShootTimer > RandomizeFirerate && ReloadComplete && CurrentAmmo > 0) {
+				}
+				else if(ShootTimer > RandomizeFirerate && ReloadComplete && CurrentAmmo > 0) {
 					// Randomize enemy aim delay a bit
 					RandomizeFirerate = Random.Range(weaponStats.FireRate - 0.3f, weaponStats.FireRate);
 
@@ -168,17 +171,13 @@ public class Weapon : MonoBehaviour {
 					}
 				}
 			}
-		// Logic for boss shooting
-		} else if (ObjectType == ObjectTypes.boss) {
+		} // Logic for boss shooting
+		else if (ObjectType == ObjectTypes.boss) {
+
 			if (playerVisible && enemyVisible) {
 				// Player position with collider offset
-
 				Vector3 playerPosition = PlayerCollider.transform.TransformPoint(new Vector3(PlayerCollider.offset.x, PlayerCollider.offset.y, 0));
-				/*
-				Vector3 playerPosition = new Vector3(PlayerCollider.transform.position.x + PlayerCollider.offset.x, 
-				                                     PlayerCollider.transform.position.y + PlayerCollider.offset.y,
-				                                     0f);
-				 */
+
 				if(weaponStats.WeaponType == WeaponTypes.single){ // Boss is using single shot rifle
 					if(ExecuteAttack){ // Set the flag based on boss behaviour or something
 						StartCoroutine(Aim(playerPosition, FirePoint.position));
@@ -187,7 +186,8 @@ public class Weapon : MonoBehaviour {
 					if(ExecuteAttack){
 						if(ShootTimer < weaponStats.FireRate){
 							ShootTimer += Time.deltaTime;
-						} else {
+						}
+						else {
 							// Reset the timer
 							ShootTimer = 0;
 
@@ -230,32 +230,32 @@ public class Weapon : MonoBehaviour {
 		}
 	}
 
-	IEnumerator Aim(Vector2 aimPosition, Vector2 firePointPosition){ //Vector2 aimPosition, Vector2 firePointPosition
+	IEnumerator Aim(Vector2 aimPosition, Vector2 firePointPosition){
 		Debug.Log ("Start aiming");
-		Boss.FreezeBoss = true;
+		Boss.FreezeBoss = true; // Stop boss movement
 		ExecuteAttack = false;
 		float time = 0;
+
 		AimEffect(aimPosition, firePointPosition);
 
 		while(time < weaponStats.ChargeTime){
-			Arm.FreezeArmAndDirection = true;
-			//Debug.DrawRay (firePointPosition, (aimPosition-firePointPosition), Color.white, 0.1f);
+			Arm.FreezeArmAndDirection = true; // Stop boss' arm from moving
 			time += Time.deltaTime;
 			yield return null;
-			//Debug.Log(time);
 		}
+
+		Shoot(aimPosition, firePointPosition); // Shoot
+
+		// Release
 		Arm.FreezeArmAndDirection = false;
-		Debug.Log ("Stop aiming");
-		Shoot(aimPosition, firePointPosition);
 		Boss.FreezeBoss = false;
-		Debug.Log ("Shoot after aiming");
 	}
 
 	void AimEffect(Vector2 aimPosition, Vector2 firePointPosition){
-		//Vector3 hitDirection = new Vector3();
 		Vector2 hitPosition; 
 		hitPosition = (aimPosition - firePointPosition) * 3;
 		hitPosition += firePointPosition;
+
 		Transform line = Instantiate (AimTestPrefab, FirePoint.position, FirePoint.rotation) as Transform;
 		LineRenderer linerenderer = line.GetComponent<LineRenderer> ();
 		
@@ -263,8 +263,8 @@ public class Weapon : MonoBehaviour {
 			linerenderer.SetPosition(0, firePointPosition);
 			linerenderer.SetPosition(1, hitPosition); // If aim is all over the place... fix this (aimPosition - firePointPosition) * 3
 		}
-		Destroy (line.gameObject, weaponStats.ChargeTime);
 
+		Destroy (line.gameObject, weaponStats.ChargeTime);
 	}
 
 	void Shoot(Vector2 aimPosition, Vector2 firePointPosition){
@@ -276,8 +276,7 @@ public class Weapon : MonoBehaviour {
 		// reminder: http://answers.unity3d.com/questions/211910/getting-object-local-direction.html
 		Vector2 cameraCornerPosition = Camera.main.ViewportToWorldPoint (new Vector3(1f, 1f, -10f));
 		Vector2 playerPostition = new Vector2 (player.transform.position.x, player.transform.position.y);
-		HitRange = Vector2.Distance(playerPostition, cameraCornerPosition); //half of camera width + distance between camera and player //(Camera.main.orthographicSize * Screen.width / Screen.height) + 
-		// direction somehow
+		HitRange = Vector2.Distance(playerPostition, cameraCornerPosition); //half of camera width + distance between camera and player
 
 
 		// raycast is used to see when player hits something
@@ -286,9 +285,10 @@ public class Weapon : MonoBehaviour {
 		// Firing sound effect
 		audioSource.PlayOneShot (WeaponFireSoundEffect, 0.2f);
 
+		// Check if we hit something
 		if (hit.collider != null) {
 			// Logic after we hit something
-			Debug.Log ("Hit " + hit.collider.name + " and did " + weaponStats.Damage + " damage.");
+			//Debug.Log ("Hit " + hit.collider.name + " and did " + weaponStats.Damage + " damage.");
 
 			hitDirection = aimPosition-firePointPosition; // direction of the bullet
 			hitPosition = hit.point; // point where bullet collided with something
@@ -297,33 +297,37 @@ public class Weapon : MonoBehaviour {
 
 			if(hit.collider.tag == "enemy") {
 				hit.collider.GetComponent<Enemy>().DamageEnemy(weaponStats.Damage);
-			} else if(hit.collider.tag == "boss") {
+			}
+			else if(hit.collider.tag == "boss") {
 				hit.collider.GetComponent<Boss>().DamageBoss(weaponStats.Damage);
-			} else if(hit.collider.tag == "hittable") {
-				 // wall
-			} else if(hit.collider.tag == "Player") {
+			}
+			else if(hit.collider.tag == "hittable") {
+				 // If we make covers destructable put the damage for those here
+			}
+			else if(hit.collider.tag == "Player") {
 				player.DamagePlayer(weaponStats.Damage);
-			} else{
+			}
+			else{
 				//do something
 			}
 
 			weaponEffects.BulletTrail(hitPosition);
 			weaponEffects.BulletHit(hitDirection ,hitPosition, hitNormal, collider);
-		} else {
+		}
+		// In case we didn't hit anything
+		else {
 			hitPosition = (aimPosition-firePointPosition)*30; // Get the mouse cursor direction and add some distance
 			hitPosition += FirePoint.position;
 			hitNormal = new Vector3 (9999, 9999, 9999); // used for checking if bullet hit something in effect method... kinda bad solution but whatever
 			collider = null;
+
 			weaponEffects.BulletTrail(hitPosition);
 		}
 
 		// Remove bullet from the magazine
 		CurrentAmmo -= 1;
 
-		weaponEffects.MuzzleFlash ();
-
-
-		//Debug.DrawRay (firePointPosition, (mousePosition-firePointPosition)*30, Color.white, 1);
-
+		// Effect for muzzle flash
+		weaponEffects.MuzzleFlash ();						
 	}
 }

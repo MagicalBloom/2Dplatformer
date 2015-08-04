@@ -40,7 +40,7 @@ public class ArmRotation : MonoBehaviour {
 			RotationZ = Mathf.Atan2 (difference.y, difference.x) * Mathf.Rad2Deg;	// Find the angle in degrees
 
 		} else {
-			Vector3 difference = player.transform.position - transform.position;	// Subtract the position of the player from the mouse position
+			Vector3 difference = player.transform.position - transform.position;	// Subtract the position of the player from the enemy position
 			difference.Normalize ();	// Normalize the vector
 
 			// For enemy aim effects
@@ -70,7 +70,7 @@ public class ArmRotation : MonoBehaviour {
 			}
 
 			MouseRightSide = false;
-			transform.rotation = Quaternion.Euler (0f, 0f, RotationZ + RotationOffset + 180);
+			transform.rotation = Quaternion.Euler (0f, 0f, RotationZ + RotationOffset + 180); 
 			FirePoint.rotation = Quaternion.Euler (0f, 0f, RotationZ + RotationOffset);
 		}
 	}

@@ -7,6 +7,7 @@ public class EnemySpawnTrigger : MonoBehaviour {
 	public Vector3[] EnemyPositions;
 	public Vector3[] EnemyRotations;
 	public float SpawnInterval = 0f;
+	public float StartUpDelay = 0f;
 
 	private bool EnemySpawned = false;
 	private Vector3 EnemyPosition;
@@ -20,6 +21,9 @@ public class EnemySpawnTrigger : MonoBehaviour {
 	}
 
 	IEnumerator SpawnEnemies(){
+
+		yield return new WaitForSeconds (StartUpDelay); // Start up delay
+
 		for(int i = 0; i < EnemyPrefabs.Length; i++){
 			yield return new WaitForSeconds(SpawnInterval); // Create the desired spawn delay
 

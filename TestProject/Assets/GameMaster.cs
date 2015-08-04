@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour {
-	// This class handles gui changes, scene changes and different events
 
 	public static GameMaster gm;
 
