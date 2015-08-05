@@ -1,5 +1,5 @@
-line 1
-line 2
-line 3
-line 4
-line5
+[player]line 1
+[boss]line 2
+[boss]line 3
+[player]line 4
+[player]line5

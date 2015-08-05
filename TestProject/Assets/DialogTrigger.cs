@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 public class DialogTrigger : MonoBehaviour {
 
-	public Text CanvasText; // Place where we put our text
+	public Text CanvasTextPlayer; // Place where we put our player dialogue
+	public Text CanvasTextBoss; // Place where we put our boss dialogue
 	public TextAsset DialogTextFile; // File where we pull the text from
 
 	private string[] DialogTextLines; // Array for storing the text lines
@@ -17,10 +18,12 @@ public class DialogTrigger : MonoBehaviour {
 
 	void Awake(){
 		if(DialogTextFile != null){
+			// Split whole text to lines of text
 			DialogTextLines = DialogTextFile.text.Split('\n');
 		}
 
-		CanvasText.enabled = false;
+		CanvasTextPlayer.enabled = false;
+		CanvasTextBoss.enabled = false;
 
 		PlayerObject = GameObject.Find ("Player");
 
@@ -39,8 +42,9 @@ public class DialogTrigger : MonoBehaviour {
 			PlayerObject.GetComponent<PlatformerCharacter2D> ().enabled = false;
 
 			DialogTriggered = true;
-			CanvasText.enabled = true;
-			CanvasText.text = DialogTextLines[CurrentLine];
+
+			// Show first line of dialogue
+			DisplayDialogue();
 		}
 	}
 
@@ -52,8 +56,7 @@ public class DialogTrigger : MonoBehaviour {
 			// Advance trough dialogue with space
 			if(Input.GetKeyDown(KeyCode.Space)){
 				if(CurrentLine < LineCount){
-					CanvasText.text = DialogTextLines[CurrentLine];
-					CurrentLine ++;
+					DisplayDialogue();
 				}
 				else {
 					// Enable player controls
@@ -61,6 +64,30 @@ public class DialogTrigger : MonoBehaviour {
 					PlayerObject.GetComponent<PlatformerCharacter2D> ().enabled = true;
 				}
 			}
+		}
+	}
+
+	void DisplayDialogue(){
+		// Check whose line is going to be displayed next
+		if(DialogTextLines[CurrentLine].Contains("[player]")){
+
+			// Disable and enable canvas elements accordingly
+			CanvasTextPlayer.enabled = true;
+			CanvasTextBoss.enabled = false;
+
+			// Display current line and advance to the next line
+			CanvasTextPlayer.text = DialogTextLines[CurrentLine];
+			CurrentLine ++;
+		}
+		else {
+
+			// Disable and enable canvas elements accordingly
+			CanvasTextPlayer.enabled = false;
+			CanvasTextBoss.enabled = true;
+
+			// Display current line and advance to the next line
+			CanvasTextBoss.text = DialogTextLines[CurrentLine];
+			CurrentLine ++;
 		}
 	}
 }

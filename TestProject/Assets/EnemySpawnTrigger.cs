@@ -8,6 +8,7 @@ public class EnemySpawnTrigger : MonoBehaviour {
 	public Vector3[] EnemyRotations;
 	public float SpawnInterval = 0f;
 	public float StartUpDelay = 0f;
+	public float EnemyMovementDuration = 0f;
 
 	private bool EnemySpawned = false;
 	private Vector3 EnemyPosition;
@@ -30,6 +31,7 @@ public class EnemySpawnTrigger : MonoBehaviour {
 			// Spawn the enemies
 			Quaternion enemyRotation = Quaternion.Euler (EnemyRotations[i].x, EnemyRotations[i].y, EnemyRotations[i].z); 
 			GameObject EnemyClone1 = Instantiate (EnemyPrefabs[i], EnemyPositions[i], enemyRotation) as GameObject;
+			EnemyClone1.GetComponent<Enemy>().MovementDuration = EnemyMovementDuration;
 			EnemyClone1.GetComponent<Enemy>().EnemyMoving = true;
 		}
 	}

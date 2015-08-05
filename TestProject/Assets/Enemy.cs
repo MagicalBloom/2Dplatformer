@@ -24,7 +24,10 @@ public class Enemy : MonoBehaviour {
 	private Animator animator;
 
 	public bool EnemyMoving = false;
+
+	[HideInInspector]
 	public float MovementDuration;
+
 	private float MovementDirection;
 	private float MovementTimer = 0;
 
