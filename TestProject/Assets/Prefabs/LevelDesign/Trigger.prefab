@@ -12,6 +12,8 @@ GameObject:
   - 23: {fileID: 2348018}
   - 61: {fileID: 6176850}
   - 114: {fileID: 11414870}
+  - 61: {fileID: 6195120}
+  - 114: {fileID: 11423196}
   m_Layer: 12
   m_Name: Trigger
   m_TagString: trig_spawnEnemy
@@ -26,8 +28,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126122}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.113801, y: 4.01623583, z: 1}
+  m_LocalPosition: {x: 142.600006, y: 8.19999981, z: 0}
+  m_LocalScale: {x: 3.42816687, y: 4.21704626, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -37,7 +39,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126122}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_Materials:
@@ -75,6 +77,19 @@ BoxCollider2D:
   m_Offset: {x: 0, y: -2.38418579e-07}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
+--- !u!61 &6195120
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 126122}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!114 &11414870
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -89,13 +104,43 @@ MonoBehaviour:
   EnemyPrefabs: []
   EnemyPositions: []
   EnemyRotations: []
+  SpawnInterval: 0
+  StartUpDelay: 0
+  EnemyMovementDuration: 0
+--- !u!114 &11423196
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 126122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adec31186bf2bb944a61d4a290d3f766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyPrefabs:
+  - {fileID: 111818, guid: cca7884694a4b6e41b607b41fe31bc80, type: 2}
+  - {fileID: 111818, guid: cca7884694a4b6e41b607b41fe31bc80, type: 2}
+  EnemyPositions:
+  - {x: 124, y: 7, z: 0}
+  - {x: 122, y: 7, z: 0}
+  EnemyRotations:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  SpawnInterval: .100000001
+  StartUpDelay: 0
+  EnemyMovementDuration: 1.29999995
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 126122}
