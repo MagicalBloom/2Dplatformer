@@ -63,7 +63,7 @@ public class menuScript : MonoBehaviour
 	
 	public void StartLevel () { //this function will be used on our Play button	
 		//Application.LoadLevel ("level1"); //this will load our first level from our build settings. "1" is the second scene in our game
-		StartCoroutine (MusicFadeOut()); // This is behaving wierdly..
+		StartCoroutine (MusicFadeOut()); // This is behaving wierdly.. it works though :D
 		AutoFade.LoadLevel ("level1", 2, 1, Color.black);
 	}
 	

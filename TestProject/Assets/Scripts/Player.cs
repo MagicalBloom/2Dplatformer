@@ -27,12 +27,12 @@ public class Player : MonoBehaviour {
 			// Player will get max health after death, scene change or start
 			CurrentHealth = MaxHealth;
 
-			// Some horrifying design right here...
+			// Some horrifying design right here... easy way out
 			if (PlayerPrefs.HasKey ("PlayerLivesRemaining")) {
 				if(PlayerPrefs.GetInt ("PlayerLivesRemaining") >= MaxLives){
 					CurrentLives = MaxLives;
 				} else if(PlayerPrefs.GetInt ("PlayerLivesRemaining") <= 0){
-					CurrentLives = MaxLives; // for now.. need to edit gameover screen
+					//CurrentLives = MaxLives; // for now.. need to edit gameover screen
 				}else {
 					CurrentLives = PlayerPrefs.GetInt ("PlayerLivesRemaining");
 				}
@@ -78,10 +78,10 @@ public class Player : MonoBehaviour {
 
 		GUIManager.UpdatePlayerHealthbar (playerStats.CurHealth);
 		if(playerStats.CurHealth <= 0){
-			GameMaster.KillPlayer(this);
 			playerStats.CurLives -= 1;
 			PlayerPrefs.SetInt("PlayerLivesRemaining", playerStats.CurLives);
 			GUIManager.UpdatePlayerLives(playerStats.CurLives);
+			GameMaster.KillPlayer(this);
 		}
 	}
 }

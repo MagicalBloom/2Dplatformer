@@ -40,6 +40,7 @@ public class DialogTrigger : MonoBehaviour {
 			// Disable player controls
 			PlayerObject.GetComponent<Platformer2DUserControl> ().enabled = false;
 			PlayerObject.GetComponent<PlatformerCharacter2D> ().enabled = false;
+			PlayerObject.transform.GetComponentInChildren<Weapon>().enabled = false;
 
 			DialogTriggered = true;
 
@@ -62,6 +63,7 @@ public class DialogTrigger : MonoBehaviour {
 					// Enable player controls
 					PlayerObject.GetComponent<Platformer2DUserControl> ().enabled = true;
 					PlayerObject.GetComponent<PlatformerCharacter2D> ().enabled = true;
+					PlayerObject.transform.GetComponentInChildren<Weapon>().enabled = true;
 				}
 			}
 		}
@@ -75,6 +77,11 @@ public class DialogTrigger : MonoBehaviour {
 			CanvasTextPlayer.enabled = true;
 			CanvasTextBoss.enabled = false;
 
+			// Find the tag in front of the line and remove it
+			int firstBracket = DialogTextLines[CurrentLine].IndexOf("[");
+			int secondBracket = DialogTextLines[CurrentLine].IndexOf("]");
+			DialogTextLines[CurrentLine] = DialogTextLines[CurrentLine].Remove(firstBracket, secondBracket + 1);
+
 			// Display current line and advance to the next line
 			CanvasTextPlayer.text = DialogTextLines[CurrentLine];
 			CurrentLine ++;
@@ -84,6 +91,11 @@ public class DialogTrigger : MonoBehaviour {
 			// Disable and enable canvas elements accordingly
 			CanvasTextPlayer.enabled = false;
 			CanvasTextBoss.enabled = true;
+
+			// Find the tag in front of the line and remove it
+			int firstBracket = DialogTextLines[CurrentLine].IndexOf("[");
+			int secondBracket = DialogTextLines[CurrentLine].IndexOf("]");
+			DialogTextLines[CurrentLine] = DialogTextLines[CurrentLine].Remove(firstBracket, secondBracket + 1);
 
 			// Display current line and advance to the next line
 			CanvasTextBoss.text = DialogTextLines[CurrentLine];

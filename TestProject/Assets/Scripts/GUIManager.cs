@@ -7,12 +7,16 @@ public class GUIManager : MonoBehaviour {
 	public static GUIManager guiManager;
 
 	public GameObject GameOverMenu;
+	public GameObject GameOverForRealMenu;
 	public GameObject PauseMenu;
 	public GameObject ExitMenu;
 	public GameObject OptionsMenu;
 	public GameObject PlayerHealthbar;
 	public GameObject PlayerAmmo;
 	public GameObject PlayerLives;
+
+	public Text CanvasTextPlayer; // Place where we put our player dialogue
+	public Text CanvasTextBoss; // Place where we put our boss dialogue
 
 	public Texture2D CustomCursor;
 
@@ -26,6 +30,14 @@ public class GUIManager : MonoBehaviour {
 	void Awake() {
 		if(guiManager == null){
 			guiManager = GetComponent<GUIManager>();
+		}
+
+		// Disable dialogue elements
+		if(CanvasTextPlayer != null){
+			CanvasTextPlayer.enabled = false;
+		}
+		if(CanvasTextBoss != null){
+			CanvasTextBoss.enabled = false;
 		}
 
 		// Set cursor with a slight delay
@@ -69,9 +81,14 @@ public class GUIManager : MonoBehaviour {
 	
 	// Display the game over menu
 	public void DisplayGameOverMenu(){
-		GameOverMenu.SetActive (true); // reveal the game over menu
+		GameOverMenu.SetActive (true);
 	}
-	
+
+	// Display the game over menu when there is no lives left
+	public void DisplayGameOverForRealMenu(){
+		GameOverForRealMenu.SetActive (true);
+	}
+
 	// Set new value to the healtbar
 	public static void UpdatePlayerHealthbar(int newValue){
 		guiManager.PlayerHealthbarSlider.value = newValue; 

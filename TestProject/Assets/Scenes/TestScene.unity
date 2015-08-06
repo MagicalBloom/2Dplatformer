@@ -754,6 +754,7 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   SpawnInterval: 1
   StartUpDelay: 3
+  EnemyMovementDuration: 2
 --- !u!61 &459251975
 BoxCollider2D:
   m_ObjectHideFlags: 0

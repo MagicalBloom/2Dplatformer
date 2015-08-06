@@ -86,11 +86,11 @@ public class BossAI : MonoBehaviour {
 
 
 		// Check if boss should throw some grenades
-		if (Vector3.Distance (boss.Waypoints [0].position, transform.position) < 0.2f && MovingTowardsWaypoint == 0 && ExecutionStopperGrenades == false) {
+		if (Vector3.Distance (boss.Waypoints [0].position, transform.position) < 0.8f && MovingTowardsWaypoint == 0 && ExecutionStopperGrenades == false) {
 			StartCoroutine(boss.ThrowGrenades(4, -1));
 			ExecutionStopperGrenades = true;
 		}
-		else if(Vector3.Distance (boss.Waypoints [2].position, transform.position) < 0.5f && MovingTowardsWaypoint == 2 && ExecutionStopperGrenades == false) {
+		else if(Vector3.Distance (boss.Waypoints [2].position, transform.position) < 0.8f && MovingTowardsWaypoint == 2 && ExecutionStopperGrenades == false) {
 			StartCoroutine(boss.ThrowGrenades(4, 1));
 			ExecutionStopperGrenades = true;
 		}
