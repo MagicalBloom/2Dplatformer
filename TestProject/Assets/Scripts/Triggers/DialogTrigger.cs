@@ -12,7 +12,8 @@ public class DialogTrigger : MonoBehaviour {
 	private int LineCount = 0;
 	private int CurrentLine = 0;
 
-	private GameObject PlayerObject; // Player gameobject for disabling movement
+	private GameObject PlayerObject;
+	private GameObject BossObject;
 
 	private bool DialogTriggered = false;
 
@@ -26,6 +27,7 @@ public class DialogTrigger : MonoBehaviour {
 		CanvasTextBoss.enabled = false;
 
 		PlayerObject = GameObject.Find ("Player");
+		BossObject = GameObject.Find ("EnemyBossTest2");
 
 		LineCount = DialogTextLines.Length;
 	}
@@ -64,6 +66,10 @@ public class DialogTrigger : MonoBehaviour {
 					PlayerObject.GetComponent<Platformer2DUserControl> ().enabled = true;
 					PlayerObject.GetComponent<PlatformerCharacter2D> ().enabled = true;
 					PlayerObject.transform.GetComponentInChildren<Weapon>().enabled = true;
+
+					// Disable texts
+					CanvasTextPlayer.enabled = false;
+					CanvasTextBoss.enabled = false;
 				}
 			}
 		}
@@ -76,6 +82,9 @@ public class DialogTrigger : MonoBehaviour {
 			// Disable and enable canvas elements accordingly
 			CanvasTextPlayer.enabled = true;
 			CanvasTextBoss.enabled = false;
+
+			// Set the position of the text
+			CanvasTextPlayer.rectTransform.position = new Vector3(PlayerObject.transform.position.x, PlayerObject.transform.position.y + 1.3f, PlayerObject.transform.position.z);
 
 			// Find the tag in front of the line and remove it
 			int firstBracket = DialogTextLines[CurrentLine].IndexOf("[");
@@ -91,6 +100,9 @@ public class DialogTrigger : MonoBehaviour {
 			// Disable and enable canvas elements accordingly
 			CanvasTextPlayer.enabled = false;
 			CanvasTextBoss.enabled = true;
+
+			// Set the position of the text
+			CanvasTextBoss.rectTransform.position = new Vector3(BossObject.transform.position.x, BossObject.transform.position.y + 1.3f, BossObject.transform.position.z);
 
 			// Find the tag in front of the line and remove it
 			int firstBracket = DialogTextLines[CurrentLine].IndexOf("[");

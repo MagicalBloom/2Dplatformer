@@ -777,6 +777,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 11409148, guid: aa3250c485fbbb54486349ff42ded9c8, type: 2}
+      propertyPath: BackgroundMusicBoss
+      value: 
+      objectReference: {fileID: 8300000, guid: d13e6b2689b4b2c4685e90039fce902a, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aa3250c485fbbb54486349ff42ded9c8, type: 2}
   m_IsPrefabParent: 0
