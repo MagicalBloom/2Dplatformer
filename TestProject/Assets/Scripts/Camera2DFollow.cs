@@ -35,7 +35,8 @@ public class Camera2DFollow : MonoBehaviour
 		newPosition = new Vector3 (Mathf.Clamp(newPosition.x, MinXposition, Mathf.Infinity), newPosition.y + PositionYOffset, newPosition.z);
 
 		if(!FreezeCamera){
-			transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, 0.2f); // I'm not sure if this is good or not. I kinda like it maybe? :D
+			// Smoothdamp is used mostly because when camera is freezed, it's nicer to have a small transition than instantly re-position the camera 
+			transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, 0.2f); // I'm not sure if this is good effect or not. I kinda like it maybe? :D
 		}
     }
 }

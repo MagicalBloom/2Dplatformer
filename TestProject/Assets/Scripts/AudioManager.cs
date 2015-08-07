@@ -22,28 +22,9 @@ public class AudioManager : MonoBehaviour {
 		audioSource = GameObject.Find ("AudioManager/MusicAudio").GetComponent<AudioSource> ();
 	}
 
-	void Update(){
-		/*
-		if(Input.GetKeyDown(KeyCode.M)){
-			audioSource.clip = BackgroundMusicTitle;
-			audioSource.volume = 0.5f;
-			audioSource.Play();
-		}
-
-		if(Input.GetKeyDown(KeyCode.K)){
-			audioSource.clip = BackgroundMusicLevel1;
-			audioSource.volume = 0.5f;
-			audioSource.Play();
-		}
-
-		if(Input.GetKeyDown(KeyCode.N)){
-			audioSource.Stop();
-		}
-		*/
-
-	}
-
 	void OnLevelWasLoaded(int level){
+
+		// Check which level was loaded and play music accordingly
 		switch (level) {
 		case 1: // Level 1
 			audioSource.clip = BackgroundMusicLevel1;
@@ -59,5 +40,4 @@ public class AudioManager : MonoBehaviour {
 			break;
 		}
 	}
-
 }

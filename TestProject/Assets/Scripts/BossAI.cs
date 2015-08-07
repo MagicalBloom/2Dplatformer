@@ -13,7 +13,6 @@ public class BossAI : MonoBehaviour {
 
 	private bool ExecutionStopperWeapons = false;
 	private bool ExecutionStopperGrenades = false;
-	private bool Waiting = false;
 	private float Timer;
 	private float Timer2 = 0f;
 
@@ -22,6 +21,7 @@ public class BossAI : MonoBehaviour {
 		Rifle = transform.GetChild (0).FindChild ("AWP").GetComponent<Weapon>();
 		Uzi = transform.GetChild (0).FindChild ("Uzi").GetComponent<Weapon>();
 
+		// Set default waypoint to go to
 		MovingTowardsWaypoint = 1;
 	}
 
@@ -42,44 +42,19 @@ public class BossAI : MonoBehaviour {
 		else {
 			BossMovement();
 		}
-
-	
-		//BossMovement();
-
-		/*
-		// Check if boss should use his rifle
-		if (Vector3.Distance (boss.Waypoints [1].position, transform.position) < 1f && MovingTowardsWaypoint == 1) {
-			BossShootRifle ();
-		} else {
-			// Dont't shoot for 0.5 seconds
-			if(Timer2 <= 1f){
-				Uzi.ExecuteAttack = false;
-				Timer2 += Time.deltaTime;
-			// Shoot for 0.5 seconds
-			} else {
-				BossShootUzi();
-				Timer2 += Time.deltaTime;
-			}
-
-			// Reset Timer2
-			if(Timer2 > 1.5f){
-				Timer2 = 0f;
-			}
-		}
-		*/
-
+		
 		// Boss uzi shooting delay
 		if(Timer2 <= 3f){
 			Uzi.ExecuteAttack = false;
 			Timer2 += Time.deltaTime;
-			// Shoot for 0.5 seconds
 		}
+		// Shoot for 0.5 seconds
 		else {
 			BossShootUzi();
 			Timer2 += Time.deltaTime;
 		}
 		
-		// Reset Timer2
+		// Reset Timer2 after defined amount of time
 		if(Timer2 > 3.5f){
 			Timer2 = 0f;
 		}
@@ -102,6 +77,7 @@ public class BossAI : MonoBehaviour {
 			// Get next random waypoint
 			int previousWaypoint = MovingTowardsWaypoint;
 
+			// Prevent same waypoint from coming twice in a row
 			while (previousWaypoint == MovingTowardsWaypoint) {
 				MovingTowardsWaypoint = Random.Range (0, 3);
 			}
@@ -110,12 +86,15 @@ public class BossAI : MonoBehaviour {
 				BossShootRifle ();
 			}
 
+			// Reset stoppers
 			ExecutionStopperGrenades = false;
 			ExecutionStopperWeapons = false;
 		}
 	}
 
 	void BossShootRifle(){
+
+		// Check if stopper has been set
 		if(ExecutionStopperWeapons == false){
 			// Check if weapon switch is needed
 			if(!Rifle.gameObject.activeInHierarchy){
@@ -123,12 +102,18 @@ public class BossAI : MonoBehaviour {
 			}
 
 			//Debug.Log("Rifle Execute");
+
+			// Set boolean from Weapon class to true
 			Rifle.ExecuteAttack = true;
+
+			// Set the stopper so boss won't shoot multiple times with his rifle
 			ExecutionStopperWeapons = true;
 		}
 	}
 
 	void BossShootUzi(){
+
+		// Check if boss is moving
 		if (BossSpeed > 0.5f) {
 			// Check if weapon switch is needed
 			if(!Uzi.gameObject.activeInHierarchy){
@@ -136,6 +121,8 @@ public class BossAI : MonoBehaviour {
 			}
 			
 			//Debug.Log ("Uzi Execute");
+
+			// Set boolean from Weapon class to true
 			Uzi.ExecuteAttack = true;
 			ExecutionStopperWeapons = false;
 		}

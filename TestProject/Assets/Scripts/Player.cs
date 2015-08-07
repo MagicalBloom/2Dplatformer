@@ -29,16 +29,20 @@ public class Player : MonoBehaviour {
 
 			// Some horrifying design right here... easy way out
 			if (PlayerPrefs.HasKey ("PlayerLivesRemaining")) {
+
 				if(PlayerPrefs.GetInt ("PlayerLivesRemaining") >= MaxLives){
-					CurrentLives = MaxLives;
+					CurrentLives = MaxLives; // Assign max lives
 				} else if(PlayerPrefs.GetInt ("PlayerLivesRemaining") <= 0){
 					//CurrentLives = MaxLives; // for now.. need to edit gameover screen
 				}else {
 					CurrentLives = PlayerPrefs.GetInt ("PlayerLivesRemaining");
 				}
+
 			} else {
+
 				CurrentLives = MaxLives;
 				PlayerPrefs.SetInt("PlayerLivesRemaining", MaxLives);
+
 			}
 		}
 	}
@@ -64,19 +68,24 @@ public class Player : MonoBehaviour {
 	}
 
 	public void RegenPlayer(){
+
+		// Checkking that we won't heal player over max amount of health
 		if (playerStats.CurHealth + playerStats.RegenAmount <= playerStats.MaxHealth) {
 			playerStats.CurHealth += playerStats.RegenAmount;
 		} else {
 			playerStats.CurHealth += playerStats.RegenAmount - ((playerStats.CurHealth + playerStats.RegenAmount) % playerStats.MaxHealth);
 		}
-		GUIManager.UpdatePlayerHealthbar(playerStats.CurHealth);
+		
+		GUIManager.UpdatePlayerHealthbar(playerStats.CurHealth); // Update the GUI
 	}
 
 	public void DamagePlayer(int damage){
-		playerStats.CurHealth -= damage;
+		playerStats.CurHealth -= damage; // Take hit points from current health
 		RegenTimerDelay = 0; // Reset regenTimer so regen won't kick in if player takes damage
 
-		GUIManager.UpdatePlayerHealthbar (playerStats.CurHealth);
+		GUIManager.UpdatePlayerHealthbar (playerStats.CurHealth); // Update the GUI
+
+		// If current health is 0 or less, kill the player
 		if(playerStats.CurHealth <= 0){
 			playerStats.CurLives -= 1;
 			PlayerPrefs.SetInt("PlayerLivesRemaining", playerStats.CurLives);

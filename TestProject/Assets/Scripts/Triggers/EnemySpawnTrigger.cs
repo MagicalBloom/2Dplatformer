@@ -12,7 +12,6 @@ public class EnemySpawnTrigger : MonoBehaviour {
 
 	private bool EnemySpawned = false;
 	private Vector3 EnemyPosition;
-	private Quaternion DefaultRotation = Quaternion.Euler(0, 0, 0);
 
 	void OnTriggerEnter2D(Collider2D collider2D){
 		if(!EnemySpawned && collider2D.tag == "Player"){

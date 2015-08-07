@@ -5,11 +5,11 @@ public class Explosion : MonoBehaviour {
 
 	[System.Serializable]
 	public class ExplosionStats{
-		public float ExplosionSize;
-		public int ExplosionDamage;
-		public float ExplosionDelay;
-		public float ExplosionSpeed;
-		public float TroughWallsTime;
+		public float ExplosionSize; // Size of the explosion
+		public int ExplosionDamage; // Damage og the explosion
+		public float ExplosionDelay; // Delay before the explosive explode after thrown
+		public float ExplosionSpeed; // How fast the explosion radius travels from 0 to ExplosionSize
+		public float TroughWallsTime; // Time before explosive's collider is activated
 	}
 
 	public ExplosionStats explosionStats = new ExplosionStats();
@@ -45,27 +45,38 @@ public class Explosion : MonoBehaviour {
 			ParentCollider.enabled = true;
 		}
 
+		// Set explode to true and with that, trigger the explosion
 		if(explosionStats.ExplosionDelay < 0){
 			Explode = true;
 		}
 	}
 
 	void FixedUpdate(){
+		
 		if(Explode){
+			// Check if the radius is stioll within defined explosion size
 			if(CurrentExplosionRadius < explosionStats.ExplosionSize){
-				CurrentExplosionRadius += explosionStats.ExplosionSpeed;
-			} else if(CurrentExplosionRadius >= explosionStats.ExplosionSize && Exploded == false) {
-				Exploded = true;
-				audioSource.PlayOneShot (ExplosionSoundEffect, 0.3f);
-				GameObject clone = Instantiate(ExplosionEffect, transform.position, transform.rotation) as GameObject;
-				clone.transform.SetParent(transform);
-				Destroy(this.transform.parent.gameObject, 0.2f);
+
+				CurrentExplosionRadius += explosionStats.ExplosionSpeed; // Set current radius
 			}
+			// Explosion radius is big enough and effect hasn't happened yet
+			else if(CurrentExplosionRadius >= explosionStats.ExplosionSize && Exploded == false) {
+
+				audioSource.PlayOneShot (ExplosionSoundEffect, 0.3f); // Play the sound effect
+				GameObject clone = Instantiate(ExplosionEffect, transform.position, transform.rotation) as GameObject; // Instantiate the effect
+				clone.transform.SetParent(transform); // Set effect's parent to the explosive so it'll be destroyed with it
+				Destroy(this.transform.parent.gameObject, 0.2f); // Destroy the explosive object
+				Exploded = true; // Effect fired
+			}
+
+			// Update the circle collider's size
 			ExplosionRadius.radius = CurrentExplosionRadius;
 		}
 	}
 
 	void OnTriggerEnter2D(Collider2D collider){
+
+		// Handle the damage given to the player
 		if(Explode){
 			if(collider.gameObject.GetComponent<Rigidbody2D>()){
 				// Additional if statement for future uses

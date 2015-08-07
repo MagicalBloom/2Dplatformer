@@ -52,8 +52,10 @@ public class Enemy : MonoBehaviour {
 	}
 	
 	public void DamageEnemy(int damage){
+		// Take hit points from current health
 		enemyStats.CurrentHealth -= damage;
 
+		// If current health is 0 or less, kill the enemy
 		if(enemyStats.CurrentHealth <= 0){
 			GameMaster.KillEnemy(this);
 		}
@@ -62,7 +64,10 @@ public class Enemy : MonoBehaviour {
 	void FixedUpdate(){
 		// Check if the enemy type is a moving one and that the EnemyMoving variable is set to true
 		if((enemyType == EnemyType.runInBack || enemyType == EnemyType.runInFront) && EnemyMoving == true){
+
 			MovementTimer += Time.fixedDeltaTime;
+
+			// Move enemy based on timer
 			if(MovementTimer < MovementDuration){
 				MoveEnemy(MovementDirection * enemyStats.MovementSpeed);
 			} else {
@@ -70,9 +75,12 @@ public class Enemy : MonoBehaviour {
 				MovementTimer = 0;
 			}
 		}
+
+		animator.SetBool ("Moving", EnemyMoving);
 	}
 
 	public void MoveEnemy(float direction) {
+		// Set velocity for the enemy
 		EnemyRigidbody2D.velocity = new Vector2(direction, EnemyRigidbody2D.velocity.y);
 	}
 

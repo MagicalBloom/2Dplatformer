@@ -7,9 +7,10 @@ public class ArmRotation : MonoBehaviour {
 
 	public bool FreezeArmAndDirection = false;
 
-	public int RotationOffset = 0;
+	public int RotationOffset = 0; // In case sprite is drawn in wrong angle
 	private Transform FirePoint;
-	public AttachedTo attachedTo;
+
+	public AttachedTo attachedTo; // Is the arm attached to player or enemy?
 
 	private bool MouseRightSide = true; // For determining which way the player is currently aiming.
 	private Vector3 Direction;
@@ -31,6 +32,7 @@ public class ArmRotation : MonoBehaviour {
 		Vector3 lastDirection = Direction;
 		float lastRotation = RotationZ;
 
+		// Calculate player arm rotation based on mouse position
 		if (attachedTo == AttachedTo.player) {
 			Direction = Input.mousePosition - Camera.main.WorldToScreenPoint (transform.position);
 
@@ -38,7 +40,8 @@ public class ArmRotation : MonoBehaviour {
 			difference.Normalize ();	// Normalize the vector
 			
 			RotationZ = Mathf.Atan2 (difference.y, difference.x) * Mathf.Rad2Deg;	// Find the angle in degrees
-
+		
+		// Calculate enemy arm rotation based on player position
 		} else {
 			Vector3 difference = player.transform.position - transform.position;	// Subtract the position of the player from the enemy position
 			difference.Normalize ();	// Normalize the vector
@@ -53,23 +56,33 @@ public class ArmRotation : MonoBehaviour {
 			}
 		}
 
+		// If the target is on the right side of the arm's owner
 		if (Direction.x >= 0) {
+
+			// Flip the scale of the sprite
 			if(MouseRightSide == false) {
 				armScale.x *= -1;
 				this.transform.localScale = armScale;
 			}
 
-			MouseRightSide = true;
+			MouseRightSide = true; // Set boolean to the opposite so scale flip will happen only once
+
+			// Assign rotation to the arm and firepoint(so bullets fly in the right direction)
 			transform.rotation = Quaternion.Euler (0f, 0f, RotationZ + RotationOffset);
 			FirePoint.rotation = Quaternion.Euler (0f, 0f, RotationZ + RotationOffset);
 		}
+		// If the target is on the left side of the arm's owner
 		else {
+
+			// Flip the scale of the sprite
 			if(MouseRightSide == true){
 				armScale.x *= -1;
 				this.transform.localScale = armScale;
 			}
 
-			MouseRightSide = false;
+			MouseRightSide = false; // Set boolean to the opposite so scale flip will happen only once
+
+			// Assign rotation to the arm and firepoint(so bullets fly in the right direction)
 			transform.rotation = Quaternion.Euler (0f, 0f, RotationZ + RotationOffset + 180); 
 			FirePoint.rotation = Quaternion.Euler (0f, 0f, RotationZ + RotationOffset);
 		}

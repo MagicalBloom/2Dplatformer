@@ -45,8 +45,6 @@ public class Weapon : MonoBehaviour {
 	public AudioClip WeaponReloadEndSoundEffect;
 	public AudioClip WeaponClipEmptySoundEffect;
 
-	private bool ClipIsEmpty = false;
-
 	public bool ExecuteAttack = false;
 
 	void Start() {
@@ -58,6 +56,7 @@ public class Weapon : MonoBehaviour {
 	}
 
 	void Awake () {
+		// Get all required components and objects
 		player = GameObject.Find("Player").GetComponent<Player>();
 		PlayerCollider = GameObject.Find("Player").GetComponent<BoxCollider2D>();
 		FirePoint = transform.GetChild(0);
@@ -104,38 +103,42 @@ public class Weapon : MonoBehaviour {
 				StartCoroutine(Reload());
 			}
 
-			// Clip empty
-			if(CurrentAmmo <= 0){
-				ClipIsEmpty = true;
-			}
-
 			// Shooting
+			// Check if current weapon is automatic or something else
 			if(weaponStats.WeaponType == WeaponTypes.full){
 
+				// Check if mouse button is pressed, player isn't reloading or timer is less than firerate
 				if (Input.GetMouseButton (0) && ReloadComplete && ShootTimer > weaponStats.FireRate) {
+
+					// Check if there is still bullets left in the magazine
 					if(CurrentAmmo > 0){
 						Shoot (mousePosition, firePointPosition);
 						GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
 					}
+					// No bullets left
 					else {
-						audioSource.PlayOneShot (WeaponClipEmptySoundEffect, 0.4f);
+						audioSource.PlayOneShot (WeaponClipEmptySoundEffect, 0.4f); // Empty magazine sound effect
 					}
 
-					ShootTimer = 0;
+					ShootTimer = 0; // Reset the timer
 				}
 			}
 			else {
 
+				// Check if mouse button is pressed, player isn't reloading or timer is less than firerate
 				if (Input.GetMouseButtonDown (0) && ReloadComplete && ShootTimer > weaponStats.FireRate) {
+
+					// Check if there is still bullets left in the magazine
 					if(CurrentAmmo > 0){
 						Shoot (mousePosition, firePointPosition);
 						GUIManager.UpdatePlayerAmmo (weaponStats.ClipSize, CurrentAmmo);
 					}
+					// No bullets left
 					else {
-						audioSource.PlayOneShot (WeaponClipEmptySoundEffect, 0.4f);
+						audioSource.PlayOneShot (WeaponClipEmptySoundEffect, 0.4f); // Empty magazine sound effect
 					}
 
-					ShootTimer = 0;
+					ShootTimer = 0; // Reset the timer
 				}
 			}
 		} // Logic for enemy shooting
