@@ -1,0 +1,37 @@
+[boss]Well if it isn't Vincent. What brings you here? Bored of the retired lifestyle?
+
+[player]I'm here because you can't properly leash your dogs resulting innocent bystanders getting shot! 
+
+[player]Your goons shot my wife over some turf war that you started playing a big time mafia boss.
+
+[player]And I'm here to kill you for it!
+
+[boss]Some high and mighty talk from someone who murdered a bunch of his former colleagues seeking revenge.
+
+[player]After you took over, the organization lost all it's dignity. Anyone who didn't leave then is barely worth the bullet used to kill them.
+
+[boss]Maybe you shouldn't have left then. To ensure that a crime organization keeps it's "dignity".
+
+[boss]The Boss and you were always too soft! Letting some ridiculous "code" get in the way of business.
+
+[boss]And when you announced you would retire to live with your wife, instead having you executed for betrayal, The Boss got you a villa to live in.
+
+[player]I see you still haven't got over the fact that she chose me over you.
+
+[player]Also, if you ever had accomplished anything worthwhile in your life, you could also enjoy some perks. 
+
+[boss]The Boss, you and your wife always belittled me. No one ever recognized anythin I did.
+
+[boss]But thanks to that and the fact that you weren't around, it was easy enough to arrange The Boss' early demise.
+
+[player]!!
+
+[boss]And no one suspected a thing! Surely Antonio couldn't have schemed something so eloquent.
+
+[boss]From there it was child's play to take the reins of the organization and arrange the "accident" involving your wife.
+
+[player]Ending your life won't be punishment enough to the likes of you...
+
+[player]But it's the best I can do!
+
+[boss]YOU WON'T LEAVE HERE ALIVE!
