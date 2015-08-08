@@ -8,6 +8,8 @@ public class RestrictCameraTrigger : MonoBehaviour {
 	private GameObject[] Enemies;
 	private GameObject SingleEnemy;
 
+	private float Timer;
+
 	void OnTriggerEnter2D(Collider2D collider2D){
 		if(collider2D.tag == "Player" && AllEnemiesKilled == false){
 			Camera2DFollow.FreezeCamera = true;
@@ -16,8 +18,13 @@ public class RestrictCameraTrigger : MonoBehaviour {
 	}
 
 	void Update(){
-		if(PlayerEntered){
-			StartCoroutine(EnemiesVisible());
+		if (PlayerEntered) {
+			if(Timer > 7f){
+				StartCoroutine (EnemiesVisible ());
+			}
+			else{
+				Timer += Time.deltaTime;
+			}
 		}
 
 		if(AllEnemiesKilled){

@@ -813,12 +813,11 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 464568}
-  - 33: {fileID: 3303400}
-  - 23: {fileID: 2375312}
   - 114: {fileID: 11426942}
   - 61: {fileID: 6167810}
   - 50: {fileID: 5020834}
   - 95: {fileID: 9574230}
+  - 212: {fileID: 21289998}
   m_Layer: 11
   m_Name: EnemyStat
   m_TagString: enemy
@@ -2113,7 +2112,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 107854}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .620000005, y: .133000001, z: 0}
+  m_LocalPosition: {x: .721000016, y: .201000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 458506}
@@ -2188,7 +2187,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 155434}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -1.62920685e-07}
   m_LocalPosition: {x: -8.18712997, y: -3.13839436, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2874,30 +2873,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!23 &2375312
-MeshRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 155434}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_Materials:
-  - {fileID: 2100000, guid: 8a24ef57ff648394e9e19607f974eb7c, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
-  m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
 --- !u!23 &2375672
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -3120,13 +3095,6 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 147958}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!33 &3303400
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 155434}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &3304668
 MeshFilter:
@@ -3791,7 +3759,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 5.96046448e-08, y: 0}
   serializedVersion: 2
-  m_Size: {x: 1.00000012, y: 2}
+  m_Size: {x: .5, y: 2}
 --- !u!61 &6171882
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -4098,7 +4066,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 155434}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 6ea4d1e91f48f1744a0fb502b1948337, type: 2}
   m_CullingMode: 0
@@ -6274,7 +6242,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1327972859
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300004, guid: cdf4919e62809d44db03a14890f20bbf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5d266d7f34e9e04439b34cb0ab4503c9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21236108
 SpriteRenderer:
@@ -6873,6 +6841,32 @@ SpriteRenderer:
   m_SortingLayerID: -1327972859
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300004, guid: cdf4919e62809d44db03a14890f20bbf, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!212 &21289998
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 155434}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_ReflectionProbeUsage: 0
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 526e9fad152f759438975682a267df8b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21291970
 SpriteRenderer:
